@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@ctrl/ngx-emoji-mart/picker';
+
+html {
+    background-color: white;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    outline: 0 !important;
+}
+
+@font-face {
+    font-family: mnalta;
+    src: url('./assets/font/bebas.ttf');
+}
+
+@font-face {
+    font-family: geomanist;
+    src: url('./assets/font/geomanist.otf');
+}
+
+h1,
+button,
+input,
+span,
+textarea,
+label {
+    font-family: mnalta !important;
+}
+
+input,
+textarea,
+h3, p {
+    font-family: geomanist !important;
+}
+
+app-home, app-reports, app-horas-extras, app-requests, app-setting, app-users, app-list-horarios {
+    display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+    app-home, app-reports, app-horas-extras, app-requests, app-setting, app-users, app-list-horarios {
+        display: block!important;
+    }
+  }
+
+@font-face {
+    font-family: Bebas;
+    src: url('./assets/font/bebas.ttf');
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* ESTILO DE POPUPS */
+
+.cdk-overlay-pane {
+    height: fit-content!important;
+    width: 100dvw!important;
+}
+
+.mat-mdc-dialog-container {
+    display: flex!important;
+    height: fit-content!important;
+    margin: auto!important;
+}
+
+.mdc-dialog__container {
+    width: 75dvw!important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 2rem!important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.menubox::-webkit-scrollbar{
+    display: none;
+  }
