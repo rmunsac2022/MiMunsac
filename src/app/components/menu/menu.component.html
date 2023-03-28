@@ -1,0 +1,35 @@
+<div class="md:px-6 py-5 md:py-12 bg-black h-fit md:h-[100dvh] relative menu">
+    
+    <div class="md:px-2">
+
+      <img class="hidden md:flex w-fit mr-auto h-8 mx-auto" src="../../../assets/img/logomunsac.svg" alt="" (click)="this.router.navigate(['/home'])">
+      <div class="flex w-full md:hidden mx-auto px-6 items-center">
+        <img class="w-auto mr-auto h-5 md:h-10 flex" src="../../../assets/img/logomunsac.svg" alt="">
+        <button (click)="cerrarSesion()"
+        class="ml-auto w-fit flex rounded-full bg-transparent text-white text-left px-0 underline pt-1 pb-1 text-2xl">Cerrar sesión</button>  
+      </div>
+
+    </div>
+  
+
+    <div id="botonesmenu" style="scrollbar-width: none;" class="menubox ml-6 md:ml-0 flex overscroll-none overflow-x-scroll text-center md:grid gap-2 md:gap-3 mt-3 md:mt-10">
+      <button routerLink="/home" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 w-fit md:w-full rounded-full bg-negroclaro text-white text-left px-5 pt-1 pb-1 text-xl whitespace-nowrap">Home</button>
+      <button routerLink="/reports" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Reportes</button>        
+      <button routerLink="/requests" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Solicitudes</button>
+      <button routerLink="/history" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Historial diario</button>
+      <button routerLink="/hoursExtra" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Horas Extras</button>
+      <button routerLink="/profile" routerLinkActive="active"
+        class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Mi perfil</button>
+    </div>
+
+    <div class="hidden md:flex mt-auto w-full absolute bottom-0 left-0 right-0 px-6 pb-4">
+      <button (click)="cerrarSesion()"
+      class="rounded-full bg-transparent text-white text-left w-full px-0 underline pt-1 pb-1 text-2xl origin-left transition-all duration-200 hover:scale-95">Cerrar sesión</button>  
+    </div>
+   
+</div>
