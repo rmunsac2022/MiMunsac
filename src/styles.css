@@ -39,12 +39,12 @@ h3, p {
     font-family: geomanist !important;
 }
 
-app-home, app-reports, app-horas-extras, app-requests, app-setting, app-users, app-list-horarios {
+app-home, app-reports, app-hours-extra, app-requests, app-profile, app-history {
     display: flex;
 }
 
 @media only screen and (max-width: 600px) {
-    app-home, app-reports, app-horas-extras, app-requests, app-setting, app-users, app-list-horarios {
+    app-home, app-reports, app-hours-extra, app-requests, app-profile, app-history {
         display: block!important;
     }
   }
