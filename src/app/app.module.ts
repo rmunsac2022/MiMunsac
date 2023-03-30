@@ -30,6 +30,10 @@ import { HoursExtraComponent } from './pages/hours-extra/hours-extra.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { PopupCreateReportComponent } from './components/popup-create-report/popup-create-report.component';
+import { PopupTickQrComponent } from './components/popup-tick-qr/popup-tick-qr.component';
+import { PopupCreateRequestComponent } from './components/popup-create-request/popup-create-request.component';
+import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add-hourex.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,10 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MenuComponent,
     LoginComponent,
     SpinnerComponent,
+    PopupCreateReportComponent,
+    PopupTickQrComponent,
+    PopupCreateRequestComponent,
+    PopupAddHourexComponent,
   ],
   imports: [
     BrowserModule,
