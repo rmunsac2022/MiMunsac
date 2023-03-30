@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { RequestsComponent } from './pages/requests/requests.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { RequestPermitsComponent } from './components/request-permits/request-permits.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch:'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'requests', component: RequestsComponent},
   { path: 'history', component: HistoryComponent},
   { path: 'hoursExtra', component: HoursExtraComponent},
+  { path: 'permits', component: RequestPermitsComponent},
   { path: '**', redirectTo: 'login', pathMatch:'full'}
 ];
 
