@@ -12,4 +12,8 @@ export class ReportsService {
   getReports(): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes', ref => ref.orderBy('fecha', 'asc')).snapshotChanges();
   }
+
+  getReportByIdUser(idUsuario: any, attribute: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
+  }
 }

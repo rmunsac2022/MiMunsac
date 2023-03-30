@@ -14,7 +14,7 @@ export class HorasExtrasService {
   }
 
   getHoraExtraByMes(fecha: any, attribute: any): Observable<any> {
-    return this.firestore.collection('PersonalMunsac').doc('registros').collection('HorasExtras', ref => ref.where(attribute, '==', fecha)).valueChanges();
+    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where(attribute, '==', fecha)).valueChanges();
   }
 
   guardarHoraExtra(hora: any): Promise<any> {

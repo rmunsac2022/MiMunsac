@@ -39,29 +39,9 @@
                         <button routerLink="/hoursExtra" class="w-fit font-bebas text-black text-md shadow-min mt-1 md:mt-0 px-10 md:px-6 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">VER TODAS</button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-36 md:h-28 overflow-y-scroll">
-                        <div class="bg-white rounded-2xl p-2 pl-4  flex items-center">
+                        <div *ngFor="let horaExtra of listHorasExtras" class="bg-white rounded-2xl p-2 pl-4  flex items-center">
                             <span class="text-xl mr-2">⚠️</span>
-                            <h1 class="text-xl mr-auto">CONTENEDORES</h1>
-                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
-                        </div>
-                        <div class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                            <span class="text-xl mr-2">⚠️</span>
-                            <h1 class="text-xl mr-auto">CONTENEDORES</h1>
-                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
-                        </div>
-                        <div class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                            <span class="text-xl mr-2">⚠️</span>
-                            <h1 class="text-xl mr-auto">CONTENEDORES</h1>
-                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
-                        </div>
-                        <div class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                            <span class="text-xl mr-2">⚠️</span>
-                            <h1 class="text-xl mr-auto">CONTENEDORES</h1>
-                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
-                        </div>
-                        <div class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                            <span class="text-xl mr-2">⚠️</span>
-                            <h1 class="text-xl mr-auto">CONTENEDORES</h1>
+                            <h1 class="text-xl mr-auto">{{horaExtra.nombreProyecto}}</h1>
                             <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
                         </div>
                     </div>

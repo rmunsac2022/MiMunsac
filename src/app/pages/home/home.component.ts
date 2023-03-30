@@ -50,23 +50,27 @@ export class HomeComponent implements OnInit{
   getUser(email: any){
     const sub = this.authService.getUserByEmail(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      console.log(user);
       this.user = user[0];
       var partesNombre = this.user.nombre.split(" ");
       var primerNombre = partesNombre[0];
       var primerApellido = partesNombre[2];
       this.user.name = primerNombre;
       this.user.apellido = primerApellido;
-      this.loading = false;
+
+      var anio = new Date().getFullYear();
+      var mes = new Date().getMonth() + 1;
+      var fecha = mes+"."+anio
+      this.getHoraExtra(fecha);
     });
   }
 
-  /*getHoraExtra(){
-    const sub = this.horaExtraService.getHoraExtraByMes().subscribe((horasExtras)=>{
-
-    })
-    //this.loading = false;
-  }*/
+  getHoraExtra(fecha: string){
+    const sub = this.horaExtraService.getHoraExtraByMes(fecha, 'mesAnio').subscribe((horasExtras)=>{
+      sub.unsubscribe();
+      this.listHorasExtras = horasExtras;
+    });
+    this.loading = false;
+  }
 
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {

@@ -24,6 +24,10 @@ export class AuthService {
     return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', email)).valueChanges();
   }
 
+  getUserByEmailWithId(idUsuario: any, attribute: any){
+    return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', idUsuario)).snapshotChanges();
+  }
+
   getUserById(id: any): Observable<any> {
     return this.firestore.collection('PersonalMunsac').doc(id).valueChanges();
   }

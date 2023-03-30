@@ -1,10 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
-import { FirebaseCodeErrorService } from 'src/app/services/firebase-code-error.service';
 
 
 @Component({
@@ -13,41 +11,35 @@ import { FirebaseCodeErrorService } from 'src/app/services/firebase-code-error.s
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  uObject: any;
-  isContent: boolean = false;
-  registrarUser: FormGroup;
-  cambioBoton: boolean = false;
-  isOpened: boolean = false;
-  message: string = '';
-  emoji: any;
-  listUser: User[] = [];
-  index: any
+  user: User = new User;
+  loading: boolean = true;
 
   constructor(
-    private fb: FormBuilder,
-    private toastr: ToastrService,
-    private _userService: AuthService,
-    private firebaseError: FirebaseCodeErrorService,
-    private auth: AuthService,
     private afAuth: AngularFireAuth,
-  ) { 
+    private router: Router,
+    private authService: AuthService,
+  ) { }
 
-    this.registrarUser = this.fb.group({
-      nombre: ['', Validators.required],
-      rut: ['', Validators.required],
-      cargo: ['', Validators.required],
-      telefono: ['', Validators.required],
-      correo: ['', Validators.required],
-      emoji: ['', Validators.required],
-      idDireccion: ['', Validators.required],
-      password: ['', Validators.required],
-      sistema: ['']
+  ngOnInit(): void {
+    this.afAuth.onAuthStateChanged((user) => {
+      if (!user) {
+        this.router.navigate(['/login']);
+      }
+      this.getUser(user!.email)
     });
   }
 
-  ngOnInit(): void {
-    
-    
+  getUser(email: any){
+    const sub = this.authService.getUserByEmail(email, 'correo').subscribe((user)=> {
+      sub.unsubscribe();
+      this.user = user[0];
+      var partesNombre = this.user.nombre!.split(" ");
+      var primerNombre = partesNombre[0];
+      var primerApellido = partesNombre[2];
+      this.user.name = primerNombre;
+      this.user.apellido = primerApellido;
+      console.log(this.user);
+      this.loading = false;
+    });
   }
-
 }
