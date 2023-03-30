@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupTickQrComponent } from 'src/app/components/popup-tick-qr/popup-tick-qr.component';
+import { PopupCreateReportComponent } from 'src/app/components/popup-create-report/popup-create-report.component';
 
 @Component({
   selector: 'app-home',
@@ -50,25 +51,33 @@ export class HomeComponent implements OnInit{
     });
   }
 
-  marcarEntrada(){
+  marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: {
-        name: 'asdas'
-      }
+      data: 'asd'
     });
 
     dialogRef.afterClosed().subscribe(result => {
+
     });
   }
 
   marcarSalida(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: {
-        name: 'asdasd'
-      }
+      data: 'asd'
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  crearReporte(){
+    const dialogRef = this.dialog.open(PopupCreateReportComponent, {
+      data: 'asd'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
     });
   }
 }

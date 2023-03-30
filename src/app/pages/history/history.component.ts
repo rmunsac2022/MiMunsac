@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupTickQrComponent } from 'src/app/components/popup-tick-qr/popup-tick-qr.component';
 
 @Component({
   selector: 'app-history',
@@ -8,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 export class HistoryComponent implements OnInit {
   isLlegada : boolean = true;
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  marcarEntrada() {
+    const dialogRef = this.dialog.open(PopupTickQrComponent, {
+      data: 'asd'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  marcarSalida(){
+    const dialogRef = this.dialog.open(PopupTickQrComponent, {
+      data: 'asd'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
 }

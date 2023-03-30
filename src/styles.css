@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@ctrl/ngx-emoji-mart/picker';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~@ctrl/ngx-emoji-mart/picker';
 
 html {
     background-color: white;
