@@ -10,8 +10,11 @@ export class HorasExtrasService {
   constructor(private firestore: AngularFirestore) { }
 
   getHoraExtra(): Observable<any> {
-    return this.firestore.collection('MunsacControl').doc('registros')
-    .collection('HorasExtras',ref => ref.orderBy('fecha', 'asc')).snapshotChanges();
+    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras',ref => ref.orderBy('fecha', 'asc')).snapshotChanges();
+  }
+
+  getHoraExtraByMes(fecha: any, attribute: any): Observable<any> {
+    return this.firestore.collection('PersonalMunsac').doc('registros').collection('HorasExtras', ref => ref.where(attribute, '==', fecha)).valueChanges();
   }
 
   guardarHoraExtra(hora: any): Promise<any> {
