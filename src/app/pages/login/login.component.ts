@@ -14,6 +14,7 @@ export class LoginComponent {
   login: FormGroup;
   userLogged: any;
   rutNotFound: boolean = true;
+  permitionsGranted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,11 @@ export class LoginComponent {
 
     this.afAuth.onAuthStateChanged((user) => {
       if (user) {
-        this.router.navigate(['/home']);
+        if(!this.permitionsGranted){
+          this.router.navigate(['/permits']);
+        } else{
+          this.router.navigate(['/home']);
+        }
       }
     });
 
@@ -44,4 +49,6 @@ export class LoginComponent {
     this.auth.logIn(email, password);
     this.login.reset();
   }
+
+  
 }

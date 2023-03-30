@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { provideAuth,getAuth } from '@angular/fire/auth';
+import { LottieModule } from 'ngx-lottie';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,12 @@ import { PopupCreateReportComponent } from './components/popup-create-report/pop
 import { PopupTickQrComponent } from './components/popup-tick-qr/popup-tick-qr.component';
 import { PopupCreateRequestComponent } from './components/popup-create-request/popup-create-request.component';
 import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add-hourex.component';
+import { RequestPermitsComponent } from './components/request-permits/request-permits.component';
+import player from 'lottie-web';
+
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -52,6 +59,7 @@ import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add
     PopupTickQrComponent,
     PopupCreateRequestComponent,
     PopupAddHourexComponent,
+    RequestPermitsComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +71,8 @@ import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add
     AngularFirestoreModule,
     BrowserAnimationsModule,
     QRCodeModule,
+    LottieModule.forRoot({ player: playerFactory }),
+  
     NgxEmojiPickerModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
