@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -36,6 +36,7 @@ import { PopupCreateRequestComponent } from './components/popup-create-request/p
 import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add-hourex.component';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     HomeComponent,
