@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PopupCreateRequestComponent } from 'src/app/components/popup-create-request/popup-create-request.component';
 import { Requests } from 'src/app/models/Request';
 import { AuthService } from 'src/app/services/auth.service';
+import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { RequestService } from 'src/app/services/request.service';
 
 @Component({
@@ -76,12 +77,16 @@ export class RequestsComponent implements OnInit {
     private authService: AuthService,
     private requestService: RequestService,
     private datePipe: DatePipe,
+    private permissionService: PermissionRequestService
   ) { }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
+      }
+      if (user){
+        this.permissionService.confirmPermitionsRequest();
       }
       this.getUser(user!.email)
     });

@@ -68,14 +68,14 @@
                 <div class="gap-4">
                     <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Dirgido por</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
-                        <p class="text-sm">{{user.idDireccion}}</p>
+                        <p class="text-sm">{{encargado.name}} {{encargado.apellido}}</p>
                     </div>
                 </div>
     
                 <div class="gap-4">
                     <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Contraseña</h1>
                     <div class="shadow-min flex py-2 rounded-xl bg-white pl-2 text-sm w-full">
-                        <button class="font-bebas flex text-black text-sm mr-auto shadow-xxs px-10 py-1 bg-verdemun whitespace-nowrap rounded-md hover:shadow-none transition-all duration-200 hover:scale-95">CAMBIAR MI CONTRASEÑA</button>
+                        <button (click)="recuperarPassword(user.correo)" class="font-bebas flex text-black text-sm mr-auto shadow-xxs px-10 py-1 bg-verdemun whitespace-nowrap rounded-md hover:shadow-none transition-all duration-200 hover:scale-95">CAMBIAR MI CONTRASEÑA</button>
                     </div>
                 </div>
     

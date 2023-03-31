@@ -40,9 +40,9 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-36 md:h-28 overflow-y-scroll">
                         <div *ngFor="let horaExtra of listHorasExtras" class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                            <span class="text-xl mr-2">⚠️</span>
+                            <span class="text-xl mr-2">{{horaExtra.emoji}}</span>
                             <h1 class="text-xl mr-auto">{{horaExtra.nombreProyecto}}</h1>
-                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+2HR</h1>
+                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+{{horaExtra.duracion}}HR</h1>
                         </div>
                     </div>
                 </div>

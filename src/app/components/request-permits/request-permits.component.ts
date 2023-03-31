@@ -3,6 +3,8 @@ import { LottieModule } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { PermissionRequestService } from 'src/app/services/permission-request.service';
 
 @Component({
   selector: 'app-request-permits',
@@ -42,9 +44,17 @@ export class RequestPermitsComponent implements OnInit {
 
   
   constructor(
-    public router: Router) {}
+    public router: Router,
+    private afAuth: AngularFireAuth,
+    private permissionService: PermissionRequestService
+    ) {}
 
   ngOnInit(): void {
+    this.afAuth.onAuthStateChanged((user) => {
+      if(user){
+        this.permissionService.confirmPermitions();
+      }
+    });
   }
 
 

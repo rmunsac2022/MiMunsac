@@ -37,6 +37,7 @@ import { PopupCreateRequestComponent } from './components/popup-create-request/p
 import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add-hourex.component';
 import { RequestPermitsComponent } from './components/request-permits/request-permits.component';
 import player from 'lottie-web';
+import * as lottie from 'lottie-web';
 
 export function playerFactory() {
   return player;
@@ -72,7 +73,6 @@ export function playerFactory() {
     BrowserAnimationsModule,
     QRCodeModule,
     LottieModule.forRoot({ player: playerFactory }),
-  
     NgxEmojiPickerModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),

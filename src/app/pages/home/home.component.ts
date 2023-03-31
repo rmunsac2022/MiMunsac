@@ -7,6 +7,7 @@ import { PopupCreateReportComponent } from 'src/app/components/popup-create-repo
 import { AuthService } from 'src/app/services/auth.service';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
+import { PermissionRequestService } from 'src/app/services/permission-request.service';
 
 @Component({
   selector: 'app-home',
@@ -30,13 +31,17 @@ export class HomeComponent implements OnInit{
     private afAuth: AngularFireAuth,
     private dialog: MatDialog,
     private authService: AuthService,
-    private horaExtraService: HorasExtrasService
+    private horaExtraService: HorasExtrasService,
+    private permissionService: PermissionRequestService
   ) {}
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
-      if (!user) {
+      if (!user){
         this.router.navigate(['/login']);
+      }
+      if (user){
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });
@@ -67,6 +72,16 @@ export class HomeComponent implements OnInit{
   getHoraExtra(fecha: string){
     const sub = this.horaExtraService.getHoraExtraByMes(fecha, 'mesAnio').subscribe((horasExtras)=>{
       sub.unsubscribe();
+      horasExtras.forEach((element: HoraExtra)=>{
+        const fechaHoraDesde = element.cantidad!.desde;
+        const fechaHoraHasta = element.cantidad!.hasta;
+
+        const fechaDesde = new Date(fechaHoraDesde);
+        const fechaHasta = new Date(fechaHoraHasta);
+        const diferenciaMilisegundos = fechaHasta.getTime() - fechaDesde.getTime();
+        const diferenciaHoras = Math.round(diferenciaMilisegundos / (1000 * 60 * 60));
+        element.duracion = diferenciaHoras
+      });
       this.listHorasExtras = horasExtras;
     });
     this.loading = false;
@@ -109,8 +124,8 @@ export class HomeComponent implements OnInit{
         const latitude = position.coords.latitude;
         console.log(latitude+", "+longitude);
       });
-  } else {
-     console.log("No support for geolocation")
+    } else {
+      console.log("No support for geolocation")
+    }
   }
-}
 }

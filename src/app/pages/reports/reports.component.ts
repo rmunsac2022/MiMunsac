@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReportsService } from 'src/app/services/reports.service';
 import { Storage, ref, listAll, getDownloadURL } from '@angular/fire/storage';
 import { ToastrService } from 'ngx-toastr';
+import { PermissionRequestService } from 'src/app/services/permission-request.service';
 
 @Component({
   selector: 'app-reports',
@@ -78,13 +79,17 @@ export class ReportsComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private authService: AuthService,
     private storage: Storage,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private permissionService: PermissionRequestService
   ) { }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
+      }
+      if (user){
+        this.permissionService.confirmPermitionsReport();
       }
       this.getUser(user!.email)
     });
@@ -166,10 +171,8 @@ export class ReportsComponent implements OnInit {
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
       this.toastr.info('No se encontraron reportes')
-      console.log('test1')
     }else{
       this.toastr.success('Reportes encontrados')
-      console.log('test2')
     }
     this.loading = false;
   }
