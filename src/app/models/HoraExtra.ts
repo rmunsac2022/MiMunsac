@@ -21,4 +21,5 @@ export class HoraExtra {
     desde?: string;
     hasta?: string;
     nombreRut?: string;
+    duracion?: number;
 }

@@ -27,43 +27,43 @@
                         <h1 class="text-4xl">HISTORIAL</h1>
                     </div>
                     <div class="md:mt-0 flex gap-3 order-last md:-order-none">
-                        <form class="flex gap-3 items-center">
+                        <form class="flex gap-3 items-center" (ngSubmit)="filtrar()">
                             <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="mesSelected" name="filtrar">
-                                <!--<option
+                                <option
                                     *ngFor="let mes of meses"
                                     [selected]="mes.nombre === selectMes.nombre"
                                     [value]="mes.valor">
                                     {{ mes.nombre }}
-                                    </option>-->
+                                    </option>
                               </select>
                             <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="anioSelected" name="filtrar">
-                                <!--<option
+                                <option
                                     *ngFor="let anio of anios"
                                     [selected]="anio === selectAnio"
                                     [value]="anio">
                                     {{ anio }}
-                                    </option>-->
+                                    </option>
                               </select>
                             <button class="font-bebas text-black text-xl shadow-xxs px-6 py-1 bg-verdemun rounded-xl hover:shadow-none transition-all duration-200 hover:scale-95" type="submit">Filtrar</button>
                         </form>
         
                     </div>
                     <div class="ml-auto md:flex gap-3">
-                        <button  class="w-full md:w-fit font-bebas text-white text-xl shadow-xxs px-6 py-2 md:py-1 bg-black whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">DESCARGAR RESUMEN</button>
+                        <button (click)="descargarExcel()" class="w-full md:w-fit font-bebas text-white text-xl shadow-xxs px-6 py-2 md:py-1 bg-black whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">DESCARGAR RESUMEN</button>
                     </div>
                 </div>
 
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5"> 
                     <!--ITEM PROYECTOS-->
-                    <div class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
+                    <div *ngFor="let horaExtra of listFiltrada;" class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
                         <div class="bg-black md:mr-4 px-1 md:w-10 md:h-full py-2 md:py-0 relative justify-center flex items-center">
                             <p class="md:rotate-90 text-white w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-bebas whitespace-nowrap">10 AM</p>
                         </div>
                         <div class="px-6 md:px-0 py-5 md:flex w-full relative gap-5">
                             <div class="w-full mr-auto relative">
-                                <h2 class="text-2xl font-bebas mb-0 text-black">TEST</h2>
-                                <p class="text-sm mb-1 text-black">12 participantes</p>
+                                <h2 class="text-2xl font-bebas mb-0 text-black">{{horaExtra.nombreProyecto}}</h2>
+                                <p class="text-sm mb-1 text-black">{{horaExtra.empleados.length}} participantes</p>
                             </div>
                             <div class="h-full items-center flex mt-3 md:mt-0">
                                 <button class="w-full md:w-fit font-bebas mx-auto text-xl shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">VER DETALLE</button>
@@ -72,10 +72,10 @@
                     </div>
                 </div>
                     <!--FIN ITEM PROYECTOS-->
-                    
 
                 <!--<app-spinner class="flex justify-center"></app-spinner>-->
-                <h1 class="text-2xl">No hay horas extras</h1>
+                <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
+                <h1 *ngIf="listVacia" class="text-2xl">No hay reportes</h1>
             </section>
 
     </div>

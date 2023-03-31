@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { User } from '../models/User';
 import { FirebaseCodeErrorService } from './firebase-code-error.service';
+import { PermissionRequestService } from './permission-request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     private toastr: ToastrService,
     public router: Router,
-    private firebaseError: FirebaseCodeErrorService
+    private firebaseError: FirebaseCodeErrorService,
+    private permissionService: PermissionRequestService
   ) { }
 
   getUserByEmail(email: any, attribute: any): Observable<any> {
@@ -68,8 +70,8 @@ export class AuthService {
           audio.src = "../../../assets/audio/beep.mp3";
           audio.load();
           audio.play();
-          this.router.navigate(['/splash']);
-          this.toastr.info('Ha ingresado exitosamente', 'Bienvenido');
+          this.permissionService.confirmPermitions();
+          this.toastr.success('Ha ingresado exitosamente', 'Bienvenido');
         }
       })
       .catch((error) => {

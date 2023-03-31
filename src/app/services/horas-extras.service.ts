@@ -24,4 +24,8 @@ export class HorasExtrasService {
   editHoraExtra(id: string, hora: any): Promise<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras').doc(id).update(hora);
   }
+
+  getHoraExtraByIdUser(idUsuario: any, attribute: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where('empleados', 'array-contains', idUsuario)).valueChanges();
+  }
 }
