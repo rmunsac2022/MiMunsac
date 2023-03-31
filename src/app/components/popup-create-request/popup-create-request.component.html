@@ -1,1 +1,69 @@
-<p>popup-create-request works!</p>
+<section class="p-4">
+
+    <div class="bg-black rounded-3xl p-3 md:flex gap-5">
+        <div class="md:flex mr-auto gap-5 items-center">
+            <div class="flex md:hidden gap-5 items-center">
+                <div class="mr-auto bg-verdemun relative rounded-2xl items-center w-16 flex justify-center shadow-in aspect-square">
+                    <span class="text-4xl pt-1 z-50">☝🏻</span>
+                    <span class="text-7xl absolute text-center top-0 bottom-0 left-0 right-0 z-10">+</span>
+                </div>
+                <img class="md:flex cursor-pointer hover:scale-90 transition-all duration-200 h-6 mr-3 w-auto" src="../../../assets/img/cerrar.svg" alt="">
+
+            </div>
+            <div class="hidden relative items-center w-16 md:flex justify-center shadow-in aspect-square">
+                <span class="text-6xl pt-1 z-50">☝🏻</span>
+            </div>
+            <div>
+
+                <h1 class="mt-3 md:mt-0 flex text-4xl font-bebas text-white">uObject.name uObject.apellido</h1>
+                <p class="text-md -mt-1 text-white">this.fecha</p>
+            </div>
+        </div>
+
+
+        <div class="mt-2 md:mt-0 flex gap-3 items-center md:justify-end">
+            <img class="hidden md:flex cursor-pointer hover:scale-90 transition-all duration-200 h-6 mr-3 w-auto" src="../../../assets/img/cerrar.svg" alt="">
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 px-0 md:px-10 py-6">
+
+        <div class="w-full">
+            <h1 class="text-2xl mb-2">DESCRIPCIÓN</h1>
+            <textarea class="rounded-2xl w-full bg-white px-5 py-2 mr-2 flex h-fit text-sm shadow-xxs" placeholder="Ingresa la descripción" type="text" rows="7" cols="50" formControlName="descripcion"> </textarea>
+            
+
+        </div>
+
+
+        <div class="w-full h-full">
+
+            <h1 class="text-2xl mb-2">RANGO SOLICITADO</h1>
+            <div class="bg-verdemunclaro rounded-4xl p-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="w-full">
+                        <p>Desde</p>
+                        <h1 class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"></h1>
+                    </div>
+                    <div class="w-full">
+                        <p>Hasta</p>
+                        <h1 class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"></h1>
+                    </div>
+                </div>
+
+                <input formControlName="idDocumento" multiple
+                class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:bg-verdemun file:text-black file:cursor-pointer file:transition-all file:duration-200 file:font-bebas hover:file:scale-95 hover:file:bg-black  hover:file:text-white rounded-2xl bg-white p-3 mt-5 flex h-fit shadow-xxs text-sm text-center font-bebas placeholder:font-bebas place-content-center" placeholder="SELECCIONAR" type="file">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:flex gap-3 md:gap-5 justify-center">
+        <button  class="font-bebas justify-center flex my-5 text-black text-2xl md:text-xl shadow-xxs px-6 py-3 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95" >ENVIAR SOLICITUD</button>    
+    </div>
+
+
+</section>

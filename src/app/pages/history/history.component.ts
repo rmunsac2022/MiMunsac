@@ -19,7 +19,8 @@ export class HistoryComponent implements OnInit {
 
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: 'asd'
+      data: 'asd',
+      maxWidth:  "40vw",
     });
 
     dialogRef.afterClosed().subscribe(result => {
