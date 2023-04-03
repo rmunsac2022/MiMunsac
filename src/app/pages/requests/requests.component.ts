@@ -9,6 +9,7 @@ import { Requests } from 'src/app/models/Request';
 import { AuthService } from 'src/app/services/auth.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { RequestService } from 'src/app/services/request.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-requests',
@@ -69,6 +70,7 @@ export class RequestsComponent implements OnInit {
   user: any;
   hora: any;
   id: string | undefined;
+  isMobile : boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -78,8 +80,11 @@ export class RequestsComponent implements OnInit {
     private authService: AuthService,
     private requestService: RequestService,
     private datePipe: DatePipe,
-    private permissionService: PermissionRequestService
-  ) { }
+    private permissionService: PermissionRequestService,
+    private deviceService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceService.isMobile();
+   }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -98,7 +103,8 @@ export class RequestsComponent implements OnInit {
 
   crearRequest(){
     const dialogRef = this.dialog.open(PopupCreateRequestComponent, {
-      data: ''
+      data: '',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.listFiltrada = [];
