@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PopupTickQrComponent } from 'src/app/components/popup-tick-qr/popup-tick-qr.component';
-import { HoraExtra } from 'src/app/models/HoraExtra';
+import { Horario } from 'src/app/models/Horario';
 import { AuthService } from 'src/app/services/auth.service';
 import { HorariosService } from 'src/app/services/horarios.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
@@ -59,7 +59,6 @@ export class HistoryComponent implements OnInit {
   anios: string[] = ['2023', '2024', '2025', '2026', '2027', '2028'];
   mesSelected: any;
   anioSelected: any;
-  hora: any;
   fecha: string | undefined;
   mes: any;
   selectAnio: any;
@@ -67,8 +66,8 @@ export class HistoryComponent implements OnInit {
   user: any;
   listVacia: boolean = false;
   loading: boolean = true;
-  listHoraExtra: HoraExtra[] = [];
-  listFiltrada: HoraExtra[] = [];
+  listHorario: Horario[] = [];
+  listFiltrada: Horario[] = [];
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -87,7 +86,7 @@ export class HistoryComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsReport();
+        this.permissionService.confirmPermitionsHistory();
       }
       this.getUser(user!.email)
     });
@@ -120,36 +119,25 @@ export class HistoryComponent implements OnInit {
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
-      this.getReportsByUser(this.user.id);
+      this.getHoraExtraByUser(this.user.id);
     });
   }
   
-  getReportsByUser(id: string){
+  getHoraExtraByUser(id: string){
     this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
-      this.listHoraExtra = [];
+      this.listHorario = [];
       doc.forEach((element: any) => { 
-        var reporte = {
-          nombre: '',
+        var horaExtra = {
           fecha: element.fecha,
-          descripcion: element.descripcion,
-          hora: '',
-          horario: '',
           fechaString: element.fechaString,
+          llegada: element.horario.llegada,
+          salida: element.horario.salida,
+          idUsuario: element.idUsuario
         }
-        var hora = reporte.fecha.seconds;          
-        const fechaHora = new Date();
-        fechaHora.setTime(hora * 1000);
-        this.hora = this.datePipe.transform(fechaHora, 'HH');   
-        reporte.hora = this.hora; 
-        
-        if(this.hora <= 11){
-          reporte.horario = 'AM'
-        }else{
-          reporte.horario = 'PM'
-        }
-        this.listHoraExtra.push(reporte);  
+
+        this.listHorario.push(horaExtra);  
       });
-      if(this.listHoraExtra.length<=0){
+      if(this.listHorario.length<=0){
         this.listVacia = true;
       }
       this.filtrar();
@@ -163,7 +151,7 @@ export class HistoryComponent implements OnInit {
     this.mesSelected = (<HTMLInputElement>document.getElementById('mesSelected')).value;
     this.fecha = this.mesSelected+"."+this.anioSelected;
 
-    this.listHoraExtra.forEach((element)=>{
+    this.listHorario.forEach((element)=>{
       var partesFecha = element.fechaString!.split(".");
 
       var mes = partesFecha[1];
@@ -176,11 +164,31 @@ export class HistoryComponent implements OnInit {
     });
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontraron reportes')
+      this.toastr.info('No se encontraron horas extras')
     }else{
-      this.toastr.success('Reportes encontrados')
+      this.toastr.success('Horas extras encontrados')
     }
     this.loading = false;
+  }
+
+  filtrarLlegada(estado: boolean){
+    this.isLlegada = estado;
+    this.listFiltrada = [];
+    this.listHorario.forEach((element)=>{
+      element.hora = element.horario?.llegada;
+      element.accion = 'LLEGADA';
+      this.listFiltrada.push(element);
+    });
+  }
+
+  filtrarSalida(estado: boolean){
+    this.isLlegada = estado;
+    this.listFiltrada = [];
+    this.listHorario.forEach((element)=>{
+      element.hora = element.horario?.salida;
+      element.accion = 'SALIDA';
+      this.listFiltrada.push(element);
+    });
   }
 
 }

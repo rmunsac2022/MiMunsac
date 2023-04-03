@@ -10,6 +10,6 @@ export class HorariosService {
   constructor(private firestore: AngularFirestore) { }
 
   getHorarioByIdUser(idUsuario: any, attribute: any): Observable<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
+    return this.firestore.collection('MunsacControl').doc('registros').collection('Horarios', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
   }
 }

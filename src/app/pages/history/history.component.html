@@ -53,29 +53,30 @@
                     <div class="ml-auto md:flex gap-3">
                         <form class="flex gap-3 items-center">
                             <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="mesSelected" name="filtrar">
-                                <!--<option
+                                <option
                                     *ngFor="let mes of meses"
                                     [selected]="mes.nombre === selectMes.nombre"
                                     [value]="mes.valor">
                                     {{ mes.nombre }}
-                                    </option>-->
+                                    </option>
                               </select>
                             <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="anioSelected" name="filtrar">
-                                <!--<option
+                                <option
                                     *ngFor="let anio of anios"
                                     [selected]="anio === selectAnio"
                                     [value]="anio">
                                     {{ anio }}
-                                    </option>-->
-                              </select>
-                            <button class="font-bebas text-black text-xl shadow-xxs px-6 py-1 bg-verdemun rounded-xl hover:shadow-none transition-all duration-200 hover:scale-95" type="submit">Filtrar</button>
-                        </form>                    </div>
+                                </option>
+                            </select>
+                            <button (click)="filtrar()" class="font-bebas text-black text-xl shadow-xxs px-6 py-1 bg-verdemun rounded-xl hover:shadow-none transition-all duration-200 hover:scale-95" type="submit">Filtrar</button>
+                        </form>                    
+                    </div>
                 </div>
 
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5"> 
                     <!--ITEM REGISTRO-->
-                    <div class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
+                    <div *ngFor="let horaExtra of listFiltrada;" class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
                         <div class="bg-black md:mr-4 px-1 md:w-10 md:h-full py-2 md:py-0 relative justify-center flex items-center">
                             <p class="md:rotate-90 text-white w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-bebas whitespace-nowrap">10 AM</p>
                         </div>
@@ -94,7 +95,8 @@
                     
 
                 <!--<app-spinner class="flex justify-center"></app-spinner>-->
-                <h1 class="text-2xl">No hay registros</h1>
+                <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
+                <h1 *ngIf="listVacia" class="text-2xl">No hay reportes</h1>
             </section>
 
     </div>
