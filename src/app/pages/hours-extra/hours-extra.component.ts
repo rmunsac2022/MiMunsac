@@ -11,6 +11,7 @@ import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import * as XLSX from 'xlsx';
 
+
 @Component({
   selector: 'app-hours-extra',
   templateUrl: './hours-extra.component.html',
