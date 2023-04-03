@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PopupAddHourexComponent } from 'src/app/components/popup-add-hourex/popup-add-hourex.component';
+import { PopupTickQrComponent } from 'src/app/components/popup-tick-qr/popup-tick-qr.component';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { AuthService } from 'src/app/services/auth.service';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
@@ -167,8 +168,9 @@ export class HoursExtraComponent implements OnInit {
 
 
   addHoraExtra(){
-    const dialogRef = this.dialog.open(PopupAddHourexComponent, {
-      data: ''
+    const dialogRef = this.dialog.open(PopupTickQrComponent, {
+      data: 'horaextra',
+      maxWidth:  "40vw",
     });
     dialogRef.afterClosed().subscribe(result => {
 
