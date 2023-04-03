@@ -38,7 +38,7 @@
                     <div class="flex gap-3 mb-3 md:mb-0 mr-6 items-center">
                         <h1 class="text-4xl">HISTORIAL</h1>
                     </div>
-                    <div class="md:mt-0 flex gap-3 items-center">
+                    <div class="md:mt-0 mb-3 md:mb-0 flex gap-3 items-center">
                         
                         <div class="grid grid-cols-2 gap-0 bg-white rounded-full p-1 h-fit ">
                             <div (click)="filtrarLlegada(this.isLlegada = true)" class="h-fit transition-all duration-200 hover:scale-95 cursor-pointer rounded-full shadow-xxs bg-verdemun px-6 py-1" [ngClass]="{'bg-verdemun': this.isLlegada, 'shadow-xxs': this.isLlegada}">
@@ -113,7 +113,7 @@
 
                 <!--<app-spinner class="flex justify-center"></app-spinner>-->
                 <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
-                <h1 *ngIf="listVacia" class="text-2xl">No hay reportes</h1>
+                <h1 *ngIf="listVacia" class="text-2xl">No hay registros</h1>
             </section>
 
     </div>

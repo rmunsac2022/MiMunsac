@@ -9,6 +9,7 @@ import { Horario } from 'src/app/models/Horario';
 import { AuthService } from 'src/app/services/auth.service';
 import { HorariosService } from 'src/app/services/horarios.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-history',
@@ -69,6 +70,7 @@ export class HistoryComponent implements OnInit {
   listHorario: Horario[] = [];
   listFiltrada: Horario[] = [];
   listActualizada: Horario[] = [];
+  isMobile : boolean;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -79,7 +81,11 @@ export class HistoryComponent implements OnInit {
     private toastr: ToastrService,
     private horaExtraService: HorariosService,
     private datePipe: DatePipe,
-  ) { }
+    private deviceService: DeviceDetectorService
+
+  ) { 
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -99,7 +105,7 @@ export class HistoryComponent implements OnInit {
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'entrada',
-      maxWidth:  "40vw",
+      maxWidth:  this.isMobile ? '90dvw' : '40vw',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -110,7 +116,7 @@ export class HistoryComponent implements OnInit {
   marcarSalida(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'salida',
-      maxWidth:  "40vw",
+      maxWidth:  this.isMobile ? '90dvw' : '40vw',
     });
 
     dialogRef.afterClosed().subscribe(result => {

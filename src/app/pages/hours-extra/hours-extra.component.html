@@ -26,7 +26,7 @@
                     <div  class="flex gap-3 mb-3 md:mb-0 mr-6">
                         <h1 class="text-4xl">HISTORIAL</h1>
                     </div>
-                    <div class="md:mt-0 flex gap-3 order-last md:-order-none">
+                    <div class="md:mt-0 flex gap-3 mb-3 md:mb-0 order-last md:-order-none">
                         <form class="flex gap-3 items-center" (ngSubmit)="filtrar()">
                             <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="mesSelected" name="filtrar">
                                 <option
@@ -75,7 +75,7 @@
 
                 <!--<app-spinner class="flex justify-center"></app-spinner>-->
                 <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
-                <h1 *ngIf="listVacia" class="text-2xl">No hay reportes</h1>
+                <h1 *ngIf="listVacia" class="text-2xl">No hay horas extras</h1>
             </section>
 
     </div>

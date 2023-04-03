@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit{
   marcarSalida(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'salida',
-      maxWidth:  "40vw",
+      maxWidth:  this.isMobile ? '90dvw' : '40vw',
       minWidth: this.isMobile ? '90dvw' : 'auto'
     });
 
