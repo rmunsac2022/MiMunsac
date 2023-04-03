@@ -23,20 +23,20 @@ export class PopupTickQrComponent implements OnInit {
   valuess: any;
   valorQr: any;
   hora: string = '';
-  mes: number | undefined;
-  dia: number | undefined;
-  anio: number | undefined;
+  mes: any;
+  dia: any;
+  anio: any;
   fechaString: string = '';
   user: any;
+  horaActual: any;
+  minutoActual: any;
   escaneoRealizado: boolean = false;
   horaExtraObj: HoraExtra = new HoraExtra;
   public qrCodeResult: NgxScannerQrcodeService[] = [];
   $subject: BehaviorSubject<ScannerQRCodeResult[]> = new BehaviorSubject<ScannerQRCodeResult[]>([]);
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
 
-
   public config: ScannerQRCodeConfig = {
-    deviceActive: 1,
     isBeep: false,
     constraints: { 
       audio: false,
@@ -59,14 +59,14 @@ export class PopupTickQrComponent implements OnInit {
     });
     this.valorQr = this.data;
     const ahora = new Date();
-    const horaActual = ahora.getHours();
-    const minutoActual = ahora.getMinutes();
-    this.hora = horaActual+":"+minutoActual;
+    this.horaActual = ahora.getHours();
+    this.minutoActual = ahora.getMinutes();
+    this.hora = this.horaActual+":"+this.minutoActual;
 
-    this.mes = new Date().getMonth();
+    this.mes = new Date().getMonth()+1;
     this.dia = new Date().getDate();
     this.anio = new Date().getFullYear();
-    this.fechaString = this.dia+"."+(this.mes+1)+"."+this.anio;
+    this.fechaString = this.dia+"."+this.mes+"."+this.anio;
   }
 
   getUser(email: any){
@@ -84,8 +84,29 @@ export class PopupTickQrComponent implements OnInit {
   }
 
   entrada($subject : any) {
-    //Todo: Validar que el id escaneada sea valida y despues ejecutar el siguiente código
-    if (!this.escaneoRealizado){
+    var qr = $subject[0].value;
+    const decodedString = atob(qr);
+    console.log(decodedString);
+
+    var partes = decodedString.split("/");
+    var fecha = partes[0];
+    var text = partes[1].length;
+    var munsac = partes[2];
+
+    var partesFecha = fecha.split(":");
+    var dia = partesFecha[0];
+    var mes = partesFecha[1];
+    var anio = partesFecha[2];
+    var hora = partesFecha[3];
+    var minuto = partesFecha[4];
+
+    this.mes = this.mes.toString();
+    this.dia = this.dia.toString();
+    this.anio = this.anio.toString();
+    this.horaActual = this.horaActual.toString();
+    this.minutoActual = this.minutoActual.toString();
+
+    if (this.escaneoRealizado === false && dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
       this.escaneoRealizado = true;
       const ahora = new Date();
       const horaActual = ahora.getHours();
@@ -105,6 +126,7 @@ export class PopupTickQrComponent implements OnInit {
       };
       this.horarioService.generarLlegada(LLEGADA).then(
         () => {
+          console.log('Llegada ingresada')
           const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
             data: ''
           });
@@ -116,11 +138,34 @@ export class PopupTickQrComponent implements OnInit {
           console.log(error);
         }
       );
+    }else{
+      console.log('Codigo no valido')
     }
   }
   
   salida($subject : any) {
-    if (!this.escaneoRealizado){
+    var qr = $subject[0].value;
+    const decodedString = atob(qr);
+
+    var partes = decodedString.split("/");
+    var fecha = partes[0];
+    var text = partes[1].length;
+    var munsac = partes[2];
+
+    var partesFecha = fecha.split(":");
+    var dia = partesFecha[0];
+    var mes = partesFecha[1];
+    var anio = partesFecha[2];
+    var hora = partesFecha[3];
+    var minuto = partesFecha[4];
+
+    this.mes = this.mes.toString();
+    this.dia = this.dia.toString();
+    this.anio = this.anio.toString();
+    this.horaActual = this.horaActual.toString();
+    this.minutoActual = this.minutoActual.toString();
+
+    if(this.escaneoRealizado === false && dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
       this.escaneoRealizado = true;
       const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
         sub.unsubscribe();
@@ -135,6 +180,7 @@ export class PopupTickQrComponent implements OnInit {
         };
         this.horarioService.generarSalida(id, cambios).then(
           () => {
+            console.log('Salida ingresada')
             const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
               data: ''
             });
