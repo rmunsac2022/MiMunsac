@@ -15,7 +15,7 @@ export class Requests {
     nombre?: string;
     hora?: string;
     horario?: string;
-    emoji: any;
+    emoji?: string;
     name?: string;
     apellido?: string;
     correo?: string;

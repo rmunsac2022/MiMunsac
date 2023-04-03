@@ -70,6 +70,7 @@ export class ReportsComponent implements OnInit {
   selectMes: any;
   user: any;
   documentos: string[] = [];
+  id: string | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -103,6 +104,8 @@ export class ReportsComponent implements OnInit {
       data: ''
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.listFiltrada = [];
+      this.getReportsByUser(this.id!);
     });
   }
 
@@ -110,6 +113,7 @@ export class ReportsComponent implements OnInit {
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
+      this.id = this.user.id;
       this.getReportsByUser(this.user.id);
     });
   }
@@ -170,9 +174,9 @@ export class ReportsComponent implements OnInit {
     });
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontraron reportes')
+      //this.toastr.info('No se encontraron reportes')
     }else{
-      this.toastr.success('Reportes encontrados')
+      //this.toastr.success('Reportes encontrados')
     }
     this.loading = false;
   }

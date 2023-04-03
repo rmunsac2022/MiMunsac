@@ -68,6 +68,7 @@ export class HistoryComponent implements OnInit {
   loading: boolean = true;
   listHorario: Horario[] = [];
   listFiltrada: Horario[] = [];
+  listActualizada: Horario[] = [];
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -164,32 +165,38 @@ export class HistoryComponent implements OnInit {
       }
     });
     var estado = true;
-    if(this.listFiltrada.length<=0){
-      this.listVacia = true;
-      //this.toastr.info('No se encontraron horas extras')
-    }else{
-      //this.toastr.success('Horas extras encontrados')
-      this.filtrarLlegada(estado);
-    }
+    this.filtrarLlegada(estado);
     this.loading = false;
   }
 
   filtrarLlegada(estado: boolean){
     this.isLlegada = estado;
-    this.listFiltrada = [];
-    this.listHorario.forEach((element)=>{
+    this.listActualizada = [];
+    this.listFiltrada.forEach((element)=>{
       element.hora = element.llegada;
-      this.listFiltrada.push(element);
+      this.listActualizada.push(element);
     });
+    if(this.listActualizada.length<=0){
+      this.listVacia = true;
+      this.toastr.info('No se encontró historial')
+    }else{
+      this.toastr.success('Historial encontrado')
+    }
   }
 
   filtrarSalida(estado: boolean){
     this.isLlegada = estado;
-    this.listFiltrada = [];
-    this.listHorario.forEach((element)=>{
+    this.listActualizada = [];
+    this.listFiltrada.forEach((element)=>{
       element.hora = element.salida;
-      this.listFiltrada.push(element);
+      this.listActualizada.push(element);
     });
+    if(this.listActualizada.length<=0){
+      this.listVacia = true;
+      this.toastr.info('No se encontró historial')
+    }else{
+      this.toastr.success('Historial encontrados')
+    }
   }
 
 }

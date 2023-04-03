@@ -68,6 +68,7 @@ export class RequestsComponent implements OnInit {
   loading: boolean = true;
   user: any;
   hora: any;
+  id: string | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -100,7 +101,8 @@ export class RequestsComponent implements OnInit {
       data: ''
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.listFiltrada = [];
+      this.getRequestByUser(this.id!);
     });
   }
 
@@ -108,6 +110,7 @@ export class RequestsComponent implements OnInit {
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
+      this.id = this.user.id;
       this.getRequestByUser(this.user.id);
     });
   }
@@ -175,9 +178,9 @@ export class RequestsComponent implements OnInit {
     });
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontraron solicitudes')
+      //this.toastr.info('No se encontraron solicitudes')
     }else{
-      this.toastr.success('Solicitudes encontradas')
+      //this.toastr.success('Solicitudes encontradas')
     }
     this.loading = false;
   }
