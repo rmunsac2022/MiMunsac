@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +27,16 @@ export class HorasExtrasService {
 
   getHoraExtraByIdUser(idUsuario: any, attribute: any): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where('empleados', 'array-contains', idUsuario)).valueChanges();
+  }
+
+  getHoraExtraById(id: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras').doc(id).snapshotChanges()
+      .pipe(
+        map(changes => {
+          const data = changes.payload.data();
+          const id = changes.payload.id;
+          return { id, ...data };
+        })
+      );
   }
 }

@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit{
 
   crearReporte(){
     const dialogRef = this.dialog.open(PopupCreateReportComponent, {
-      data: 'asd'
+      data: ''
     });
 
     dialogRef.afterClosed().subscribe(result => {

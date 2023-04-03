@@ -54,8 +54,6 @@ export class PermissionRequestService {
     }
   }
 
-
-
   async confirmPermitionsRequest(){
     const locationPerm = await navigator.permissions.query({ name: 'geolocation' });
     const cameraPerm = await navigator.permissions.query({ name: 'camera' as PermissionName});
@@ -67,7 +65,7 @@ export class PermissionRequestService {
     }
   }
 
-  /*async confirmPermitionsHistory(){
+  async confirmPermitionsHistory(){
     const locationPerm = await navigator.permissions.query({ name: 'geolocation' });
     const cameraPerm = await navigator.permissions.query({ name: 'camera' as PermissionName});
     
@@ -76,5 +74,5 @@ export class PermissionRequestService {
     } else {
       this.router.navigate(['/permits']);
     }
-  }*/
+  }
 }

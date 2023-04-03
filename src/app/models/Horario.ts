@@ -7,4 +7,10 @@ export class Horario {
     idUsuario?: string;
     llegada?: string;
     salida?: string;
+    idReporteEntrada?: string[];
+    idReporteSalida?: string[];
+    horario?: {
+        llegada: string;
+        salida: string;
+    }
 }
