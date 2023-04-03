@@ -16,6 +16,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { LottieModule } from 'ngx-lottie';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -72,6 +74,7 @@ export function playerFactory() {
     AngularFirestoreModule,
     BrowserAnimationsModule,
     QRCodeModule,
+    NgxScannerQrcodeModule,
     LottieModule.forRoot({ player: playerFactory }),
     NgxEmojiPickerModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
