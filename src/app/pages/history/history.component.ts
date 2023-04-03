@@ -162,11 +162,13 @@ export class HistoryComponent implements OnInit {
         this.listFiltrada.push(element);        
       }
     });
+    var estado = true;
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontraron horas extras')
+      //this.toastr.info('No se encontraron horas extras')
     }else{
-      this.toastr.success('Horas extras encontrados')
+      //this.toastr.success('Horas extras encontrados')
+      this.filtrarLlegada(estado);
     }
     this.loading = false;
   }
@@ -175,8 +177,7 @@ export class HistoryComponent implements OnInit {
     this.isLlegada = estado;
     this.listFiltrada = [];
     this.listHorario.forEach((element)=>{
-      element.hora = element.horario?.llegada;
-      element.accion = 'LLEGADA';
+      element.hora = element.llegada;
       this.listFiltrada.push(element);
     });
   }
@@ -185,8 +186,7 @@ export class HistoryComponent implements OnInit {
     this.isLlegada = estado;
     this.listFiltrada = [];
     this.listHorario.forEach((element)=>{
-      element.hora = element.horario?.salida;
-      element.accion = 'SALIDA';
+      element.hora = element.salida;
       this.listFiltrada.push(element);
     });
   }
