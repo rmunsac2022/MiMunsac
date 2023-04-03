@@ -74,6 +74,7 @@ export function playerFactory() {
     AngularFirestoreModule,
     BrowserAnimationsModule,
     QRCodeModule,
+    NgxScannerQrcodeModule,
     LottieModule.forRoot({ player: playerFactory }),
     NgxEmojiPickerModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -87,8 +88,7 @@ export function playerFactory() {
     MatDialogModule,
     provideStorage(() => getStorage()),
     PickerModule,
-    provideAuth(() => getAuth()),
-    NgxScannerQrcodeModule
+    provideAuth(() => getAuth())
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

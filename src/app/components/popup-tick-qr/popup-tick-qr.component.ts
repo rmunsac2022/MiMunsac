@@ -32,7 +32,6 @@ export class PopupTickQrComponent implements OnInit {
     public dialogRef: MatDialogRef<PopupTickQrComponent>,
     @Inject(MAT_DIALOG_DATA) 
     public data: any,
-    private qrcode: NgxScannerQrcodeService,
     ) {}
 
   ngOnInit(): void {

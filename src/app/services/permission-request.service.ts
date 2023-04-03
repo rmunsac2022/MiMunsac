@@ -54,6 +54,18 @@ export class PermissionRequestService {
     }
   }
 
+
+  async confirmPermitionsHistory(){
+    const locationPerm = await navigator.permissions.query({ name: 'geolocation' });
+    const cameraPerm = await navigator.permissions.query({ name: 'camera' as PermissionName});
+    
+    if (locationPerm.state === 'granted' && cameraPerm.state === 'granted') {
+      this.router.navigate(['/history']); 
+    } else {
+      this.router.navigate(['/permits']);
+    }
+  }
+
   async confirmPermitionsRequest(){
     const locationPerm = await navigator.permissions.query({ name: 'geolocation' });
     const cameraPerm = await navigator.permissions.query({ name: 'camera' as PermissionName});
