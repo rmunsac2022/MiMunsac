@@ -98,7 +98,7 @@ export class HistoryComponent implements OnInit {
 
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: 'asd',
+      data: 'entrada',
       maxWidth:  "40vw",
     });
 
@@ -109,7 +109,8 @@ export class HistoryComponent implements OnInit {
 
   marcarSalida(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: 'asd'
+      data: 'salida',
+      maxWidth:  "40vw",
     });
 
     dialogRef.afterClosed().subscribe(result => {
