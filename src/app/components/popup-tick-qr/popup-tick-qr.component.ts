@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit,ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult  } from 'ngx-scanner-qrcode';
+import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeModule, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import {BehaviorSubject} from 'rxjs';
 
 
@@ -15,31 +15,37 @@ export class PopupTickQrComponent implements OnInit {
   valuess: any;
   public qrCodeResult: NgxScannerQrcodeService[] = [];
   $subject: BehaviorSubject<ScannerQRCodeResult[]> = new BehaviorSubject<ScannerQRCodeResult[]>([]);
+  @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
+
 
   public config: ScannerQRCodeConfig = {
-    // fps: 100,
-    // isBeep: false,
-    // decode: 'macintosh',
-    // deviceActive: 1,
+    deviceActive: 1,
+    isBeep: false,
     constraints: { 
       audio: false,
-      video: {
-        width: '10px'
-      }
     } 
   };
   constructor(
     public dialogRef: MatDialogRef<PopupTickQrComponent>,
     @Inject(MAT_DIALOG_DATA) 
-    public data: any,
+    public data: any
     ) {}
 
   ngOnInit(): void {
-    console.log(this.qrCodeResult);
+  }
+
+  ngAfterViewInit() {
+    if (this.ac) {
+      // Inicializar el componente
+      this.ac.start();
+    }
   }
 
   resultad($subject : any) {
     console.log($subject[0].value)
+
+
+
   }
   
 

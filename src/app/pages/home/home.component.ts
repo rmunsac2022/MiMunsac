@@ -89,7 +89,8 @@ export class HomeComponent implements OnInit{
 
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: 'asd'
+      data: 'entrada',
+      maxWidth:  "40vw",
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -99,7 +100,8 @@ export class HomeComponent implements OnInit{
 
   marcarSalida(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
-      data: 'asd'
+      data: 'salida',
+      maxWidth:  "40vw",
     });
 
     dialogRef.afterClosed().subscribe(result => {

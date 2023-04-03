@@ -40,6 +40,7 @@ import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add
 import { RequestPermitsComponent } from './components/request-permits/request-permits.component';
 import player from 'lottie-web';
 import * as lottie from 'lottie-web';
+import { PopupActionSuccessComponent } from './components/popup-action-success/popup-action-success.component';
 
 export function playerFactory() {
   return player;
@@ -49,6 +50,7 @@ export function playerFactory() {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
+    
     HomeComponent,
     ProfileComponent,
     HistoryComponent,
@@ -63,6 +65,7 @@ export function playerFactory() {
     PopupCreateRequestComponent,
     PopupAddHourexComponent,
     RequestPermitsComponent,
+    PopupActionSuccessComponent,
   ],
   imports: [
     BrowserModule,
