@@ -10,6 +10,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { Storage, ref, listAll, getDownloadURL } from '@angular/fire/storage';
 import { ToastrService } from 'ngx-toastr';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-reports',
@@ -71,6 +72,8 @@ export class ReportsComponent implements OnInit {
   user: any;
   documentos: string[] = [];
   id: string | undefined;
+  deviceInfo : any;
+  isMobile : boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -81,8 +84,11 @@ export class ReportsComponent implements OnInit {
     private authService: AuthService,
     private storage: Storage,
     private toastr: ToastrService,
-    private permissionService: PermissionRequestService
-  ) { }
+    private permissionService: PermissionRequestService,
+    private deviceService: DeviceDetectorService) { 
+      this.isMobile = this.deviceService.isMobile();
+      console.log(this.isMobile)
+    }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -101,7 +107,8 @@ export class ReportsComponent implements OnInit {
 
   crearReporte(){
     const dialogRef = this.dialog.open(PopupCreateReportComponent, {
-      data: ''
+      data: '',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.listFiltrada = [];

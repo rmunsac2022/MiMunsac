@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { PermissionRequestService } from 'src/app/services/permission-request.se
 })
 export class HomeComponent implements OnInit{
   fecha: any;
+  isMobile : boolean;
   meses: string[] = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   loading: boolean = true;
   today: any;
@@ -32,8 +34,11 @@ export class HomeComponent implements OnInit{
     private dialog: MatDialog,
     private authService: AuthService,
     private horaExtraService: HorasExtrasService,
-    private permissionService: PermissionRequestService
-  ) {}
+    private permissionService: PermissionRequestService,
+    private deviceService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -90,7 +95,8 @@ export class HomeComponent implements OnInit{
   marcarEntrada() {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'entrada',
-      maxWidth:  "40vw",
+      maxWidth:  this.isMobile ? '90dvw' : '40vw',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -102,6 +108,7 @@ export class HomeComponent implements OnInit{
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'salida',
       maxWidth:  "40vw",
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
 
     dialogRef.afterClosed().subscribe(result => {

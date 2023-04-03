@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import * as XLSX from 'xlsx';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
@@ -20,6 +21,7 @@ import * as XLSX from 'xlsx';
 })
 export class HoursExtraComponent implements OnInit {
   user: any;
+  isMobile : boolean;
   listHoraExtra: HoraExtra[] = [];
   listFiltrada: HoraExtra[] = [];
   meses: any[] = [
@@ -81,7 +83,10 @@ export class HoursExtraComponent implements OnInit {
     private horaExtraService: HorasExtrasService,
     private toastr: ToastrService,
     private datePipe: DatePipe,
-  ) { }
+    private deviceService: DeviceDetectorService
+  ) { 
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -170,7 +175,8 @@ export class HoursExtraComponent implements OnInit {
   addHoraExtra(){
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'horaextra',
-      maxWidth:  "40vw",
+      maxWidth:  this.isMobile ? '90dvw' : '40vw',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
 
