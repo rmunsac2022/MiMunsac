@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { Requests } from '../models/Request';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class RequestService {
 
   getRequestByIdUser(idUsuario: any, attribute: any): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Solicitudes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
+  }
+
+  crearRequest(request: Requests): Promise<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('Solicitudes').add(request);
   }
 }

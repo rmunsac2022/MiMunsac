@@ -5,8 +5,6 @@ export class Horario {
     hora?: string;
     accion?: string;
     idUsuario?: string;
-    horario?: {
-        llegada: string;
-        salida: string;
-    };
+    llegada?: string;
+    salida?: string;
 }
