@@ -35,11 +35,11 @@
                 <div class="bg-verdemun mx-auto md:mr-auto relative rounded-2xl items-center w-12 md:w-16 flex justify-center shadow-in aspect-square">
                     <span class="text-3xl pt-1 z-50">⌛️</span>
                 </div>
-                <h1 class="text-2xl text-center md:text-left mt-1 md:mt-2 md:text-3xl font-bebas">LLEGADA CONTENEDORES</h1>
+                <h1 class="text-2xl text-center md:text-left mt-1 md:mt-2 md:text-3xl font-bebas">{{data.nombreProyecto}}</h1>
             </div>
             <div class="ml-auto justify-center md:justify-end flex mt-3 md:mt-0 gap-3 items-center">
                 <p class="text-xs md:text-md">Monto pago</p>
-                <h1 class="bg-white shadow-min rounded-full text-md md:text-2xl px-5 py-1">$489.000</h1>
+                <h1 class="bg-white shadow-min rounded-full text-md md:text-2xl px-5 py-1">${{data.pago}}.000</h1>
             </div>
         </div>
 
@@ -50,7 +50,7 @@
             <div class="w-full h-full">
                 <h1 class="text-2xl mb-2">DESCRIPCIÓN</h1>
                 <div class="rounded-2xl break-all text-sm h-28 max-h-28 w-full bg-white px-5 py-2 mr-2 flex shadow-xxs overflow-y-scroll">
-                    descripcion
+                    {{data.descripcion}}
                 </div>
             </div>
     

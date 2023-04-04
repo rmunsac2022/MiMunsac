@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HorariosService } from 'src/app/services/horarios.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ReportsService } from 'src/app/services/reports.service';
 
 @Component({
   selector: 'app-history',
@@ -56,7 +57,6 @@ export class HistoryComponent implements OnInit {
       nombre:"Diciembre"
     }
   ];
-  isLlegada : boolean = true;
   anios: string[] = ['2023', '2024', '2025', '2026', '2027', '2028'];
   mesSelected: any;
   anioSelected: any;
@@ -69,7 +69,6 @@ export class HistoryComponent implements OnInit {
   loading: boolean = true;
   listHorario: Horario[] = [];
   listFiltrada: Horario[] = [];
-  listActualizada: Horario[] = [];
   isMobile : boolean;
 
   constructor(
@@ -81,7 +80,8 @@ export class HistoryComponent implements OnInit {
     private toastr: ToastrService,
     private horaExtraService: HorariosService,
     private datePipe: DatePipe,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private reportService: ReportsService
   ) { 
     this.isMobile = this.deviceService.isMobile();
   }
@@ -106,9 +106,7 @@ export class HistoryComponent implements OnInit {
       data: 'entrada',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
     });
   }
 
@@ -117,9 +115,7 @@ export class HistoryComponent implements OnInit {
       data: 'salida',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      
     });
   }
 
@@ -127,23 +123,50 @@ export class HistoryComponent implements OnInit {
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
-      this.getHoraExtraByUser(this.user.id);
+      this.getHorarioByUser(this.user.id);
     });
   }
   
-  getHoraExtraByUser(id: string){
+  getHorarioByUser(id: string){
+
     this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
       this.listHorario = [];
       doc.forEach((element: any) => { 
-        var horaExtra = {
+        var partesFecha = element.fechaString.split(".");
+        var dia = partesFecha[0];
+        var horario = {
           fecha: element.fecha,
           fechaString: element.fechaString,
           llegada: element.horario.llegada,
           salida: element.horario.salida,
-          idUsuario: element.idUsuario
+          idUsuario: element.idUsuario,
+          dia: dia,
+          am: '',
+          pm: '',
+          largeReports: 0,
         }
+        const sub = this.reportService.getReportByIdUserAndFecha(id, 'idUsuario', horario.fechaString).subscribe((report)=>{
+          sub.unsubscribe();
+          horario.largeReports = report.length;
+        })
+        var horaLlegada = horario.llegada.split(":");
+        var horaSalida = horario.salida.split(":");
+        var hora1 = horaLlegada[0];
+        hora1 = parseInt(hora1)
+        var hora2 = horaSalida[0];
+        hora2 = parseInt(hora2)
 
-        this.listHorario.push(horaExtra);  
+        if(hora1 <= 11){
+          horario.am = 'AM'
+        }else{
+          horario.am = 'PM'
+        }
+        if(hora2 <= 11){
+          horario.pm = 'AM'
+        }else{
+          horario.pm = 'PM'
+        }
+        this.listHorario.push(horario);  
       });
       if(this.listHorario.length<=0){
         this.listVacia = true;
@@ -170,39 +193,16 @@ export class HistoryComponent implements OnInit {
         this.listFiltrada.push(element);        
       }
     });
-    var estado = true;
-    this.filtrarLlegada(estado);
-    this.loading = false;
-  }
-
-  filtrarLlegada(estado: boolean){
-    this.isLlegada = estado;
-    this.listActualizada = [];
-    this.listFiltrada.forEach((element)=>{
-      element.hora = element.llegada;
-      this.listActualizada.push(element);
-    });
-    if(this.listActualizada.length<=0){
+    if(this.listFiltrada.length<=0){
       this.listVacia = true;
       this.toastr.info('No se encontró historial')
     }else{
       this.toastr.success('Historial encontrado')
     }
+    this.loading = false;
   }
 
-  filtrarSalida(estado: boolean){
-    this.isLlegada = estado;
-    this.listActualizada = [];
-    this.listFiltrada.forEach((element)=>{
-      element.hora = element.salida;
-      this.listActualizada.push(element);
-    });
-    if(this.listActualizada.length<=0){
-      this.listVacia = true;
-      this.toastr.info('No se encontró historial')
-    }else{
-      this.toastr.success('Historial encontrados')
-    }
-  }
+  getReportById(){
 
+  }
 }

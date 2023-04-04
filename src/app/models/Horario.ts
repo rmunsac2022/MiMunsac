@@ -12,5 +12,9 @@ export class Horario {
     horario?: {
         llegada: string;
         salida: string;
-    }
+    };
+    dia?: string;
+    am?: string;
+    pm?: string;
+    largeReports?: number
 }

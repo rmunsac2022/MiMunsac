@@ -13,6 +13,8 @@ import { PopupActionSuccessComponent } from '../popup-action-success/popup-actio
 })
 export class PopupAddHourexComponent implements OnInit {
   user: any;
+  desde: any;
+  hasta: any;
 
   constructor(
     public dialogRef: MatDialogRef<PopupAddHourexComponent>,
@@ -25,6 +27,34 @@ export class PopupAddHourexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const fechaDesde = this.data.cantidad.desde;
+    const fechaHasta = this.data.cantidad.desde;
+
+    const fecha1 = new Date(fechaDesde);
+    const anio1 = fecha1.getFullYear();
+    const mes1 = fecha1.getMonth() + 1;
+    const dia1 = fecha1.getDate();
+    const hora1 = fecha1.getHours();
+
+    const fecha2 = new Date(fechaHasta);
+    const anio2 = fecha2.getFullYear();
+    const mes2 = fecha2.getMonth() + 1;
+    const dia2 = fecha2.getDate();
+    const hora2 = fecha2.getHours();
+
+    if(hora1 > 11){
+      var horario1 = 'PM';
+    }else{
+      var horario1 = 'AM';
+    }
+    if(hora2 > 11){
+      var horario2 = 'PM';
+    }else{
+      var horario2 = 'AM';
+    }
+    this.desde = dia1+"/"+mes1+"/"+anio1+" "+hora1+horario1
+    this.hasta = dia2+"/"+mes2+"/"+anio2+" "+hora2+horario2
+
     this.afAuth.onAuthStateChanged((user) => {
       this.getUser(user!.email)
     });

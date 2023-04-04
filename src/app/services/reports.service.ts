@@ -21,4 +21,8 @@ export class ReportsService {
   crearReporte(reporte: Report): Promise<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes').add(reporte);
   }
+
+  getReportByIdUserAndFecha(idUsuario: any, attribute: any, fecha: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes', ref => ref.where(attribute, '==', idUsuario).where('fechaString', '==', fecha)).valueChanges();
+  }
 }
