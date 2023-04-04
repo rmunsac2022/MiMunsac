@@ -82,7 +82,6 @@ export class HistoryComponent implements OnInit {
     private horaExtraService: HorariosService,
     private datePipe: DatePipe,
     private deviceService: DeviceDetectorService
-
   ) { 
     this.isMobile = this.deviceService.isMobile();
   }
