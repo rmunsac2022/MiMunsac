@@ -41,6 +41,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   public config: ScannerQRCodeConfig = {
     isBeep: false,
     fps: 60,
+    deviceActive: 2,
     constraints: { 
       audio: false,
     }
