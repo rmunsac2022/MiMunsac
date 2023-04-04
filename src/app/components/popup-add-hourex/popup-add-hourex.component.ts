@@ -46,7 +46,7 @@ export class PopupAddHourexComponent implements OnInit {
     this.horaExtraService.editHoraExtra(this.data.id, HORAEXTRA).then(
       () => {
         const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
-          data: ''
+          data: 'HORA EXTRA'
         });
         this.dialogRef.close();
         dialogRef.afterClosed().subscribe(result => {
