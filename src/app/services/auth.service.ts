@@ -67,7 +67,7 @@ export class AuthService {
       .then((user) => {
         if (user) {
           let audio = new Audio();
-          audio.src = "../../../assets/audio/beep.mp3";
+          audio.src = "./assets/audio/beep.mp3";
           audio.load();
           audio.play();
           this.permissionService.confirmPermitions();

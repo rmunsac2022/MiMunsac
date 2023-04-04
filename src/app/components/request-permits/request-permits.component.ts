@@ -24,18 +24,18 @@ export class RequestPermitsComponent implements OnInit {
 
   
   options: AnimationOptions = {
-    path: '../../../assets/animations/question.json',
+    path: './assets/animations/question.json',
   };
   optionsubication: AnimationOptions = {
-    path: '../../../assets/animations/location.json',
+    path: './assets/animations/location.json',
   };
 
   optionscamera: AnimationOptions = {
-    path: '../../../assets/animations/camera.json',
+    path: './assets/animations/camera.json',
   };
 
   optionsready: AnimationOptions = {
-    path: '../../../assets/animations/ready.json',
+    path: './assets/animations/ready.json',
   };
 
   animationCreated(animationItem: AnimationItem): void {
