@@ -87,7 +87,6 @@ export class ReportsComponent implements OnInit {
     private permissionService: PermissionRequestService,
     private deviceService: DeviceDetectorService) { 
       this.isMobile = this.deviceService.isMobile();
-      console.log(this.isMobile)
     }
 
   ngOnInit(): void {

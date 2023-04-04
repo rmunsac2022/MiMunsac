@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit,ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeModule, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { BehaviorSubject } from 'rxjs';
@@ -9,15 +9,15 @@ import { PopupAddHourexComponent } from '../popup-add-hourex/popup-add-hourex.co
 import { Horario } from 'src/app/models/Horario';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from 'src/app/services/auth.service';
-import { idToken } from '@angular/fire/auth';
 import { PopupActionSuccessComponent } from '../popup-action-success/popup-action-success.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-popup-tick-qr',
   templateUrl: './popup-tick-qr.component.html',
   styleUrls: ['./popup-tick-qr.component.css']
 })
-export class PopupTickQrComponent implements OnInit {
+export class PopupTickQrComponent implements OnInit, OnDestroy {
   uObject: any;
   isContent: boolean = false;
   valuess: any;
@@ -49,6 +49,7 @@ export class PopupTickQrComponent implements OnInit {
     private horarioService: HorariosService,
     private afAuth: AngularFireAuth,
     private authService: AuthService,
+    private toast: ToastrService,
     @Inject(MAT_DIALOG_DATA) 
     public data: any
     ) {}
@@ -83,117 +84,139 @@ export class PopupTickQrComponent implements OnInit {
     }
   }
 
-  entrada($subject : any) {
-    var qr = $subject[0].value;
-    const decodedString = atob(qr);
-    console.log(decodedString);
-
-    var partes = decodedString.split("/");
-    var fecha = partes[0];
-    var text = partes[1].length;
-    var munsac = partes[2];
-
-    var partesFecha = fecha.split(":");
-    var dia = partesFecha[0];
-    var mes = partesFecha[1];
-    var anio = partesFecha[2];
-    var hora = partesFecha[3];
-    var minuto = partesFecha[4];
-
-    this.mes = this.mes.toString();
-    this.dia = this.dia.toString();
-    this.anio = this.anio.toString();
-    this.horaActual = this.horaActual.toString();
-    this.minutoActual = this.minutoActual.toString();
-
-    if (this.escaneoRealizado === false && dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
-      this.escaneoRealizado = true;
-      const ahora = new Date();
-      const horaActual = ahora.getHours();
-      const minutoActual = ahora.getMinutes();
-      const hora = horaActual+":"+minutoActual;
-
-      const LLEGADA: Horario = {
-        fecha: new Date(),
-        fechaString: this.fechaString,
-        idUsuario: this.user.id,
-        idReporteEntrada: [],
-        idReporteSalida: [],
-        horario: {
-          llegada: hora,
-          salida:''
-        }
-      };
-      this.horarioService.generarLlegada(LLEGADA).then(
-        () => {
-          console.log('Llegada ingresada')
-          const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
-            data: ''
-          });
-          this.dialogRef.close();
-          dialogRef.afterClosed().subscribe(result => {
-          });
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
-    }else{
-      console.log('Codigo no valido')
+  ngOnDestroy(){
+    if (this.ac) {
+      this.ac.stop();
     }
   }
-  
-  salida($subject : any) {
-    var qr = $subject[0].value;
-    const decodedString = atob(qr);
 
-    var partes = decodedString.split("/");
-    var fecha = partes[0];
-    var text = partes[1].length;
-    var munsac = partes[2];
-
-    var partesFecha = fecha.split(":");
-    var dia = partesFecha[0];
-    var mes = partesFecha[1];
-    var anio = partesFecha[2];
-    var hora = partesFecha[3];
-    var minuto = partesFecha[4];
-
-    this.mes = this.mes.toString();
-    this.dia = this.dia.toString();
-    this.anio = this.anio.toString();
-    this.horaActual = this.horaActual.toString();
-    this.minutoActual = this.minutoActual.toString();
-
-    if(this.escaneoRealizado === false && dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+  entrada($subject : any) {
+    if(this.escaneoRealizado === false){
       this.escaneoRealizado = true;
       const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
         sub.unsubscribe();
-        var id = horario[0].payload.doc.id;
-        const ahora = new Date();
-        const horaActual = ahora.getHours();
-        const minutoActual = ahora.getMinutes();
-        const hora = horaActual+":"+minutoActual;
-    
-        const cambios: any = {
-          'horario.salida': hora
-        };
-        this.horarioService.generarSalida(id, cambios).then(
-          () => {
-            console.log('Salida ingresada')
-            const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
-              data: ''
-            });
-            this.dialogRef.close();
-            dialogRef.afterClosed().subscribe(result => {
-        
-            });
-          },
-          (error: any) => {
-            console.log(error);
+        if(horario.length>0){
+          this.toast.info('Ya has marcado tu entrada')
+        }else{
+          var qr = $subject[0].value;
+          const decodedString = atob(qr);
+      
+          var partes = decodedString.split("/");
+          var fecha = partes[0];
+          var text = partes[1].length;
+          var munsac = partes[2];
+      
+          var partesFecha = fecha.split(":");
+          var dia = partesFecha[0];
+          var mes = partesFecha[1];
+          var anio = partesFecha[2];
+          var hora = partesFecha[3];
+          var minuto = partesFecha[4];
+      
+          this.mes = this.mes.toString();
+          this.dia = this.dia.toString();
+          this.anio = this.anio.toString();
+          this.horaActual = this.horaActual.toString();
+          this.minutoActual = this.minutoActual.toString();
+      
+          if (dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+            const ahora = new Date();
+            const horaActual = ahora.getHours();
+            const minutoActual = ahora.getMinutes();
+            const hora = horaActual+":"+minutoActual;
+      
+            const LLEGADA: Horario = {
+              fecha: new Date(),
+              fechaString: this.fechaString,
+              idUsuario: this.user.id,
+              idReporteEntrada: [],
+              idReporteSalida: [],
+              horario: {
+                llegada: hora,
+                salida:''
+              }
+            };
+            this.horarioService.generarLlegada(LLEGADA).then(
+              () => {
+                this.toast.success('Entrada ingresada')
+                const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
+                  data: 'ENTRADA'
+                });
+                this.dialogRef.close();
+                dialogRef.afterClosed().subscribe(result => {
+                });
+              },
+              (error: any) => {
+                console.log(error);
+              }
+            );
+          }else{
+            this.toast.info('Código no válido')
           }
-        );
+        }
       });
+    }
+  }
+
+  salida($subject : any) {
+    if(this.escaneoRealizado === false){
+      this.escaneoRealizado = true;
+      var qr = $subject[0].value;
+      const decodedString = atob(qr);
+  
+      var partes = decodedString.split("/");
+      var fecha = partes[0];
+      var text = partes[1].length;
+      var munsac = partes[2];
+  
+      var partesFecha = fecha.split(":");
+      var dia = partesFecha[0];
+      var mes = partesFecha[1];
+      var anio = partesFecha[2];
+      var hora = partesFecha[3];
+      var minuto = partesFecha[4];
+  
+      this.mes = this.mes.toString();
+      this.dia = this.dia.toString();
+      this.anio = this.anio.toString();
+      this.horaActual = this.horaActual.toString();
+      this.minutoActual = this.minutoActual.toString();
+  
+      if(dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+        const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
+          if(horario.length>0){
+            sub.unsubscribe();
+            var id = horario[0].payload.doc.id;
+            const ahora = new Date();
+            const horaActual = ahora.getHours();
+            const minutoActual = ahora.getMinutes();
+            const hora = horaActual+":"+minutoActual;
+        
+            const cambios: any = {
+              'horario.salida': hora
+            };
+            this.horarioService.generarSalida(id, cambios).then(
+              () => {
+                this.toast.success('Salida ingresada')
+                const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
+                  data: 'SALIDA'
+                });
+                this.dialogRef.close();
+                dialogRef.afterClosed().subscribe(result => {
+            
+                });
+              },
+              (error: any) => {
+                console.log(error);
+              }
+            );
+          }else{
+            this.toast.info('Primero debes marcar entrada')
+          }
+        });
+      }else{
+        this.toast.info('Código no válido')
+      }
     }
   }
 

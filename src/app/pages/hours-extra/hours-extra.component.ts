@@ -4,7 +4,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PopupAddHourexComponent } from 'src/app/components/popup-add-hourex/popup-add-hourex.component';
 import { PopupTickQrComponent } from 'src/app/components/popup-tick-qr/popup-tick-qr.component';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { AuthService } from 'src/app/services/auth.service';
@@ -179,7 +178,8 @@ export class HoursExtraComponent implements OnInit {
       minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      this.listFiltrada = []
+      this.getReportsByUser(this.user.id);
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import { HoraExtra } from 'src/app/models/HoraExtra';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit{
   email: any;
   user: any;
   listHorasExtras: HoraExtra[] = [];
-  
+  @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
+
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
@@ -112,7 +114,7 @@ export class HomeComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
   }
 
@@ -122,7 +124,7 @@ export class HomeComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
   }
 
