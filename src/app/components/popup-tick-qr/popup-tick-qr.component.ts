@@ -198,17 +198,20 @@ export class PopupTickQrComponent implements OnInit {
   }
 
   horaExtra($subject : any) {
-    var id = $subject[0].value;
-    const sub = this.horaExtraService.getHoraExtraById(id).subscribe((horaExtra)=>{
-      sub.unsubscribe();
-      const dialogRef = this.dialog.open(PopupAddHourexComponent, {
-        data: horaExtra
-      });
-      this.dialogRef.close();
-      dialogRef.afterClosed().subscribe(result => {
-  
-      });
-    })
+    if(this.escaneoRealizado === false){
+      this.escaneoRealizado = true;
+      var id = $subject[0].value;
+      const sub = this.horaExtraService.getHoraExtraById(id).subscribe((horaExtra)=>{
+        sub.unsubscribe();
+        const dialogRef = this.dialog.open(PopupAddHourexComponent, {
+          data: horaExtra
+        });
+        this.dialogRef.close();
+        dialogRef.afterClosed().subscribe(result => {
+    
+        });
+      })
+    }
   }
 
 }
