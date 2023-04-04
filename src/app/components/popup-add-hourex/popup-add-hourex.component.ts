@@ -5,6 +5,7 @@ import { HoraExtra } from 'src/app/models/HoraExtra';
 import { AuthService } from 'src/app/services/auth.service';
 import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PopupActionSuccessComponent } from '../popup-action-success/popup-action-success.component';
+import { Storage, ref, listAll, getDownloadURL } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-popup-add-hourex',
@@ -15,6 +16,9 @@ export class PopupAddHourexComponent implements OnInit {
   user: any;
   desde: any;
   hasta: any;
+  documentos: string[] = [];
+  listNombres: string[] = [];
+  nombre: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<PopupAddHourexComponent>,
@@ -24,10 +28,11 @@ export class PopupAddHourexComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private authService: AuthService,
     private dialog: MatDialog,
+    private storage: Storage,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
     const fechaDesde = this.data.cantidad.desde;
     const fechaHasta = this.data.cantidad.hasta;
 
@@ -59,12 +64,30 @@ export class PopupAddHourexComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       this.getUser(user!.email)
     });
+
+    this.getEmpleados(this.data.empleados);
   }
 
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
+    });
+  }
+
+  getEmpleados(empleados: any){
+    empleados.forEach((element: any)=>{
+      const sub = this._authService.getUserById(element).subscribe((user)=>{
+        sub.unsubscribe();
+        var nombre = user.nombre;   
+        
+        var partesNombre = nombre.split(" ");
+        var primerNombre = partesNombre[0];
+        var primerApellido = partesNombre[2];
+  
+        this.nombre = primerNombre+' '+primerApellido;
+        this.listNombres.push(this.nombre);
+      });
     });
   }
 
@@ -88,5 +111,20 @@ export class PopupAddHourexComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getDocument(urlImagen: any){
+    const documentRef = ref(this.storage, 'horasExtras/'.concat(urlImagen));
+
+    listAll(documentRef).then(async documentos => {
+      this.documentos = [];
+      for(let image of documentos.items) {
+        const url = await getDownloadURL(image);
+        this.documentos.push(url);
+      }
+      this.documentos.forEach((element)=> {
+        window.open(element, '_blank');
+      })
+    }).catch(error => console.log(error));
   }
 }

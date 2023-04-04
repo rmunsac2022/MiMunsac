@@ -17,7 +17,7 @@ export class HorariosService {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Horarios').add(horario);
   }
 
-  generarSalida(id: string, horario: any): Promise<any> {
+  editHorario(id: string, horario: any): Promise<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Horarios').doc(id).update(horario);
   }
 

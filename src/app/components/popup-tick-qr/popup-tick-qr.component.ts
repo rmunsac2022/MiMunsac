@@ -204,7 +204,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
             const cambios: any = {
               'horario.salida': hora
             };
-            this.horarioService.generarSalida(id, cambios).then(
+            this.horarioService.editHorario(id, cambios).then(
               () => {
                 this.toast.success('Salida ingresada')
                 const dialogRef = this.dialog.open(PopupActionSuccessComponent, {

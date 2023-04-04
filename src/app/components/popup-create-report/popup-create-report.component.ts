@@ -9,6 +9,8 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { User } from 'src/app/models/User';
 import { GeoPoint } from 'firebase/firestore';
+import { HorariosService } from 'src/app/services/horarios.service';
+import { Horario } from 'src/app/models/Horario';
 
 @Component({
   selector: 'app-popup-create-report',
@@ -30,7 +32,9 @@ export class PopupCreateReportComponent implements OnInit {
   timestamp: any;
   fechaString: string = "";
   geopoint: any;
-  
+  idReport: string = '';
+  elementHorario: any;
+
   constructor(
     public dialogRef: MatDialogRef<PopupCreateReportComponent>,
     @Inject(MAT_DIALOG_DATA) 
@@ -41,6 +45,7 @@ export class PopupCreateReportComponent implements OnInit {
     private reportService: ReportsService,
     private toastr: ToastrService,
     private storage: Storage,
+    private horarioService: HorariosService,
   ) { 
     this.registrarReporte = this.fb.group({
       descripcion: [''],
@@ -99,7 +104,9 @@ export class PopupCreateReportComponent implements OnInit {
       ubicacion: this.geopoint
     };
     this.reportService.crearReporte(REPORT).then(
-      () => {
+      (docRef) => {
+        this.idReport = docRef.id;
+        this.actualizarHorario(this.idReport, REPORT.categoria);
         this.toastr.success(
           'El reporte fue registrado con exito!',
           'Reporte registrado'
@@ -121,6 +128,50 @@ export class PopupCreateReportComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  actualizarHorario(idReport: string, categoria: any){
+    const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
+      if(horario.length>0){
+        sub.unsubscribe();
+        horario.forEach((element: any) => {
+          this.elementHorario = {
+            id: element.payload.doc.id,
+            ...element.payload.doc.data(),
+          }
+        });
+        if(categoria === 'llegada'){
+          this.elementHorario.idReporteEntrada.push(idReport)
+          const HORARIO: Horario = {
+            idReporteEntrada: this.elementHorario.idReporteEntrada
+          }
+          this.horarioService.editHorario(this.elementHorario.id, HORARIO).then(
+            () => {
+              this.toastr.success('Reporte enlazado')
+            },
+            (error: any) => {
+              console.log(error);
+            }
+          );
+        }
+        if(categoria === 'salida'){
+          this.elementHorario.idReporteSalida.push(idReport)
+          const HORARIO: Horario = {
+            idReporteSalida: this.elementHorario.idReporteSalida
+          }
+          this.horarioService.editHorario(this.elementHorario.id, HORARIO).then(
+            () => {
+              this.toastr.success('Reporte enlazado')
+            },
+            (error: any) => {
+              console.log(error);
+            }
+          );
+        }
+      }else{
+        console.log('No ha marcado llegada');
+      }
+    });
   }
 
   subirArchivo($event: any) {
