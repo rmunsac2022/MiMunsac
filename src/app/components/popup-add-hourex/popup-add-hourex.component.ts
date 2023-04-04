@@ -27,8 +27,9 @@ export class PopupAddHourexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data)
     const fechaDesde = this.data.cantidad.desde;
-    const fechaHasta = this.data.cantidad.desde;
+    const fechaHasta = this.data.cantidad.hasta;
 
     const fecha1 = new Date(fechaDesde);
     const anio1 = fecha1.getFullYear();
