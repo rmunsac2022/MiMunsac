@@ -11,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { idToken } from '@angular/fire/auth';
 import { PopupActionSuccessComponent } from '../popup-action-success/popup-action-success.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-popup-tick-qr',
@@ -19,6 +20,7 @@ import { PopupActionSuccessComponent } from '../popup-action-success/popup-actio
 })
 export class PopupTickQrComponent implements OnInit {
   uObject: any;
+  isMobile : boolean;
   isContent: boolean = false;
   valuess: any;
   valorQr: any;
@@ -38,9 +40,10 @@ export class PopupTickQrComponent implements OnInit {
 
   public config: ScannerQRCodeConfig = {
     isBeep: false,
+    fps: 60,
     constraints: { 
       audio: false,
-    } 
+    }
   };
   constructor(
     public dialogRef: MatDialogRef<PopupTickQrComponent>,
@@ -49,9 +52,13 @@ export class PopupTickQrComponent implements OnInit {
     private horarioService: HorariosService,
     private afAuth: AngularFireAuth,
     private authService: AuthService,
+    private deviceService: DeviceDetectorService,
     @Inject(MAT_DIALOG_DATA) 
     public data: any
-    ) {}
+    ) {
+      this.isMobile = this.deviceService.isMobile();
+
+    }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
@@ -204,7 +211,9 @@ export class PopupTickQrComponent implements OnInit {
       const sub = this.horaExtraService.getHoraExtraById(id).subscribe((horaExtra)=>{
         sub.unsubscribe();
         const dialogRef = this.dialog.open(PopupAddHourexComponent, {
-          data: horaExtra
+          data: horaExtra,
+          maxWidth:  this.isMobile ? '90dvw' : '100vw',
+          minWidth: this.isMobile ? '90dvw' : 'auto'
         });
         this.dialogRef.close();
         dialogRef.afterClosed().subscribe(result => {
