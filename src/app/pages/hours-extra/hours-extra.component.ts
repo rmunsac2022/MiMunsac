@@ -163,9 +163,9 @@ export class HoursExtraComponent implements OnInit {
     });
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontraron horas extras')
+      //this.toastr.info('No se encontraron horas extras')
     }else{
-      this.toastr.success('Horas extras encontrados')
+      //this.toastr.success('Horas extras encontrados')
     }
     this.loading = false;
   }
