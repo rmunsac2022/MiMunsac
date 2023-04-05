@@ -132,8 +132,8 @@ export class PopupCreateReportComponent implements OnInit {
 
   actualizarHorario(idReport: string, categoria: any){
     const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
+      sub.unsubscribe();
       if(horario.length>0){
-        sub.unsubscribe();
         horario.forEach((element: any) => {
           this.elementHorario = {
             id: element.payload.doc.id,
@@ -169,7 +169,25 @@ export class PopupCreateReportComponent implements OnInit {
           );
         }
       }else{
-        console.log('No ha marcado llegada');
+        const LLEGADA: Horario = {
+          fecha: new Date(),
+          fechaString: this.fechaString,
+          idUsuario: this.user.id,
+          idReporteEntrada: [idReport],
+          idReporteSalida: [],
+          horario: {
+            llegada: '',
+            salida:''
+          }
+        };
+        this.horarioService.generarLlegada(LLEGADA).then(
+          () => {
+            this.toastr.info('Registro generado')
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
       }
     });
   }
