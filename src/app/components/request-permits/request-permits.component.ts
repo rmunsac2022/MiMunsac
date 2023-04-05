@@ -52,7 +52,7 @@ export class RequestPermitsComponent implements OnInit {
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
       if(user){
-        this.permissionService.confirmPermitions();
+        this.permissionService.confirmPermitionsToHome();
       }
     });
   }

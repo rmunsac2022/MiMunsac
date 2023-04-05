@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { PermissionRequestService } from 'src/app/services/permission-request.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +19,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private auth: AuthService,
     private afAuth: AngularFireAuth,
-    private permissionService: PermissionRequestService
+    private router: Router
   ) {
     this.login = this.fb.group({
       email: ['', Validators.required],
@@ -32,7 +30,7 @@ export class LoginComponent {
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
       if(user){
-        this.permissionService.confirmPermitions();
+        this.router.navigate(['/permits'])
       }
     });
   }

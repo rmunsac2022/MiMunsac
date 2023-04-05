@@ -93,7 +93,7 @@ export class HoursExtraComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsHourExtra();
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });
@@ -111,7 +111,7 @@ export class HoursExtraComponent implements OnInit {
   }
   
   getReportsByUser(id: string){
-    this.horaExtraService.getHoraExtraByIdUser(id, 'empleados').subscribe((doc)=>{
+    this.horaExtraService.getHoraExtraByIdUser(id).subscribe((doc)=>{
       this.listHoraExtra = [];
       doc.forEach((element: any) => { 
         var horaExtra = {

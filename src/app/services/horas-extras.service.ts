@@ -13,8 +13,8 @@ export class HorasExtrasService {
     return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras',ref => ref.orderBy('fecha', 'asc')).snapshotChanges();
   }
 
-  getHoraExtraByMes(fecha: any, attribute: any): Observable<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where(attribute, '==', fecha)).valueChanges();
+  getHoraExtraByIdUserAndFecha(idUsuario: any, fecha: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where('empleados', 'array-contains', idUsuario).where('mesAnio', '==', fecha)).valueChanges();
   }
 
   guardarHoraExtra(hora: any): Promise<any> {
@@ -25,7 +25,7 @@ export class HorasExtrasService {
     return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras').doc(id).update(hora);
   }
 
-  getHoraExtraByIdUser(idUsuario: any, attribute: any): Observable<any> {
+  getHoraExtraByIdUser(idUsuario: any): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('HorasExtras', ref => ref.where('empleados', 'array-contains', idUsuario)).valueChanges();
   }
 

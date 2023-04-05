@@ -61,9 +61,11 @@ export class HomeComponent implements OnInit{
   }
 
   getUser(email: any){
-    const sub = this.authService.getUserByEmail(email, 'correo').subscribe((user)=> {
+    const sub = this.authService.getUserByEmailWithDataAndId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0];
+      this.user = user[0].payload.doc.data();
+      var id = user[0].payload.doc.id;
+
       var partesNombre = this.user.nombre.split(" ");
       var primerNombre = partesNombre[0];
       var primerApellido = partesNombre[2];
@@ -72,14 +74,15 @@ export class HomeComponent implements OnInit{
 
       var anio = new Date().getFullYear();
       var mes = new Date().getMonth() + 1;
-      var fecha = mes+"."+anio
-      this.getHoraExtra(fecha);
+      var fecha = mes+"."+anio;
+
+      this.getHoraExtra(fecha, id);
     });
   }
 
-  getHoraExtra(fecha: string){
+  getHoraExtra(fecha: string, id: string){
     this.listVacia = false;
-    const sub = this.horaExtraService.getHoraExtraByMes(fecha, 'mesAnio').subscribe((horasExtras)=>{
+    const sub = this.horaExtraService.getHoraExtraByIdUserAndFecha(id, fecha).subscribe((horasExtras)=>{
       sub.unsubscribe();
       horasExtras.forEach((element: HoraExtra)=>{
         const fechaHoraDesde = element.cantidad!.desde;
@@ -89,7 +92,8 @@ export class HomeComponent implements OnInit{
         const fechaHasta = new Date(fechaHoraHasta);
         const diferenciaMilisegundos = fechaHasta.getTime() - fechaDesde.getTime();
         const diferenciaHoras = Math.round(diferenciaMilisegundos / (1000 * 60 * 60));
-        element.duracion = diferenciaHoras
+        element.duracion = diferenciaHoras;
+        this.listHorasExtras.push(element);
       });
       this.listHorasExtras = horasExtras;
       if(this.listHorasExtras.length<=0){
@@ -136,7 +140,7 @@ export class HomeComponent implements OnInit{
     });
   }
 
-  getLocation() {
+  /*getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position)=>{
         const longitude = position.coords.longitude;
@@ -146,5 +150,5 @@ export class HomeComponent implements OnInit{
     } else {
       console.log("No support for geolocation")
     }
-  }
+  }*/
 }

@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsProfile();
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });

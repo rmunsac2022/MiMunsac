@@ -95,7 +95,7 @@ export class ReportsComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsReport();
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });

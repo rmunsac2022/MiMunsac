@@ -26,8 +26,12 @@ export class AuthService {
     return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', email)).valueChanges();
   }
 
-  getUserByEmailWithId(idUsuario: any, attribute: any){
-    return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', idUsuario)).snapshotChanges();
+  getUserByEmailWithDataAndId(email: any, attribute: any): Observable<any> {
+    return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', email)).snapshotChanges();
+  }
+
+  getUserByEmailWithId(email: any, attribute: any){
+    return this.firestore.collection('PersonalMunsac', ref => ref.where(attribute, '==', email)).snapshotChanges();
   }
 
   getUserById(id: any): Observable<any> {
@@ -70,7 +74,6 @@ export class AuthService {
           audio.src = "./assets/audio/beep.mp3";
           audio.load();
           audio.play();
-          this.permissionService.confirmPermitions();
           this.toastr.success('Ha ingresado exitosamente', 'Bienvenido');
         }
       })

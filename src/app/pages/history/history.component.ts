@@ -91,7 +91,7 @@ export class HistoryComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsHistory();
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });
@@ -127,7 +127,6 @@ export class HistoryComponent implements OnInit {
   }
   
   getHorarioByUser(id: string){
-
     this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
       this.listHorario = [];
       doc.forEach((element: any) => { 

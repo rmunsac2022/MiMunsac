@@ -92,7 +92,7 @@ export class RequestsComponent implements OnInit {
         this.router.navigate(['/login']);
       }
       if (user){
-        this.permissionService.confirmPermitionsRequest();
+        this.permissionService.confirmPermitions();
       }
       this.getUser(user!.email)
     });

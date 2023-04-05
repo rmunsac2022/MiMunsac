@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
   cerrarSesion(){
     this.auth.logOut();
     this.router.navigate(['/login'])
+    localStorage.removeItem('permission');
   }
 
 
