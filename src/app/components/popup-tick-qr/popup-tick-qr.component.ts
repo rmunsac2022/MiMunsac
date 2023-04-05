@@ -98,35 +98,55 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   }
 
   entrada($subject : any) {
+    var qr = $subject[0].value;
+    const decodedString = atob(qr);
+
+    var partes = decodedString.split("/");
+    var fecha = partes[0];
+    var text = partes[1].length;
+    var munsac = partes[2];
+
+    var partesFecha = fecha.split(":");
+    var dia = partesFecha[0];
+    var mes = partesFecha[1];
+    var anio = partesFecha[2];
+    var hora = partesFecha[3];
+    var minuto = partesFecha[4];
+
+    this.mes = this.mes.toString();
+    this.dia = this.dia.toString();
+    this.anio = this.anio.toString();
+    this.horaActual = this.horaActual.toString();
+    this.minutoActual = this.minutoActual.toString();
+
     if(this.escaneoRealizado === false){
       this.escaneoRealizado = true;
-      const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
-        sub.unsubscribe();
-        if(horario.length>0){
-          this.toast.info('Ya has marcado tu entrada')
-        }else{
-          var qr = $subject[0].value;
-          const decodedString = atob(qr);
-      
-          var partes = decodedString.split("/");
-          var fecha = partes[0];
-          var text = partes[1].length;
-          var munsac = partes[2];
-      
-          var partesFecha = fecha.split(":");
-          var dia = partesFecha[0];
-          var mes = partesFecha[1];
-          var anio = partesFecha[2];
-          var hora = partesFecha[3];
-          var minuto = partesFecha[4];
-      
-          this.mes = this.mes.toString();
-          this.dia = this.dia.toString();
-          this.anio = this.anio.toString();
-          this.horaActual = this.horaActual.toString();
-          this.minutoActual = this.minutoActual.toString();
-      
-          if (dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+      if(dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+
+        const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
+          sub.unsubscribe();
+          if(horario.length>0){
+            if(horario[0].payload.doc.data().horario.llegada === ""){
+              const ahora = new Date();
+              const horaActual = ahora.getHours();
+              const minutoActual = ahora.getMinutes();
+              const hora = horaActual+":"+minutoActual;
+              const cambios: any = {
+                'horario.llegada': hora
+              };
+              var id = horario[0].payload.doc.id;
+              this.horarioService.editHorario(id, cambios).then(
+                () => {
+                  this.toast.success('Entrada ingresada')
+                },
+                (error: any) => {
+                  console.log(error);
+                }
+              );
+            }else{
+              this.toast.info('Ya has marcado tu entrada')
+            }
+          }else{
             const ahora = new Date();
             const horaActual = ahora.getHours();
             const minutoActual = ahora.getMinutes();
@@ -159,11 +179,11 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
                 console.log(error);
               }
             );
-          }else{
-            this.toast.info('Código no válido')
           }
-        }
-      });
+        });
+      }else{
+        this.toast.info('Código no válido')
+      }
     }
   }
 
@@ -200,7 +220,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
             const horaActual = ahora.getHours();
             const minutoActual = ahora.getMinutes();
             const hora = horaActual+":"+minutoActual;
-        
+
             const cambios: any = {
               'horario.salida': hora
             };
