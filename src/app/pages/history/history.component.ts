@@ -79,7 +79,6 @@ export class HistoryComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private horaExtraService: HorariosService,
-    private datePipe: DatePipe,
     private deviceService: DeviceDetectorService,
     private reportService: ReportsService
   ) { 
@@ -140,15 +139,17 @@ export class HistoryComponent implements OnInit {
           llegada: element.horario.llegada,
           salida: element.horario.salida,
           idUsuario: element.idUsuario,
+          idReporteEntrada: element.idReporteEntrada,
+          idReporteSalida: element.idReporteSalida,
           dia: dia,
           am: '',
           pm: '',
-          largeReports: 0,
+          largeReportsEntrada: 0,
+          largeReportsSalida: 0,
         }
-        const sub = this.reportService.getReportByIdUserAndFecha(id, 'idUsuario', horario.fechaString).subscribe((report)=>{
-          sub.unsubscribe();
-          horario.largeReports = report.length;
-        })
+        horario.largeReportsEntrada = horario.idReporteEntrada.length;
+        horario.largeReportsSalida = horario.idReporteSalida.length;
+
         var horaLlegada = horario.llegada.split(":");
         var horaSalida = horario.salida.split(":");
         var hora1 = horaLlegada[0];
@@ -166,6 +167,16 @@ export class HistoryComponent implements OnInit {
         }else{
           horario.pm = 'PM'
         }
+
+        if(horario.llegada === ""){
+          horario.llegada = "Unmarked";
+          horario.am = "";
+        }
+        if(horario.salida === ""){
+          horario.salida = "Unmarked";
+          horario.pm = "";
+        }
+
         this.listHorario.push(horario);  
       });
       if(this.listHorario.length<=0){
@@ -195,14 +206,16 @@ export class HistoryComponent implements OnInit {
     });
     if(this.listFiltrada.length<=0){
       this.listVacia = true;
-      this.toastr.info('No se encontró historial')
+      //this.toastr.info('No se encontró historial')
     }else{
-      this.toastr.success('Historial encontrado')
+      //this.toastr.success('Historial encontrado')
     }
     this.loading = false;
   }
 
-  getReportById(){
-
+  getReportById(listId: any){
+    listId.forEach((element: any)=>{
+      console.log(element);
+    })
   }
 }

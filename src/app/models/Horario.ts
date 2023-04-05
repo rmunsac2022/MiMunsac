@@ -16,5 +16,6 @@ export class Horario {
     dia?: string;
     am?: string;
     pm?: string;
-    largeReports?: number
+    largeReportsEntrada?: number;
+    largeReportsSalida?: number;
 }

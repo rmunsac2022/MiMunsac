@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit{
   anio: number | undefined;
   email: any;
   user: any;
+  listVacia: boolean = false;
   listHorasExtras: HoraExtra[] = [];
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
 
@@ -77,6 +78,7 @@ export class HomeComponent implements OnInit{
   }
 
   getHoraExtra(fecha: string){
+    this.listVacia = false;
     const sub = this.horaExtraService.getHoraExtraByMes(fecha, 'mesAnio').subscribe((horasExtras)=>{
       sub.unsubscribe();
       horasExtras.forEach((element: HoraExtra)=>{
@@ -90,6 +92,12 @@ export class HomeComponent implements OnInit{
         element.duracion = diferenciaHoras
       });
       this.listHorasExtras = horasExtras;
+      if(this.listHorasExtras.length<=0){
+        this.listVacia = true;
+        //this.toastr.info('No se encontraron horas extra')
+      }else{
+        //this.toastr.success('Horas extras encontrados')
+      }
     });
     this.loading = false;
   }

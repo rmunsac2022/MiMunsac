@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Report } from '../models/Report';
 
 @Injectable({
@@ -24,5 +24,9 @@ export class ReportsService {
 
   getReportByIdUserAndFecha(idUsuario: any, attribute: any, fecha: any): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes', ref => ref.where(attribute, '==', idUsuario).where('fechaString', '==', fecha)).valueChanges();
+  }
+
+  getreportByid(id: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('registros').collection('Reportes').doc(id).valueChanges();
   }
 }
