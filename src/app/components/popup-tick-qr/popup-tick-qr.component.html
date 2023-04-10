@@ -5,7 +5,7 @@
 
         <div class="aspect-square w-full relative">
 
-            <ngx-scanner-qrcode class="h-full" #ac="scanner" (event)="entrada($event)" [config]="this.config" ></ngx-scanner-qrcode>
+            <ngx-scanner-qrcode [device]="'environment'" class="h-full" #ac="scanner" (event)="entrada($event)" [config]="this.config" ></ngx-scanner-qrcode>
                     
             <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
                 <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
