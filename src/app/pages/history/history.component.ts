@@ -136,7 +136,8 @@ export class HistoryComponent implements OnInit {
   }
   
   getHorarioByUser(id: string){
-    this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
+    const sub = this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
+      sub.unsubscribe();
       this.listHorario = [];
       doc.forEach((element: any) => { 
         var partesFecha = element.fechaString.split(".");
@@ -227,7 +228,8 @@ export class HistoryComponent implements OnInit {
     });
     this.viewReports = true;
     listId.forEach((element: any)=>{
-      this.reportService.getReportByid(element).subscribe((report)=>{
+      const sub = this.reportService.getReportByid(element).subscribe((report)=>{
+        sub.unsubscribe();
         var hora = report.fecha.seconds;          
         const fechaHora = new Date();
         fechaHora.setTime(hora * 1000);

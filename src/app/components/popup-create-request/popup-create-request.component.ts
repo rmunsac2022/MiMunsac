@@ -8,6 +8,8 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { RequestService } from 'src/app/services/request.service';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
+import { SettingService } from 'src/app/services/setting.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-popup-create-request',
@@ -39,6 +41,8 @@ export class PopupCreateRequestComponent implements OnInit {
     private requestService: RequestService,
     private toastr: ToastrService,
     private storage: Storage,
+    private settingService: SettingService,
+    private afs: AngularFirestore
   ) { 
     this.registrarSolicitud = this.fb.group({
       descripcion: [''],
@@ -116,6 +120,7 @@ export class PopupCreateRequestComponent implements OnInit {
             .then((x) => {})
             .catch((error) => console.log(error));
         }
+        this.sendEmail();
         this.registrarSolicitud.reset();
         this.dialogRef.close();
       },
@@ -128,6 +133,22 @@ export class PopupCreateRequestComponent implements OnInit {
 
   subirArchivo($event: any) {
     this.files = $event.target.files;
+  }
+
+  sendEmail() {
+    const sub = this.settingService.getSetting().subscribe((doc)=>{
+      sub.unsubscribe();
+      var correos = doc.notificacionMail.solicitud.mailsDestino.split(", ");
+      correos.forEach((email: any)=>{
+        this.afs.collection('Correos').add({
+          to: email,
+          message: {
+            subject: 'Alquien a hecho un reporte',
+            html: '' + this.userData.name + this.userData.apellido + 'ha hecho una solicitud, visita Munsac Control para ver los detalles'
+          },
+        }).then(() => console.log('Send email for delivery!'));
+      });
+    });
   }
 
 }
