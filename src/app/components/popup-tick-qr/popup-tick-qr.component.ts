@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeModule, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { BehaviorSubject } from 'rxjs';
@@ -19,6 +19,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./popup-tick-qr.component.css']
 })
 export class PopupTickQrComponent implements OnInit, OnDestroy {
+  camaras: string[] = [];
+  camarasName: string[] = [];
+  camaraselect: any;
   uObject: any;
   isMobile : boolean;
   isContent: boolean = false;
@@ -36,12 +39,15 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   horaExtraObj: HoraExtra = new HoraExtra;
   public qrCodeResult: NgxScannerQrcodeService[] = [];
   $subject: BehaviorSubject<ScannerQRCodeResult[]> = new BehaviorSubject<ScannerQRCodeResult[]>([]);
+  
+  
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
+  
+
 
   public config: ScannerQRCodeConfig = {
     isBeep: false,
     fps: 60,
-    deviceActive: 2,
     constraints: { 
       audio: false,
     }
@@ -66,6 +72,9 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     this.afAuth.onAuthStateChanged((user) => {
       this.getUser(user!.email)
     });
+
+
+
     this.valorQr = this.data;
     const ahora = new Date();
     this.horaActual = ahora.getHours();
@@ -89,12 +98,23 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     if (this.ac) {
       // Inicializar el componente
       this.ac.start();
+
     }
   }
 
   ngOnDestroy(){
     if (this.ac) {
       this.ac.stop();
+    }
+  }
+
+
+
+  cambiarCamara(select : any, event: any) {
+    console.log(select);
+    this.camaraselect = select;
+    if (this.ac) {
+      this.ac.playDevice('');
     }
   }
 
