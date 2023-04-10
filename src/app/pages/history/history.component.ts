@@ -113,6 +113,7 @@ export class HistoryComponent implements OnInit {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'entrada',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -122,6 +123,7 @@ export class HistoryComponent implements OnInit {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'salida',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
     });
