@@ -2,7 +2,7 @@
 
     <div class="flex gap-3 mb-3 max-w-full mt-6 py-2 pl-6 overflow-x-scroll ">
         <button *ngFor="let camr of camaras; let i = index" #camsl (click)="cambiarCamara(camaras[i], $event)" class="shadow-min bg-white rounded-full px-6 py-1 whitespace-nowrap">{{this.camarasName[i]}}</button>
-     </div>
+    </div>
 
     <div class="pb-6 px-6">
 
@@ -11,7 +11,7 @@
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
-                <ngx-scanner-qrcode [device]="'environment'" class="h-full" #ac="scanner" id (event)="entrada($event)" [config]="this.config" ></ngx-scanner-qrcode>
+                <ngx-scanner-qrcode [device]="'environment'" class="h-full" #ac="scanner" id (event)="entrada($event)" [config]="this.config"></ngx-scanner-qrcode>
     
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
                     <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
@@ -25,7 +25,7 @@
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
-                <ngx-scanner-qrcode [device]="'environment'" #ac="scanner" (event)="salida($event)" [config]="this.config"></ngx-scanner-qrcode>
+                <ngx-scanner-qrcode [device]="'environment'" class="h-full" #ac="scanner" (event)="salida($event)" [config]="this.config"></ngx-scanner-qrcode>
                         
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
                     <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
