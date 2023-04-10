@@ -50,6 +50,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     fps: 60,
     constraints: { 
       audio: false,
+      vibrate: false,
     }
   };
   constructor(
@@ -173,7 +174,8 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
                 }
               );
             }else{
-              this.toast.info('Ya has marcado tu entrada')
+              this.toast.info('Ya has marcado tu entrada');
+              this.dialogRef.close();
             }
           }else{
             const ahora = new Date();
@@ -211,7 +213,8 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
           }
         });
       }else{
-        this.toast.info('Código no válido')
+        this.toast.info('Código no válido');
+        this.dialogRef.close();
       }
     }
   }
@@ -271,11 +274,13 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
               }
             );
           }else{
-            this.toast.info('Primero debes marcar entrada')
+            this.toast.info('Primero debes marcar entrada');
+            this.dialogRef.close();
           }
         });
       }else{
-        this.toast.info('Código no válido')
+        this.toast.info('Código no válido');
+        this.dialogRef.close();
       }
     }
   }
