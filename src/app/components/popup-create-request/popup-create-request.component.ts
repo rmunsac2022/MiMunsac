@@ -143,8 +143,8 @@ export class PopupCreateRequestComponent implements OnInit {
         this.afs.collection('Correos').add({
           to: email,
           message: {
-            subject: 'Alquien a hecho un reporte',
-            html: '' + this.userData.name + this.userData.apellido + 'ha hecho una solicitud, visita Munsac Control para ver los detalles'
+            subject: this.userData.name! + this.userData.apellido! + ' a hecho una solicitud',
+            html: '<p>Visita Munsac Control para ver los detalles</p>'
           },
         }).then(() => console.log('Send email for delivery!'));
       });
