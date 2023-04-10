@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeModule, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
+import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { BehaviorSubject } from 'rxjs';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { HorariosService } from 'src/app/services/horarios.service';
@@ -39,7 +39,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   horaExtraObj: HoraExtra = new HoraExtra;
   public qrCodeResult: NgxScannerQrcodeService[] = [];
   $subject: BehaviorSubject<ScannerQRCodeResult[]> = new BehaviorSubject<ScannerQRCodeResult[]>([]);
-  
+
   
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
   
@@ -50,7 +50,14 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     fps: 60,
     constraints: { 
       audio: false,
-      videoHeight: 400, // Establecer la altura del video en 400 píxeles
+      scanBrightness: 10,
+      videoHeight: 400, 
+      advanced: {
+        focalLength: 5,
+        focusMode: 'manual',
+        whiteBalanceMode: 'continuous',
+        brightness: 100,
+      },
       video: {
         width: { min: 640, max: 2560 },
         height: { min: 640, max: 2560 },
@@ -71,7 +78,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) 
     public data: any,
     private el: ElementRef
-        ) {
+    ) {
       this.isMobile = this.deviceService.isMobile();
 
     }
@@ -80,6 +87,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     this.afAuth.onAuthStateChanged((user) => {
       this.getUser(user!.email)
     });
+
 
 
 
@@ -105,7 +113,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     if (this.ac) {
       // Inicializar el componente
-      this.ac?.play();
+      this.ac.play();
 
       navigator.mediaDevices.enumerateDevices().then(devices => {
         const cam = devices.filter(device => device.kind === 'videoinput');
@@ -129,6 +137,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     this.camaraselect = select;
     if (this.ac) {
       //this.ac.stop();
+      this.ac.play();
       this.ac.playDevice(select);
     }
   }
@@ -156,6 +165,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     this.minutoActual = this.minutoActual.toString();
 
     if(this.escaneoRealizado === false){
+
       this.escaneoRealizado = true;
       if(dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
 
@@ -173,7 +183,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
               var id = horario[0].payload.doc.id;
               this.horarioService.editHorario(id, cambios).then(
                 () => {
-                  this.toast.success('Entrada ingresada')
                   const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
                     data: 'ENTRADA',
                     maxWidth:  this.isMobile ? '90dvw' : '35vw',
@@ -210,7 +219,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
             };
             this.horarioService.generarLlegada(LLEGADA).then(
               () => {
-                this.toast.success('Entrada ingresada')
                 const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
                   data: 'ENTRADA',
                   maxWidth:  this.isMobile ? '90dvw' : '35vw',
@@ -234,6 +242,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   }
 
   salida($subject : any) {
+
     if(this.escaneoRealizado === false){
       this.escaneoRealizado = true;
       var qr = $subject[0].value;
@@ -272,7 +281,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
             };
             this.horarioService.editHorario(id, cambios).then(
               () => {
-                this.toast.success('Salida ingresada')
                 const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
                   data: 'SALIDA',
                   maxWidth:  this.isMobile ? '90dvw' : '35vw',

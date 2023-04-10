@@ -85,7 +85,7 @@ export function playerFactory() {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 10000,
       closeButton: true,
       progressBar: true,
       positionClass: 'toast-bottom-right'
