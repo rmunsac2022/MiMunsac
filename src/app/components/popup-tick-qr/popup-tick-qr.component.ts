@@ -266,7 +266,10 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
       const sub = this.horaExtraService.getHoraExtraById(id).subscribe((horaExtra)=>{
         sub.unsubscribe();
         const dialogRef = this.dialog.open(PopupAddHourexComponent, {
-          data: horaExtra,
+          data:{
+            horaExtra: horaExtra,
+            detail: false
+          },
           maxWidth:  this.isMobile ? '90dvw' : '100vw',
           minWidth: this.isMobile ? '90dvw' : 'auto'
         });

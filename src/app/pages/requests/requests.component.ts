@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { RequestService } from 'src/app/services/request.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { PopupDetailRequestComponent } from 'src/app/components/popup-detail-request/popup-detail-request.component';
 
 @Component({
   selector: 'app-requests',
@@ -71,6 +72,7 @@ export class RequestsComponent implements OnInit {
   hora: any;
   id: string | undefined;
   isMobile : boolean;
+  data: any;
 
   constructor(
     private dialog: MatDialog,
@@ -116,6 +118,7 @@ export class RequestsComponent implements OnInit {
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
       this.user = user[0].payload.doc;
+      this.data = user[0].payload.doc.data();
       this.id = this.user.id;
       this.getRequestByUser(this.user.id);
     });
@@ -189,6 +192,17 @@ export class RequestsComponent implements OnInit {
       //this.toastr.success('Solicitudes encontradas')
     }
     this.loading = false;
+  }
+
+  detailRequest(request: Requests) {
+    const dialogRef = this.dialog.open(PopupDetailRequestComponent, {
+      data: {
+        request: request,
+        user: this.data
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
 }

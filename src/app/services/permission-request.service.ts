@@ -15,7 +15,6 @@ export class PermissionRequestService {
     const cameraPerm = await navigator.permissions.query({ name: 'camera' as PermissionName});
     
     if (locationPerm.state === 'granted' && cameraPerm.state === 'granted') {
-      console.log('Permission granted')
     } else {
       navigator.geolocation.getCurrentPosition((position)=>{
       });

@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="grid-cols-1 grid gap-3">
-                    <div *ngFor="let horario of listFiltrada;" class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
+                    <div *ngFor="let horario of listFiltrada; let indexOfelement=index;" class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
                         <div class="bg-black md:mr-4 px-1 md:w-14 md:h-full py-2 md:py-0 relative justify-center flex items-center">
                             <h1 class="md:rotate-90 text-white text-3xl w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-bebas whitespace-nowrap">{{horario.dia}}</h1>
                         </div>
@@ -73,7 +73,7 @@
                                     <h1 class="text-4xl font-bebas">{{horario.llegada}} {{horario.am}}</h1>
                                 </div>
                                 <div class="ml-auto h-full items-center flex mt-3 md:mt-0">
-                                    <button (click)="getReportById(horario.idReporteEntrada)" class="w-full md:w-fit font-bebas mx-auto text-md shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">{{horario.largeReportsEntrada}} REPORTES</button>
+                                    <button (click)="getReportById(horario.idReporteEntrada, indexOfelement)" class="w-full md:w-fit font-bebas mx-auto text-md shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">{{horario.largeReportsEntrada}} REPORTES</button>
                                 </div>
                             </div>
                             <div class="shadow-min rounded-2xl px-4 w-full py-3 flex">
@@ -82,7 +82,26 @@
                                     <h1 class="text-4xl font-bebas">{{horario.salida}} {{horario.pm}}</h1>
                                 </div>
                                 <div class="ml-auto h-full items-center flex mt-3 md:mt-0">
-                                    <button (click)="getReportById(horario.idReporteSalida)" class="w-full md:w-fit font-bebas mx-auto text-md shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">{{horario.largeReportsSalida}} REPORTES</button>
+                                    <button (click)="getReportById(horario.idReporteSalida, indexOfelement)" class="w-full md:w-fit font-bebas mx-auto text-md shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">{{horario.largeReportsSalida}} REPORTES</button>
+                                </div>
+                            </div>
+              
+                            <div *ngFor="let report of horario.reportes" class="bg-white rounded-3xl md:pr-4 overflow-hidden md:flex shadow-xxs">
+                                <div class="bg-black md:mr-4 px-1 md:w-10 md:h-full py-2 md:py-0 relative justify-center flex items-center">
+                                    <p class="md:rotate-90 text-white w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-bebas whitespace-nowrap">{{report.hora}} {{report.horario}}</p>
+                                </div>
+                                <div class="block px-5 md:px-0 py-3 md:flex gap-5 w-full">
+                                    <div class="w-full">
+                                        <h2 class="text-xl font-bebas text-black">{{report.categoria}}</h2>
+                                        <p class="text-xs">{{report.descripcion}}</p>
+                                    </div>
+                                    <div class="w-fit ml-auto flex mt-5 md:mt-0 justify-end md:grid md:grid-cols-1 gap-2">
+                                    <a class="cursor-pointer" (click)="getDocument(report.urlImagen)">
+                                        <div class="bg-black items-center w-10 md:w-8 justify-center rounded-full aspect-square shadow-xxs flex">
+                                            <img class="h-4" src="../../../assets/img/marker.svg" alt="">
+                                        </div>
+                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

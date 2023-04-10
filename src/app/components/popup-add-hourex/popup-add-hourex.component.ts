@@ -19,6 +19,8 @@ export class PopupAddHourexComponent implements OnInit {
   documentos: string[] = [];
   listNombres: string[] = [];
   nombre: string = '';
+  horaExtra: any;
+  detail: boolean | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<PopupAddHourexComponent>,
@@ -33,8 +35,10 @@ export class PopupAddHourexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const fechaDesde = this.data.cantidad.desde;
-    const fechaHasta = this.data.cantidad.hasta;
+    this.horaExtra = this.data.horaExtra;
+    this.detail = this.data.detail;
+    const fechaDesde = this.horaExtra.cantidad.desde;
+    const fechaHasta = this.horaExtra.cantidad.hasta;
 
     const fecha1 = new Date(fechaDesde);
     const anio1 = fecha1.getFullYear();
@@ -65,7 +69,7 @@ export class PopupAddHourexComponent implements OnInit {
       this.getUser(user!.email)
     });
 
-    this.getEmpleados(this.data.empleados);
+    this.getEmpleados(this.horaExtra.empleados);
   }
 
   getUser(email: any){
@@ -92,12 +96,12 @@ export class PopupAddHourexComponent implements OnInit {
   }
 
   actualizarHoraExtra(){
-    var listEmpleados = this.data.empleados;
+    var listEmpleados = this.horaExtra.empleados;
     listEmpleados.push(this.user.id)
     const HORAEXTRA: HoraExtra = {
       empleados: listEmpleados
     };
-    this.horaExtraService.editHoraExtra(this.data.id, HORAEXTRA).then(
+    this.horaExtraService.editHoraExtra(this.horaExtra.id, HORAEXTRA).then(
       () => {
         const dialogRef = this.dialog.open(PopupActionSuccessComponent, {
           data: 'HORA EXTRA'

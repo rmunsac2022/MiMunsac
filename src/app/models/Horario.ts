@@ -1,3 +1,5 @@
+import { Report } from "src/app/models/Report";
+
 export class Horario {
     id?: string;
     fecha?: Date;
@@ -18,4 +20,5 @@ export class Horario {
     pm?: string;
     largeReportsEntrada?: number;
     largeReportsSalida?: number;
+    reportes?: Report[];
 }

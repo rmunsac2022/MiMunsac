@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +10,9 @@ import { HorariosService } from 'src/app/services/horarios.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ReportsService } from 'src/app/services/reports.service';
+import { Report } from 'src/app/models/Report';
+import { Storage, ref, listAll, getDownloadURL } from '@angular/fire/storage';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-history',
@@ -70,6 +72,11 @@ export class HistoryComponent implements OnInit {
   listHorario: Horario[] = [];
   listFiltrada: Horario[] = [];
   isMobile : boolean;
+  listReport: Report[] = [];
+  viewReports: boolean = false;
+  documentos: string[] = [];
+  horaFormateada: any;
+  horaBD: any;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -80,7 +87,9 @@ export class HistoryComponent implements OnInit {
     private toastr: ToastrService,
     private horaExtraService: HorariosService,
     private deviceService: DeviceDetectorService,
-    private reportService: ReportsService
+    private reportService: ReportsService,
+    private storage: Storage,
+    private datePipe: DatePipe
   ) { 
     this.isMobile = this.deviceService.isMobile();
   }
@@ -212,9 +221,41 @@ export class HistoryComponent implements OnInit {
     this.loading = false;
   }
 
-  getReportById(listId: any){
+  getReportById(listId: any, index: any){
+    this.listHorario.forEach((element: any)=>{
+      element.reportes = []
+    });
+    this.viewReports = true;
     listId.forEach((element: any)=>{
-      console.log(element);
+      this.reportService.getReportByid(element).subscribe((report)=>{
+        var hora = report.fecha.seconds;          
+        const fechaHora = new Date();
+        fechaHora.setTime(hora * 1000);
+        this.horaFormateada = this.datePipe.transform(fechaHora, 'HH:mm');   
+        this.horaBD = this.datePipe.transform(fechaHora, 'HH');   
+        report.hora = this.horaFormateada;   
+        if(this.horaBD <= 11){
+          report.horario = 'AM'
+        }else{
+          report.horario = 'PM'
+        }
+        this.listHorario[index].reportes?.push(report);
+      })
     })
+  }
+
+  getDocument(urlImagen: any){
+    const documentRef = ref(this.storage, 'reportes/'.concat(urlImagen));
+
+    listAll(documentRef).then(async documentos => {
+      this.documentos = [];
+      for(let image of documentos.items) {
+        const url = await getDownloadURL(image);
+        this.documentos.push(url);
+      }
+      this.documentos.forEach((element)=> {
+        window.open(element, '_blank');
+      })
+    }).catch(error => console.log(error));
   }
 }

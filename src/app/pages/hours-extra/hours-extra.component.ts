@@ -11,6 +11,7 @@ import { HorasExtrasService } from 'src/app/services/horas-extras.service';
 import { PermissionRequestService } from 'src/app/services/permission-request.service';
 import * as XLSX from 'xlsx';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { PopupAddHourexComponent } from 'src/app/components/popup-add-hourex/popup-add-hourex.component';
 
 
 @Component({
@@ -193,6 +194,20 @@ export class HoursExtraComponent implements OnInit {
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, 'Hoja1');
     XLSX.writeFile(book, 'Resumen.xlsx');
+  }
+
+  detailHoraExtra(horaExtra: HoraExtra){
+    const dialogRef = this.dialog.open(PopupAddHourexComponent, {
+      data: {
+        horaExtra: horaExtra,
+        detail: true
+      } ,
+      maxWidth:  this.isMobile ? '90dvw' : '100vw',
+      minWidth: this.isMobile ? '90dvw' : 'auto'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
 }

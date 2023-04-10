@@ -17,7 +17,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { LottieModule } from 'ngx-lottie';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,6 +41,7 @@ import { RequestPermitsComponent } from './components/request-permits/request-pe
 import player from 'lottie-web';
 import * as lottie from 'lottie-web';
 import { PopupActionSuccessComponent } from './components/popup-action-success/popup-action-success.component';
+import { PopupDetailRequestComponent } from './components/popup-detail-request/popup-detail-request.component';
 
 export function playerFactory() {
   return player;
@@ -50,7 +51,6 @@ export function playerFactory() {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
-    
     HomeComponent,
     ProfileComponent,
     HistoryComponent,
@@ -66,8 +66,10 @@ export function playerFactory() {
     PopupAddHourexComponent,
     RequestPermitsComponent,
     PopupActionSuccessComponent,
+    PopupDetailRequestComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
