@@ -55,7 +55,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
         width: { min: 1080, max: 1080 },
         height: { min: 1080, max: 1080 },
         aspectRatio: { ideal: 1 }
-      }
+      },
       vibrate: false,
     }
   };
