@@ -50,6 +50,12 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     fps: 60,
     constraints: { 
       audio: false,
+      videoHeight: 400, // Establecer la altura del video en 400 píxeles
+      video: {
+        width: { min: 1080, max: 1080 },
+        height: { min: 1080, max: 1080 },
+        aspectRatio: { ideal: 1 }
+      }
       vibrate: false,
     }
   };
@@ -63,8 +69,9 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService,
     private toast: ToastrService,
     @Inject(MAT_DIALOG_DATA) 
-    public data: any
-    ) {
+    public data: any,
+    private el: ElementRef
+        ) {
       this.isMobile = this.deviceService.isMobile();
 
     }
@@ -98,8 +105,17 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     if (this.ac) {
       // Inicializar el componente
-      this.ac.start();
+      this.ac?.play();
 
+      navigator.mediaDevices.enumerateDevices().then(devices => {
+        const cam = devices.filter(device => device.kind === 'videoinput');
+        cam.forEach(element => {
+          console.log(element);
+          this.camaras.push(element.deviceId);
+          this.camarasName.push(element.label);
+        });
+
+      });
     }
   }
 
@@ -115,7 +131,8 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     console.log(select);
     this.camaraselect = select;
     if (this.ac) {
-      this.ac.playDevice('');
+      this.ac.stop();
+      this.ac.playDevice(select);
     }
   }
 
