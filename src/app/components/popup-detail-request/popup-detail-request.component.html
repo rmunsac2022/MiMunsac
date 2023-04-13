@@ -58,6 +58,7 @@
 
         </div>
     </div>
-    <h1>Estado: {{request.estado}}</h1>
+    <h1>{{message}}</h1>
+    <h1 *ngIf="request.motivoRechazo!= ''">{{rechazo}}</h1>
 
 </section>

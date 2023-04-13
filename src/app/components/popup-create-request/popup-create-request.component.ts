@@ -30,6 +30,7 @@ export class PopupCreateRequestComponent implements OnInit {
   fechaString: string = "";
   files: any;
   packageIdImages: string | undefined;
+  minDate: string;
 
   constructor(
     public dialogRef: MatDialogRef<PopupCreateRequestComponent>,
@@ -44,6 +45,10 @@ export class PopupCreateRequestComponent implements OnInit {
     private settingService: SettingService,
     private afs: AngularFirestore
   ) { 
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 24);
+    this.minDate = currentDate.toISOString().slice(0, 16);
+
     this.registrarSolicitud = this.fb.group({
       descripcion: [''],
       categoria: [''],
@@ -103,7 +108,8 @@ export class PopupCreateRequestComponent implements OnInit {
       estado: 'pendiente',
       idUsuario: this.user.id,
       leido: false,
-      rangoSolicitados: timestamp
+      rangoSolicitados: timestamp,
+      motivoRechazo: ''
     };
     this.requestService.crearRequest(REQUEST).then(
       () => {
@@ -143,7 +149,7 @@ export class PopupCreateRequestComponent implements OnInit {
         this.afs.collection('Correos').add({
           to: email,
           message: {
-            subject: this.userData.name! + this.userData.apellido! + ' a hecho una solicitud',
+            subject: this.userData.name! +" "+ this.userData.apellido! + ' a hecho una solicitud',
             html: '<p>Visita Munsac Control para ver los detalles</p>'
           },
         }).then(() => console.log('Send email for delivery!'));

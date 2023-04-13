@@ -145,7 +145,8 @@ export class RequestsComponent implements OnInit {
           apellido: '',
           correo:'',
           rut:'',
-          telefono: ''
+          telefono: '',
+          motivoRechazo: element.motivoRechazo
         } 
         var hora = request.fecha.seconds;          
         const fechaHora = new Date();

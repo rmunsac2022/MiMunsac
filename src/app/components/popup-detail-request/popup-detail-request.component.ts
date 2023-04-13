@@ -15,6 +15,8 @@ export class PopupDetailRequestComponent implements OnInit {
   user: any;
   documentos: string[] = [];
   request: any;
+  message: any;
+  rechazo: any;
 
   constructor(
     public dialogRef: MatDialogRef<PopupDetailRequestComponent>,
@@ -40,6 +42,8 @@ export class PopupDetailRequestComponent implements OnInit {
     this.fecha = dia + "/" + mes + "/" + anio;
     this.desde = this.request.rangoSolicitados.desde.seconds*1000;
     this.hasta = this.request.rangoSolicitados.hasta.seconds*1000;
+    this.message = 'Estado: '+this.request.estado;
+    this.rechazo = 'Motivo del rechazo: '+this.request.motivoRechazo;
   }
 
   getDocument(urlImagen: any){

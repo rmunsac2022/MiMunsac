@@ -18,7 +18,6 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { LottieModule } from 'ngx-lottie';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { CommonModule } from '@angular/common';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -66,7 +65,7 @@ export function playerFactory() {
     PopupAddHourexComponent,
     RequestPermitsComponent,
     PopupActionSuccessComponent,
-    PopupDetailRequestComponent,
+    PopupDetailRequestComponent
   ],
   imports: [
     CommonModule,

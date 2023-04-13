@@ -48,11 +48,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="w-full">
                             <p>Desde</p>
-                            <input type="datetime-local" formControlName="desde" class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"/>
+                            <input type="datetime-local" min="{{minDate}}" formControlName="desde" class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"/>
                         </div>
                         <div class="w-full">
                             <p>Hasta</p>
-                            <input type="datetime-local" formControlName="hasta" class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"/>
+                            <input type="datetime-local" min="{{minDate}}" formControlName="hasta" class="rounded-2xl bg-white px-5 py-2 flex h-fit shadow-xxs text-xl text-center font-bebas w-full justify-center"/>
                         </div>
                     </div>
     

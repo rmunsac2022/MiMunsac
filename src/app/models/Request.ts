@@ -21,4 +21,6 @@ export class Requests {
     correo?: string;
     telefono?: string;
     rut?: string;
+    motivoRechazo?: string;
+
 }
