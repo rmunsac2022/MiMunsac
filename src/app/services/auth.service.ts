@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   logOut() {
-    this.toastr.info('Ha salido exitosamente', 'Sesion cerrada');
+    //this.toastr.info('Ha salido exitosamente', 'Sesion cerrada');
     this.afAuth.signOut().then(() => this.router.navigate(['/login']));
   }
 
@@ -74,7 +74,7 @@ export class AuthService {
           audio.src = "./assets/audio/beep.mp3";
           audio.load();
           audio.play();
-          this.toastr.success('Ha ingresado exitosamente', 'Bienvenido');
+          //this.toastr.success('Ha ingresado exitosamente', 'Bienvenido');
         }
       })
       .catch((error) => {
