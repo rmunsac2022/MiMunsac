@@ -31,6 +31,10 @@ export class LoginComponent {
     this.afAuth.onAuthStateChanged((user) => {
       if(user){
         this.router.navigate(['/permits'])
+        let audio = new Audio();
+        audio.src = "./assets/audio/beep.mp3";
+        audio.load();
+        audio.play();
       }
     });
   }
