@@ -107,7 +107,8 @@ export class ReportsComponent implements OnInit {
   crearReporte(){
     const dialogRef = this.dialog.open(PopupCreateReportComponent, {
       data: '',
-      minWidth: this.isMobile ? '90dvw' : 'auto'
+      minWidth: this.isMobile ? '90dvw' : 'auto',
+      maxHeight: this.isMobile ? '70dvh' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.listFiltrada = [];

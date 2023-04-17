@@ -176,7 +176,8 @@ export class HoursExtraComponent implements OnInit {
     const dialogRef = this.dialog.open(PopupTickQrComponent, {
       data: 'horaextra',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
-      minWidth: this.isMobile ? '90dvw' : 'auto'
+      minWidth: this.isMobile ? '90dvw' : 'auto',
+      maxHeight: this.isMobile ? '70dvh' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.listFiltrada = []

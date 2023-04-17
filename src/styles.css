@@ -26,7 +26,6 @@ textarea:focus-visible {
 
 h1,
 button,
-input,
 span,
 textarea,
 label {
@@ -34,7 +33,7 @@ label {
 }
 
 textarea,
-h3, p {
+h3, p, input {
     font-family: geomanist !important;
 }
 

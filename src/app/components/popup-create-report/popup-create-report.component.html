@@ -31,21 +31,21 @@
 
             <div class="w-full">
                 <h1 class="text-2xl mb-2">¿CUÉNTANOS QUE PASO?</h1>
-                <textarea class="rounded-2xl w-full bg-white px-5 py-2 mr-2 flex h-fit text-sm shadow-xxs" placeholder="Ingresa la descripción" type="text" rows="7" cols="50" formControlName="descripcion"> </textarea>
+                <textarea class="appearance-none rounded-2xl w-full bg-white px-5 py-2 mr-2 flex h-fit text-sm shadow-xxs" placeholder="Ingresa la descripción" type="text" rows="7" cols="50" formControlName="descripcion"> </textarea>
             </div>
     
     
-            <select class="shadow-min flex py-4 rounded-xl bg-white pl-4 text-sm w-full" formControlName="categoria" placeholder="Seleciona el tipo de reporte...">
+            <select class="appearance-none shadow-min flex py-4 rounded-xl bg-white pl-4 text-sm w-full" formControlName="categoria" placeholder="Seleciona el tipo de reporte...">
                 <option value="" disabled selected>Seleciona el tipo de reporte...</option>
                 <option value="llegada">Llegada</option>
                 <option value="salida">Salida</option>
                 <!--<option value="otro">Otro</option>-->
             </select>
     
-            <div class="bg-verdemunclaro md:flex rounded-4xl p-5 items-center">
+            <div class="bg-verdemunclaro md:flex rounded-4xl p-5 items-center relative">
                 <h1 class="text-2xl mr-auto">¿Deseas adjuntar alguna foto o archivo?</h1>
                 <input formControlName="urlImagen" multiple (change)="subirArchivo($event)"
-                class="w-fit file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:bg-verdemun file:text-black file:cursor-pointer file:transition-all file:duration-200 file:font-bebas hover:file:scale-95 hover:file:bg-black  hover:file:text-white rounded-2xl bg-white p-3 flex h-fit shadow-xxs text-sm text-center font-bebas placeholder:font-bebas place-content-center" placeholder="SELECCIONAR" type="file">
+                class="appearance-none w-full md:w-fit file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:bg-verdemun file:text-black file:cursor-pointer file:transition-all file:duration-200 file:font-bebas hover:file:scale-95 hover:file:bg-black  hover:file:text-white rounded-2xl bg-white p-3 flex h-fit shadow-xxs text-sm text-center font-bebas placeholder:font-bebas place-content-center" placeholder="SELECCIONAR" type="file">
             </div>
     
         </div>
