@@ -16,14 +16,14 @@ export class RequestService {
   }
 
   editRequest(id: string, request: any): Promise<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').collection('Solicitudes').doc(id).update(request);
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Solicitudes').doc(id).update(request);
   }
 
   getRequestByIdUser(idUsuario: any, attribute: any): Observable<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').collection('Solicitudes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Solicitudes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
   }
 
   crearRequest(request: Requests): Promise<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').collection('Solicitudes').add(request);
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Solicitudes').add(request);
   }
 }

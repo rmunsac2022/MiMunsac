@@ -10,10 +10,10 @@ export class SettingService {
   constructor(private firestore: AngularFirestore) { }
 
   getSetting(): Observable<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').valueChanges();
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').valueChanges();
   }
 
   editConfiguracion(setting: any): Promise<any> {
-    return this.firestore.collection('MunsacControl').doc('registros').update(setting);
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').update(setting);
   }
 }
