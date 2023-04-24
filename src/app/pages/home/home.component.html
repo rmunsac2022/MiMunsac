@@ -1,66 +1,67 @@
 
 <app-menu class="md:w-[20%] block"></app-menu>
 
-    <div class="overflow-y-scroll bg-white md:w-[80%] px-6 md:px-20 pt-10 md:pt-20 pb-10 md:max-h-screen">
-        <div *ngIf="!loading" class="container mx-auto">
-            <div class="bg-verdemun relative rounded-full items-center w-20 flex justify-center shadow-in aspect-square cursor-pointer hover:scale-90 transition-all duration-200">
-                <span class="text-6xl pt-2 z-50">{{user.emoji}}</span>
-            </div>
-            <h1 class="leading-1 text-5xl mt-3">Bienvenid@ {{user.name}}!</h1>
-            <p>{{fecha}}</p>
-            
-            <div class="mt-5 md:flex grid grid-cols-1 gap-5">
-    
-                <div class="w-full md:w-[30%]">
-    
-                    <div class="bg-black rounded-3xl p-5 h-full w-full">
-                        <h1 class="text-3xl md:text-2xl font-bebas text-white mb-4 md:my-2 text-center">ENTRADAS Y SALIDAS</h1>
-    
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="bg-negrobox rounded-3xl p-5 justify-center">
-                                <p class="text-4xl text-center mx-auto w-full">🚸</p>
-                                <h1 class="text-2xl md:text-xl font-bebas my-1 text-white text-center w-full">INGRESO A LA OFICINA</h1>
-                                <button (click)="marcarEntrada()" class="w-full flex md:mx-auto md:w-fit font-bebas justify-center text-center text-black text-xl md:text-md shadow-xxs px-8 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">MARCAR INGRESO</button>
-                            </div>
-        
-                            <div class="bg-negrobox rounded-3xl p-5 justify-center">
-                                <p class="text-4xl text-center mx-auto w-full">🏠</p>
-                                <h1 class="text-2xl md:text-xl font-bebas my-1 text-white text-center w-full">SALIDA DE LA OFICINA</h1>
-                                <button (click)="marcarSalida()" class="w-full flex md:mx-auto md:w-fit font-bebas justify-center text-center text-black text-xl md:text-md shadow-xxs px-8 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">MARCAR SALIDA</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="w-full md:w-[70%] grid grid-cols-1 gap-5">
-    
-                    <div class="bg-verdemunclaro shadow-in rounded-3xl p-5">
-                        <div class="md:flex items-center mb-4">
-                            <h1 class="text-3xl md:text-2xl font-bebas flex mr-auto">HORAS EXTRAS ESTE MES</h1>
-                            <button routerLink="/hoursExtra" class="w-fit font-bebas text-black text-md shadow-min mt-1 md:mt-0 px-10 md:px-6 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">VER HISTORIAL</button>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-36 md:h-28 overflow-y-scroll">
-                            <div *ngFor="let horaExtra of listHorasExtras" class="bg-white rounded-2xl p-2 pl-4  flex items-center">
-                                <span class="text-xl mr-2">{{horaExtra.emoji}}</span>
-                                <h1 class="text-xl mr-auto">{{horaExtra.nombreProyecto}}</h1>
-                                <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+{{horaExtra.duracion}}HR</h1>
-                            </div>
-                            <p *ngIf="listVacia" class="text-sm">Aún no estas enlazado a ninguna hora extra</p>
-                        </div>
-                    </div>
-    
-                    <div class="bg-white shadow-min rounded-3xl p-5 flex items-center">
-                        <div class="h-fit my-auto">
-                            <span class="text-6xl">⚠️</span>
-                            <h1 class="text-3xl font-bebas mr-auto my-2">¿Tuviste un problema de camino al trabajo?</h1>
-                            <button (click)="crearReporte()" class="w-full md:w-fit font-bebas text-black text-xl md:text-md shadow-min px-6 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">REPORTARLO AHORA</button>
-                        </div>
-                    </div>
-    
-                </div>
-    
-            </div>
-        
+<div class="overflow-y-scroll bg-white md:w-[80%] px-6 md:px-20 pt-10 md:pt-20 pb-10 md:max-h-screen">
+    <div *ngIf="!loading" class="container mx-auto">
+        <div class="bg-verdemun relative rounded-full items-center w-20 flex justify-center shadow-in aspect-square cursor-pointer hover:scale-90 transition-all duration-200">
+            <span class="text-6xl pt-2 z-50">{{user.emoji}}</span>
         </div>
-        <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
+        <h1 class="leading-1 text-5xl mt-3">Bienvenid@ {{user.name}}!</h1>
+        <p>{{fecha}}</p>
+        
+        <div class="mt-5 md:flex grid grid-cols-1 gap-5">
+
+            <div class="w-full md:w-[30%]">
+
+                <div class="bg-black rounded-3xl p-5 h-full w-full">
+                    <h1 class="text-3xl md:text-2xl font-bebas text-white mb-4 md:my-2 text-center">ENTRADAS Y SALIDAS</h1>
+
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="bg-negrobox rounded-3xl p-5 justify-center">
+                            <p class="text-4xl text-center mx-auto w-full">🚸</p>
+                            <h1 class="text-2xl md:text-xl font-bebas my-1 text-white text-center w-full">INGRESO A LA OFICINA</h1>
+                            <button (click)="marcarEntrada()" class="w-full flex md:mx-auto md:w-fit font-bebas justify-center text-center text-black text-xl md:text-md shadow-xxs px-8 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">MARCAR INGRESO</button>
+                        </div>
+    
+                        <div class="bg-negrobox rounded-3xl p-5 justify-center">
+                            <p class="text-4xl text-center mx-auto w-full">🏠</p>
+                            <h1 class="text-2xl md:text-xl font-bebas my-1 text-white text-center w-full">SALIDA DE LA OFICINA</h1>
+                            <button (click)="marcarSalida()" class="w-full flex md:mx-auto md:w-fit font-bebas justify-center text-center text-black text-xl md:text-md shadow-xxs px-8 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">MARCAR SALIDA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-[70%] grid grid-cols-1 gap-5">
+
+                <div class="bg-verdemunclaro shadow-in rounded-3xl p-5">
+                    <div class="md:flex items-center mb-4">
+                        <h1 class="text-3xl md:text-2xl font-bebas flex mr-auto">HORAS EXTRAS ESTE MES</h1>
+                        <button routerLink="/hoursExtra" class="w-fit font-bebas text-black text-md shadow-min mt-1 md:mt-0 px-10 md:px-6 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">VER HISTORIAL</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-36 md:h-28 overflow-y-scroll">
+                        <div *ngFor="let horaExtra of listHorasExtras" class="bg-white rounded-2xl p-2 pl-4  flex items-center">
+                            <span class="text-xl mr-2">{{horaExtra.emoji}}</span>
+                            <h1 class="text-xl mr-auto">{{horaExtra.nombreProyecto}}</h1>
+                            <h1 class="bg-negroinput text-white rounded-xl px-4 py-1 text-xl">+{{horaExtra.duracion}}HR</h1>
+                        </div>
+                        <p *ngIf="listVacia" class="text-sm">Aún no estas enlazado a ninguna hora extra</p>
+                    </div>
+                </div>
+
+                <div class="bg-white shadow-min rounded-3xl p-5 flex items-center">
+                    <div class="h-fit my-auto">
+                        <span class="text-6xl">⚠️</span>
+                        <h1 class="text-3xl font-bebas mr-auto my-2">¿Tuviste un problema de camino al trabajo?</h1>
+                        <button (click)="crearReporte()" class="w-full md:w-fit font-bebas text-black text-xl md:text-md shadow-min px-6 py-1 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">REPORTARLO AHORA</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    
     </div>
+    <app-spinner *ngIf="loading" class="flex justify-center"></app-spinner>
+</div>
+<app-scanner-qr-client *ngIf="isPostVenta"></app-scanner-qr-client>

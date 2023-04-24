@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit{
   listVacia: boolean = false;
   listHorasExtras: HoraExtra[] = [];
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
+  isPostVenta: boolean = false;
 
   constructor(
     private router: Router,
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit{
     private authService: AuthService,
     private horaExtraService: HorasExtrasService,
     private permissionService: PermissionRequestService,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private auth: AuthService,
   ) {
     this.isMobile = this.deviceService.isMobile();
   }
@@ -51,6 +53,13 @@ export class HomeComponent implements OnInit{
       if (user){
         this.permissionService.confirmPermitions();
       }
+      const sub = this.auth.getUserByEmail(user!.email, 'correo').subscribe((user)=>{
+        sub.unsubscribe();
+        var user = user[0].sistema;
+        if(user.includes('munsacAyuda')){
+          this.isPostVenta = true;
+        }
+      });
       this.getUser(user!.email)
     });
 

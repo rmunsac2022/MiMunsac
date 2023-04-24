@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PopupActionSuccessComponent } from '../popup-action-success/popup-action-success.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ToastrService } from 'ngx-toastr';
+import { ClientService } from 'src/app/services/client.service';
+import { PopupInfoClientComponent } from '../popup-info-client/popup-info-client.component';
 
 @Component({
   selector: 'app-popup-tick-qr',
@@ -43,8 +45,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
   
-
-
   public config: ScannerQRCodeConfig = {
     isBeep: false,
     fps: 60,
@@ -75,21 +75,17 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private deviceService: DeviceDetectorService,
     private toast: ToastrService,
+    private clientService: ClientService,
     @Inject(MAT_DIALOG_DATA) 
-    public data: any,
-    private el: ElementRef
+    public data: any
     ) {
       this.isMobile = this.deviceService.isMobile();
-
     }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
       this.getUser(user!.email)
     });
-
-
-
 
     this.valorQr = this.data;
     const ahora = new Date();
@@ -242,7 +238,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   }
 
   salida($subject : any) {
-
     if(this.escaneoRealizado === false){
       this.escaneoRealizado = true;
       var qr = $subject[0].value;
@@ -324,6 +319,29 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
         this.dialogRef.close();
         dialogRef.afterClosed().subscribe(result => {
     
+        });
+      })
+    }
+  }
+
+  getClient($subject: any){
+    if(this.escaneoRealizado === false){
+      this.escaneoRealizado = true;
+      var base64 = $subject[0].value;
+      console.log(base64);
+      var id = atob(base64)
+      var partesId = id.split("/");
+      var fecha = partesId[2];
+      var dia = partesId[3];
+      const sub = this.clientService.getIngresoByDateAndRut(fecha, dia, base64).subscribe((ingreso)=>{
+        sub.unsubscribe();
+        const dialogRef = this.dialog.open(PopupInfoClientComponent, {
+          data:ingreso,
+          maxWidth:  this.isMobile ? '90dvw' : '100vw',
+          minWidth: this.isMobile ? '90dvw' : 'auto'
+        });
+        this.dialogRef.close();
+        dialogRef.afterClosed().subscribe(result => {
         });
       })
     }
