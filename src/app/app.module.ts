@@ -41,8 +41,8 @@ import player from 'lottie-web';
 import * as lottie from 'lottie-web';
 import { PopupActionSuccessComponent } from './components/popup-action-success/popup-action-success.component';
 import { PopupDetailRequestComponent } from './components/popup-detail-request/popup-detail-request.component';
-import { ScannerQrClientComponent } from './components/scanner-qr-client/scanner-qr-client.component';
-import { PopupInfoClientComponent } from './components/popup-info-client/popup-info-client.component';
+import { PopupInfoClientComponent } from './components/munsacAyuda/popup-info-client/popup-info-client.component';
+import { PopupShortcutsComponent } from './components/popup-shortcuts/popup-shortcuts.component';
 
 export function playerFactory() {
   return player;
@@ -68,8 +68,8 @@ export function playerFactory() {
     RequestPermitsComponent,
     PopupActionSuccessComponent,
     PopupDetailRequestComponent,
-    ScannerQrClientComponent,
-    PopupInfoClientComponent
+    PopupInfoClientComponent,
+    PopupShortcutsComponent
   ],
   imports: [
     CommonModule,

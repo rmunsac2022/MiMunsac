@@ -53,13 +53,6 @@ export class HomeComponent implements OnInit{
       if (user){
         this.permissionService.confirmPermitions();
       }
-      const sub = this.auth.getUserByEmail(user!.email, 'correo').subscribe((user)=>{
-        sub.unsubscribe();
-        var user = user[0].sistema;
-        if(user.includes('munsacAyuda')){
-          this.isPostVenta = true;
-        }
-      });
       this.getUser(user!.email)
     });
 

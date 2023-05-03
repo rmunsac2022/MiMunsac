@@ -62,6 +62,20 @@
             </div>
         </div>
 
+        <div *ngIf="valorQr=='scooter'">
+            <h1 class="text-2xl font-bebas mb-2">Escanear qr del scooter</h1>
+
+            <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
+
+                <ngx-scanner-qrcode #ac="scanner" (event)="getDataScooter($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
+                        
+                <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
+                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                </div>
+
+            </div>
+        </div>
+
     </div>
     
 </section>

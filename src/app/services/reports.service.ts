@@ -14,6 +14,16 @@ export class ReportsService {
     return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Reportes', ref => ref.orderBy('fecha', 'asc')).snapshotChanges();
   }
 
+  /*getFirst10Reports(): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Reportes', ref => ref.orderBy('fecha', 'asc').limit(10)).snapshotChanges();
+  }
+
+  getAfter10Reports(startAfterDoc: any): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador')
+      .collection('Reportes', ref => ref.orderBy('fecha', 'asc').startAfter(startAfterDoc).limit(10))
+      .snapshotChanges();
+  }*/
+
   getReportByIdUser(idUsuario: any, attribute: any): Observable<any> {
     return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').collection('Reportes', ref => ref.where(attribute, '==', idUsuario)).valueChanges();
   }

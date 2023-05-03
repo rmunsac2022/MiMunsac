@@ -13,7 +13,8 @@ import { PopupActionSuccessComponent } from '../popup-action-success/popup-actio
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ToastrService } from 'ngx-toastr';
 import { ClientService } from 'src/app/services/client.service';
-import { PopupInfoClientComponent } from '../popup-info-client/popup-info-client.component';
+import { PopupInfoClientComponent } from '../munsacAyuda/popup-info-client/popup-info-client.component';
+import { StService } from 'src/app/services/st.service';
 
 @Component({
   selector: 'app-popup-tick-qr',
@@ -41,7 +42,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   horaExtraObj: HoraExtra = new HoraExtra;
   public qrCodeResult: NgxScannerQrcodeService[] = [];
   $subject: BehaviorSubject<ScannerQRCodeResult[]> = new BehaviorSubject<ScannerQRCodeResult[]>([]);
-
   
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
   
@@ -76,6 +76,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService,
     private toast: ToastrService,
     private clientService: ClientService,
+    private stService: StService,
     @Inject(MAT_DIALOG_DATA) 
     public data: any
     ) {
@@ -110,7 +111,6 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
     if (this.ac) {
       // Inicializar el componente
       this.ac.play();
-
       navigator.mediaDevices.enumerateDevices().then(devices => {
         const cam = devices.filter(device => device.kind === 'videoinput');
         cam.forEach(element => {
@@ -139,32 +139,30 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   }
 
   entrada($subject : any) {
-    var qr = $subject[0].value;
-    const decodedString = atob(qr);
-
-    var partes = decodedString.split("/");
-    var fecha = partes[0];
-    var text = partes[1].length;
-    var munsac = partes[2];
-
-    var partesFecha = fecha.split(":");
-    var dia = partesFecha[0];
-    var mes = partesFecha[1];
-    var anio = partesFecha[2];
-    var hora = partesFecha[3];
-    var minuto = partesFecha[4];
-
-    this.mes = this.mes.toString();
-    this.dia = this.dia.toString();
-    this.anio = this.anio.toString();
-    this.horaActual = this.horaActual.toString();
-    this.minutoActual = this.minutoActual.toString();
-
     if(this.escaneoRealizado === false){
-
       this.escaneoRealizado = true;
-      if(dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
+      var qr = $subject[0].value;
+      const decodedString = atob(qr);
+  
+      var partes = decodedString.split("/");
+      var fecha = partes[0];
+      var text = partes[1].length;
+      var munsac = partes[2];
+  
+      var partesFecha = fecha.split(":");
+      var dia = partesFecha[0];
+      var mes = partesFecha[1];
+      var anio = partesFecha[2];
+      var hora = partesFecha[3];
+      var minuto = partesFecha[4];
+  
+      this.mes = this.mes.toString();
+      this.dia = this.dia.toString();
+      this.anio = this.anio.toString();
+      this.horaActual = this.horaActual.toString();
+      this.minutoActual = this.minutoActual.toString();
 
+      if(dia === this.dia && mes === this.mes && anio === this.anio && hora === this.horaActual && minuto === this.minutoActual && text === 12 && munsac === 'miMunsac'){
         const sub = this.horarioService.getHorarioByIdUserAndDate(this.user.id, 'idUsuario', this.fechaString).subscribe((horario)=>{
           sub.unsubscribe();
           if(horario.length>0){
@@ -327,24 +325,58 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   getClient($subject: any){
     if(this.escaneoRealizado === false){
       this.escaneoRealizado = true;
-      var base64 = $subject[0].value;
-      console.log(base64);
-      var id = atob(base64)
-      var partesId = id.split("/");
-      var fecha = partesId[2];
-      var dia = partesId[3];
-      const sub = this.clientService.getIngresoByDateAndRut(fecha, dia, base64).subscribe((ingreso)=>{
-        sub.unsubscribe();
-        const dialogRef = this.dialog.open(PopupInfoClientComponent, {
-          data:ingreso,
-          maxWidth:  this.isMobile ? '90dvw' : '100vw',
-          minWidth: this.isMobile ? '90dvw' : 'auto'
+      try{
+        var base64 = $subject[0].value;
+        var id = atob(base64);
+        var partesId = id.split("/");
+        var fecha = partesId[2];
+        var dia = partesId[3];
+        const sub = this.clientService.getIngresoByDateAndRut(fecha, dia, base64).subscribe((ingreso)=>{
+          sub.unsubscribe();
+          const dialogRef = this.dialog.open(PopupInfoClientComponent, {
+            data:{
+              accion: 'ingresar',
+              datos:ingreso,
+              id: id
+            },
+            maxWidth:  this.isMobile ? '90dvw' : '100vw',
+            minWidth: this.isMobile ? '90dvw' : 'auto'
+          });
+          this.dialogRef.close();
+          dialogRef.afterClosed().subscribe(result => {
+          });
         });
+      } catch (error: any){
+        this.toast.info('El código no es valido',error);
         this.dialogRef.close();
-        dialogRef.afterClosed().subscribe(result => {
-        });
-      })
+      }
     }
   }
 
+  getDataScooter($subject: any){
+    if(this.escaneoRealizado === false){
+      this.escaneoRealizado = true;
+      try {
+        var id = $subject[0].value;
+        const sub = this.stService.getStById(id).subscribe((data)=>{
+          sub.unsubscribe();
+          const dialogRef = this.dialog.open(PopupInfoClientComponent, {
+            data:{
+              accion: 'revision',
+              datos: data,
+              id: id
+            },
+            maxWidth:  this.isMobile ? '90dvw' : '100vw',
+            minWidth: this.isMobile ? '90dvw' : 'auto'
+          });
+          this.dialogRef.close();
+          dialogRef.afterClosed().subscribe(result => {
+          });
+        });
+      } catch (error: any) {
+        this.toast.info('El código no es valido',error);
+        this.dialogRef.close();
+      }
+    }
+  }
 }
