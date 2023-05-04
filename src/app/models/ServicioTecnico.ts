@@ -22,5 +22,6 @@ export class ServicioTecnico {
     diagnostico?: string;
     fecha: any;
     fechaString?: string;
+    mesAnio?: string;
     comentario?: string;
 }

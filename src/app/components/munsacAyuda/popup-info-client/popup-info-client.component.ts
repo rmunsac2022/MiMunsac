@@ -90,6 +90,7 @@ export class PopupInfoClientComponent implements OnInit {
         diagnostico:'',
         fecha: new Date(),
         fechaString: new Date().getDay().toString()+"."+new Date().getMonth().toString()+"."+new Date().getFullYear().toString(),
+        mesAnio: (new Date().getMonth()+1).toString()+"/"+new Date().getFullYear().toString(),
         comentario: this.form.value.comentario
       }
       this.clientService.saveIngresoSt(ST).then((docRef: any)=>{

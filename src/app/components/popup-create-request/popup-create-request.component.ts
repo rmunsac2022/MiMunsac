@@ -103,6 +103,7 @@ export class PopupCreateRequestComponent implements OnInit {
       descripcion: this.registrarSolicitud.value.descripcion,
       categoria: this.registrarSolicitud.value.categoria,
       urlDocumento: this.packageIdImages,
+      mesAnio: (new Date().getMonth()+1).toString()+"/"+new Date().getFullYear().toString(),
       fecha: this.timestamp,
       fechaString: this.fechaString,
       estado: 'pendiente',

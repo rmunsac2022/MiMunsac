@@ -12,6 +12,7 @@ export class Requests {
     };
     urlDocumento?: string;
     fechaString?: string;
+    mesAnio?: string;
     nombre?: string;
     hora?: string;
     horario?: string;
