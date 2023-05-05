@@ -203,6 +203,7 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
             const LLEGADA: Horario = {
               fecha: new Date(),
               fechaString: this.fechaString,
+              mesAnio: (new Date().getMonth()+1).toString()+"/"+new Date().getFullYear().toString(),
               idUsuario: this.user.id,
               idReporteEntrada: [],
               idReporteSalida: [],

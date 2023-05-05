@@ -4,6 +4,7 @@ export class Horario {
     id?: string;
     fecha?: Date;
     fechaString?: string;
+    mesAnio?: string;
     hora?: string;
     accion?: string;
     idUsuario?: string;
