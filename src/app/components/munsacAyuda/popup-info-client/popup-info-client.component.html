@@ -19,6 +19,7 @@
             <h1 class="text-2xl">Información personal</h1>
             <p>Email: {{data.datos.datosCliente.mail}}</p>
             <p>Rut: {{data.datos.datosCliente.rut}}</p>
+            <p>Nombre: {{data.datos.datosCliente.nombre}}</p>
             <p>Telefono: {{data.datos.datosCliente.telefono}}</p>
             <p>Estado equipo: {{data.datos.datosProducto.estadoEquipo}}</p>
             <p>Fecha compra: {{data.datos.datosProducto.fechaCompra}}</p>
@@ -97,21 +98,22 @@
                 </form>
             </div>
             <div *ngIf="isRevision">
-                <p>{{data.datos.revisiones.amortiguacionQuebrada}}</p>
-                <p>{{data.datos.revisiones.bocinaFuncional}}</p>
-                <p>{{data.datos.revisiones.cableadoCortado}}</p>
-                <p>{{data.datos.revisiones.displayQuemado}}</p>
-                <p>{{data.datos.revisiones.luzQuemada}}</p>
-                <p>{{data.datos.revisiones.manillaresFrenos}}</p>
-                <p>{{data.datos.revisiones.motorFuncional}}</p>
-                <p>{{data.datos.revisiones.neumaticoEstable}}</p>
-                <p>{{data.datos.revisiones.neumaticoPinchado}}</p>
-                <p>{{data.datos.revisiones.quiebre}}</p>
-                <p>{{data.datos.revisiones.rayones}}</p>
+                <p>Amortiguación quebrada: {{data.datos.revisiones.amortiguacionQuebrada}}</p>
+                <p>Bocina funcional: {{data.datos.revisiones.bocinaFuncional}}</p>
+                <p>Cableado cortado: {{data.datos.revisiones.cableadoCortado}}</p>
+                <p>Display quemado: {{data.datos.revisiones.displayQuemado}}</p>
+                <p>Luz quemada: {{data.datos.revisiones.luzQuemada}}</p>
+                <p>Manillares frenos: {{data.datos.revisiones.manillaresFrenos}}</p>
+                <p>Motor funcional: {{data.datos.revisiones.motorFuncional}}</p>
+                <p>Neumatico estable: {{data.datos.revisiones.neumaticoEstable}}</p>
+                <p>Neumatico pinchado: {{data.datos.revisiones.neumaticoPinchado}}</p>
+                <p>Quiebre: {{data.datos.revisiones.quiebre}}</p>
+                <p>Rayones: {{data.datos.revisiones.rayones}}</p>
         
-                <textarea cols="30" rows="10" [(ngModel)]="diagnostico"></textarea>        
+                <label>Diagnostico: </label>
+                <textarea cols="30" rows="1" class="border" [(ngModel)]="diagnostico"></textarea>  
                 <div class="bg-black rounded-full py-2 px-2">
-                    <button (click)="changeState()" class="text-white font-bebas w-full text-center text-xl">Comenzar diagnostico</button>
+                    <button (click)="addDiagnosis()" class="text-white font-bebas w-full text-center text-xl">Subir diagnostico</button>
                 </div>
             </div>
         </div>

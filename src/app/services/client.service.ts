@@ -25,4 +25,12 @@ export class ClientService {
   saveIngresoSt(ingresoSt: any): Promise<any> {
     return this.firestore.collection('IngresosST').add(ingresoSt);
   }
+
+  getClientByRut(rut: string):Observable<any> {
+    return this.firestore.collection('ClientesTest', ref => ref.where('datosPersonales.rut', '==', rut)).valueChanges();
+  }
+
+  addClient(cliente: any):Promise<any>{
+    return this.firestore.collection('ClientesTest').add(cliente);
+  }
 }
