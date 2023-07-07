@@ -13,7 +13,7 @@ import { PopupShortcutsComponent } from '../popup-shortcuts/popup-shortcuts.comp
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  isPostVenta: boolean = false;
+  accesoShortcuts: boolean = false;
   isMobile : boolean;
   listOptions: any;
 
@@ -32,10 +32,9 @@ export class MenuComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       const sub = this.auth.getUserByEmail(user!.email, 'correo').subscribe((user)=>{
         sub.unsubscribe();
-        var user = user[0].sistema;
-        this.listOptions = user;
-        if(user.includes('munsacAyuda')){
-          this.isPostVenta = true;
+        var user = user[0];
+        if(user.area == "servicioTecnico" || user.area == "postVenta"  || user.area == "ti") {
+          this.accesoShortcuts = true;
         }
       });
     });

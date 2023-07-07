@@ -23,6 +23,8 @@ export class PopupInfoClientComponent implements OnInit {
   botonApretado: boolean = false;
   isIngreso: boolean = false;
   isRevision: boolean = false;
+  tieneDiagnostico: boolean = false;
+  isDiagnosticando: boolean = false;
   diagnostico: any;
   user: any;
 
@@ -59,11 +61,18 @@ export class PopupInfoClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
     if(this.data.accion === 'ingresar'){
       this.isIngreso = true;
     }
     if(this.data.accion === 'revision'){
       this.isRevision = true;
+    }
+    if(this.data.datos.diagnostico.length > 0){
+      this.tieneDiagnostico = true;
+    }
+    if(this.data.datos.estado === 'procesoDiagnostico'){
+      this.isDiagnosticando = true;
     }
     const url = `https://app.relbase.cl/api/v1/clientes?query=${this.data.datos.datosCliente.rut}`;
     const headers = new HttpHeaders()
@@ -207,7 +216,7 @@ export class PopupInfoClientComponent implements OnInit {
         if(this.diagnostico !== undefined){
           const cambios = {
             diagnostico: this.diagnostico,
-            estado: 'procesoDiagnostico',
+            estado: 'pendientePresupuesto',
             idTecnico: this.user.id
           }
           this._st.updateScheduleSt(id, cambios).then(()=>{
@@ -220,6 +229,28 @@ export class PopupInfoClientComponent implements OnInit {
         }else{
           this.toast.info('El diagnostico es requerido')
         }
+      });    
+    });
+  }
+
+  statusEnDiagnostico(){
+    this.afAuth.onAuthStateChanged((user) => {
+      const sub = this._authService.getUserByEmailWithId(user!.email, 'correo').subscribe((user)=> {
+        sub.unsubscribe();
+        this.user = user[0].payload.doc;
+        var id = this.data.id;
+        const cambios = {
+          estado: 'procesoDiagnostico',
+          idTecnico: this.user.id,
+          'fechas.inicioDiagnostico': new Date().getDate()
+        }
+        this._st.updateScheduleSt(id, cambios).then(()=>{
+          this.toast.success('Proceso de diagnostico iniciado');
+          this.isDiagnosticando = true;
+        },(error: any) => {
+          console.log(error);
+          this.toast.error('Opps... ocurrio un error', 'Error');
+        })
       });    
     });
   }

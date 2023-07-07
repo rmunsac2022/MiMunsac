@@ -341,7 +341,8 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
               id: id
             },
             maxWidth:  this.isMobile ? '90dvw' : '100vw',
-            minWidth: this.isMobile ? '90dvw' : 'auto'
+            minWidth: this.isMobile ? '90dvw' : 'auto',
+            maxHeight: this.isMobile ? '70dvh' : 'auto'
           });
           this.dialogRef.close();
           dialogRef.afterClosed().subscribe(result => {
@@ -368,7 +369,8 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
               id: id
             },
             maxWidth:  this.isMobile ? '90dvw' : '100vw',
-            minWidth: this.isMobile ? '90dvw' : 'auto'
+            minWidth: this.isMobile ? '90dvw' : 'auto',
+            maxHeight: this.isMobile ? '70dvh' : 'auto'
           });
           this.dialogRef.close();
           dialogRef.afterClosed().subscribe(result => {
