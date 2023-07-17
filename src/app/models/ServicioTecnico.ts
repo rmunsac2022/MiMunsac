@@ -17,6 +17,7 @@ export class ServicioTecnico {
         cableadoCortado?: string;
         manillaresFrenos?: string;
         isFactura?: boolean;
+        nChasis?: string;
     };
     estado?: string;
     diagnostico?: string;
