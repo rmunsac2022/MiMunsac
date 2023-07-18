@@ -4,6 +4,7 @@ export class ServicioTecnico {
     datosProducto: any;
     documento: any;
     horaString: any;
+    nOrden: any;
     revisiones?: {
         quiebre?: string;
         rayones?: string;

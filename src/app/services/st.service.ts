@@ -16,4 +16,8 @@ export class StService {
   updateScheduleSt(id: string, doc: any): Promise<any>{
     return this.firestore.collection('IngresosST').doc(id).update(doc);
   }
+
+  countDocuments(): Observable<any[]> {
+    return this.firestore.collection('IngresosST').valueChanges();
+  }
 }

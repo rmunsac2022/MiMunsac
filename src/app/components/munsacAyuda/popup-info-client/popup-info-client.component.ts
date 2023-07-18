@@ -19,6 +19,7 @@ import { StService } from 'src/app/services/st.service';
 })
 export class PopupInfoClientComponent implements OnInit {
   isMobile : boolean;
+  countsIngresosSt : number = 0;
   form: FormGroup;
   botonApretado: boolean = false;
   isIngreso: boolean = false;
@@ -33,6 +34,7 @@ export class PopupInfoClientComponent implements OnInit {
     private deviceService: DeviceDetectorService,
     private fb: FormBuilder,
     private _clientService: ClientService,
+    private _stService: StService,
     private toast: ToastrService,
     private afs: AngularFirestore,
     private _st: StService,
@@ -56,6 +58,7 @@ export class PopupInfoClientComponent implements OnInit {
       cableadoCortado: [''],
       manillaresFrenos: [''],
       isFactura: [false],
+      nChasis: [''],
       comentario: ['']
     });
   }
@@ -141,12 +144,20 @@ export class PopupInfoClientComponent implements OnInit {
     }
   }
 
+
   saveIngreso(){
+
+    this._stService.countDocuments().subscribe(documents => {
+      this.countsIngresosSt = documents.length+1;
+    });
+
+
     const ST: ServicioTecnico = {
       datosCliente: this.data.datos.datosCliente,
       datosProducto: this.data.datos.datosProducto,
       documento: this.data.datos.documento,
       horaString: this.data.datos.horaString,
+      nOrden: 'ST00'+this.countsIngresosSt,
       revisiones: {
         quiebre: this.form.value.quiebre,
         rayones: this.form.value.rayones,
@@ -178,6 +189,7 @@ export class PopupInfoClientComponent implements OnInit {
       this.toast.error('Opps... ocurrio un error', 'Error');
       console.log(error);
     });
+
   }
 
   llenarInput(controlName: string, event: any){
