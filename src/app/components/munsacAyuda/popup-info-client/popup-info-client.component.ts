@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -6,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin, of, switchMap } from 'rxjs';
 import { Cliente } from 'src/app/models/Clientes';
 import { ServicioTecnico } from 'src/app/models/ServicioTecnico';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,6 +30,9 @@ export class PopupInfoClientComponent implements OnInit {
   isDiagnosticando: boolean = false;
   diagnostico: any;
   user: any;
+  fecha : any;
+  
+
 
   constructor(
     public dialogRef: MatDialogRef<PopupInfoClientComponent>,
@@ -36,6 +41,7 @@ export class PopupInfoClientComponent implements OnInit {
     private _clientService: ClientService,
     private _stService: StService,
     private toast: ToastrService,
+    private datePipe: DatePipe,
     private afs: AngularFirestore,
     private _st: StService,
     private afAuth: AngularFireAuth,
@@ -65,14 +71,17 @@ export class PopupInfoClientComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data)
+    this.fecha = new Date();
     if(this.data.accion === 'ingresar'){
       this.isIngreso = true;
     }
     if(this.data.accion === 'revision'){
       this.isRevision = true;
     }
-    if(this.data.datos.diagnostico.length > 0){
-      this.tieneDiagnostico = true;
+    if(this.data.datos.diagnostico != null){
+      if(this.data.datos.diagnostico.length > 0){
+        this.tieneDiagnostico = true;
+      }
     }
     if(this.data.datos.estado === 'procesoDiagnostico'){
       this.isDiagnosticando = true;
@@ -82,27 +91,40 @@ export class PopupInfoClientComponent implements OnInit {
     .set('Authorization', 'NPYwMEmfdCATzYQzLNm9MJT4')
     .set('Company', '7c4VQC97YVhvHtK4ZYu4DbRq');
     this.http.get<any>(url, { headers }).subscribe((response) => {
-      if(response.data.customers[0].id !== undefined){
-        console.log(response)        
-      }},(error) => {
+      console.log(response)
+      if(response.data.customers.length > 0){
+        if(response.data.customers[0].id !== undefined){
+          console.log(response)        
+        }
+      }
+      },(error) => {
         console.log(error);
       }
     );
+    this._stService.countDocuments().subscribe(documents => {
+      console.log(documents)
+      this.countsIngresosSt = documents.length+1;
+    });
+
+
   }
 
   saveData(){
     if(this.botonApretado === false){
       this.botonApretado = true;
-      const sub = this._clientService.getClientByRut(this.data.datos.datosCliente.rut).subscribe((cliente)=>{
+      const sub = this._clientService.getClientByRut(this.eliminarGuionesAgregarGuion(this.data.datos.datosCliente.rut)).subscribe((cliente)=>{
         sub.unsubscribe();
         if(cliente.length <= 0){
           //Si no exite el cliente creamos uno
-          const url = `https://app.relbase.cl/api/v1/clientes?query=${this.data.datos.datosCliente.rut}`;
+
+          const url = `https://app.relbase.cl/api/v1/clientes?query=${this.eliminarGuionesAgregarGuion(this.data.datos.datosCliente.rut)}`;
           const headers = new HttpHeaders()
           .set('Authorization', 'NPYwMEmfdCATzYQzLNm9MJT4')
           .set('Company', '7c4VQC97YVhvHtK4ZYu4DbRq');
           this.http.get<any>(url, { headers }).subscribe((response) => {
-            if(response.data.customers[0].id !== undefined){
+            if(response.data.customers.length > 0) {
+
+            //if(response.data.customers[0].id !== undefined){
               var password = '';
               const caracteresPermitidos = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
               for (let i = 0; i < 4; i++) {
@@ -122,19 +144,21 @@ export class PopupInfoClientComponent implements OnInit {
                   esEmpresa: isEmpresa,
                   nombre: this.data.datos.datosCliente.nombre,
                   pass: password,
-                  rut: this.data.datos.datosCliente.rut,
+                  rut: this.eliminarGuionesAgregarGuion(this.data.datos.datosCliente.rut),
                   telefono: this.data.datos.datosCliente.telefono
                 },
                 documentos: [],
                 idFolios: []
               }
               this._clientService.addClient(cliente).then(()=>{
-                this.sendEmailCreateUser(this.data.datos.datosCliente.mail);
+                //this.sendEmailCreateUser(this.data.datos.datosCliente.mail);
                 this.toast.success('Usuario creado');
               },(error: any)=>{
                 console.log(error);
               });
-            }},(error) => {
+            
+          }
+        },(error) => {
               console.log(error);
             }
           );
@@ -146,11 +170,6 @@ export class PopupInfoClientComponent implements OnInit {
 
 
   saveIngreso(){
-
-    this._stService.countDocuments().subscribe(documents => {
-      this.countsIngresosSt = documents.length+1;
-    });
-
 
     const ST: ServicioTecnico = {
       datosCliente: this.data.datos.datosCliente,
@@ -174,12 +193,15 @@ export class PopupInfoClientComponent implements OnInit {
         nChasis: this.form.value.nChasis
       },
       estado: 'ingresado',
-      diagnostico:'',
+      diagnostico: '',
       fecha: new Date(),
       fechaString: new Date().getDay().toString()+"."+new Date().getMonth().toString()+"."+new Date().getFullYear().toString(),
       mesAnio: (new Date().getMonth()+1).toString()+"/"+new Date().getFullYear().toString(),
       comentario: this.form.value.comentario
     }
+
+
+
     this._clientService.saveIngresoSt(ST).then((docRef: any)=>{
       this.sendEmailIngreso(ST.datosCliente.mail, docRef.id, this.data.datos.datosCliente);
       this.toast.success('Datos guardados');
@@ -189,6 +211,11 @@ export class PopupInfoClientComponent implements OnInit {
       this.toast.error('Opps... ocurrio un error', 'Error');
       console.log(error);
     });
+  
+
+
+
+    
 
   }
 
@@ -235,7 +262,9 @@ export class PopupInfoClientComponent implements OnInit {
           const cambios = {
             diagnostico: this.diagnostico,
             estado: 'pendientePresupuesto',
-            idTecnico: this.user.id
+            idTecnico: this.user.id,
+            'idTecnico.pendientePresupuesto': this.user.id,
+            'fechas.pendientePresupuesto': this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm')
           }
           this._st.updateScheduleSt(id, cambios).then(()=>{
             this.toast.success('Diagnostico añadido');
@@ -251,7 +280,14 @@ export class PopupInfoClientComponent implements OnInit {
     });
   }
 
+  eliminarGuionesAgregarGuion(str: string): string {
+    const strSinGuiones = str.replace(/-/g, ''); // Elimina todos los guiones
+    const nuevoString = strSinGuiones.slice(0, -1) + '-' + strSinGuiones.slice(-1); // Agrega un guion antes del último carácter
+    return nuevoString;
+  }
+
   statusEnDiagnostico(){
+
     this.afAuth.onAuthStateChanged((user) => {
       const sub = this._authService.getUserByEmailWithId(user!.email, 'correo').subscribe((user)=> {
         sub.unsubscribe();
@@ -259,8 +295,8 @@ export class PopupInfoClientComponent implements OnInit {
         var id = this.data.id;
         const cambios = {
           estado: 'procesoDiagnostico',
-          idTecnico: this.user.id,
-          'fechas.inicioDiagnostico': new Date().getDate()
+          'idTecnico.inicioDiagnostico': this.user.id,
+          'fechas.inicioDiagnostico': this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm')
         }
         this._st.updateScheduleSt(id, cambios).then(()=>{
           this.toast.success('Proceso de diagnostico iniciado');
@@ -272,4 +308,6 @@ export class PopupInfoClientComponent implements OnInit {
       });    
     });
   }
+
+
 }
