@@ -379,8 +379,17 @@
             </div>
         </div>
 
+        <div *ngIf="this.data.datos.estado === 'procesoReparacion'" class="mt-3">
+            <div class="bg-black w-full rounded-full py-2 px-2">
+                <button (click)="statusListo()" class="text-white font-bebas w-full text-center text-xl">Marcar como listo</button>
+            </div>
+        </div>
+
+        <div *ngIf="isPendienteRetiro" class="mt-3 w-full">
+            <h1 class="text-xl mx-auto text-center font-bebas whitespace-nowrap">Scooter pendiente de retiro</h1>
+        </div>
+
         <div *ngIf="this.data.datos.estado === 'ingresado' || !tieneDiagnostico" class="mt-3">
-        
             <div class="bg-black w-full rounded-full py-2 px-2">
                 <button (click)="statusEnDiagnostico()" class="text-white font-bebas w-full text-center text-xl">Comenzar diagnostico</button>
             </div>
