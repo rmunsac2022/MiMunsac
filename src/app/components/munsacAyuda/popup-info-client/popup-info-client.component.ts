@@ -269,7 +269,7 @@ export class PopupInfoClientComponent implements OnInit {
             estado: 'pendientePresupuesto',
             idTecnico: this.user.id,
             'idTecnico.pendientePresupuesto': this.user.id,
-            'fechas.pendientePresupuesto': this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm')
+            'fechas.pendientePresupuesto': this.fecha
           }
           this._st.updateScheduleSt(id, cambios).then(()=>{
             this.toast.success('Diagnostico añadido');
@@ -300,12 +300,14 @@ export class PopupInfoClientComponent implements OnInit {
         const cambios = {
           estado: 'esperaRetiro',
           'idTecnico.esperaRetiro': this.user.id,
-          'fechas.esperaRetiro': this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm')
+          'fechas.esperaRetiro': this.fecha
         }
         this._st.updateScheduleSt(id, cambios).then((docRef)=>{
           
           this.toast.success('Listo! Scooter pendiente de retiro');
           this.isPendienteRetiro = true;
+          this.dialogRef.close();
+
           //AÑADIR FUNCION PARA ENVIO DE MAIL > YA PUEDE VENIR A RETIRAR SU EQUIPO
           this._st.sendMailListo(this.data.datos.datosCliente.mail, this.data.datos.datosCliente);
 
@@ -327,11 +329,13 @@ export class PopupInfoClientComponent implements OnInit {
         const cambios = {
           estado: 'procesoDiagnostico',
           'idTecnico.inicioDiagnostico': this.user.id,
-          'fechas.inicioDiagnostico': this.datePipe.transform(this.fecha, 'dd/MM/yyyy HH:mm')
+          'fechas.inicioDiagnostico': this.fecha
         }
         this._st.updateScheduleSt(id, cambios).then(()=>{
           this.toast.success('Proceso de diagnostico iniciado');
           this.isDiagnosticando = true;
+          this.dialogRef.close();
+
         },(error: any) => {
           console.log(error);
           this.toast.error('Opps... ocurrio un error', 'Error');
