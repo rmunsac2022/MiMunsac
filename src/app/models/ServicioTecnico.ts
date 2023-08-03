@@ -4,6 +4,7 @@ export class ServicioTecnico {
     datosProducto: any;
     documento: any;
     horaString: any;
+    nOrden: any;
     revisiones?: {
         quiebre?: string;
         rayones?: string;
@@ -17,6 +18,7 @@ export class ServicioTecnico {
         cableadoCortado?: string;
         manillaresFrenos?: string;
         isFactura?: boolean;
+        nChasis?: string;
     };
     estado?: string;
     diagnostico?: string;

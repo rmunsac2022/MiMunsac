@@ -10,6 +10,8 @@
     </div>
 
     <div id="botonesmenu" style="scrollbar-width: none;" class="menubox ml-6 md:ml-0 flex overscroll-none overflow-x-scroll text-center md:grid gap-2 md:gap-3 mt-3 md:mt-10">
+      <button *ngIf="accesoShortcuts" 
+      class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap" (click)="moreOptions()">Shortcuts</button>
       <button routerLink="/home" routerLinkActive="active"
         class="origin-left transition-all duration-200 hover:scale-95 m-0 w-fit md:w-full rounded-full bg-negroclaro text-white text-left px-5 pt-1 pb-1 text-xl whitespace-nowrap">Home</button>
       <button routerLink="/reports" routerLinkActive="active"
@@ -22,13 +24,9 @@
         class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Horas Extras</button>
       <button routerLink="/profile" routerLinkActive="active"
         class="origin-left transition-all duration-200 hover:scale-95 m-0 rounded-full bg-negroclaro text text-white text-left w-fit md:w-full px-5 pt-1 pb-1 text-xl whitespace-nowrap">Mi perfil</button>
-      <div *ngIf="isPostVenta" class="transition-all duration-200 hover:scale-95 m-0 w-fit md:w-full text-white pt-1 pb-1" (click)="moreOptions()">
-        <img class="w-auto mr-auto h-5 md:h-10 flex" src="../../../assets/img/check.svg" alt="">
-      </div>
     </div>
     <div class="hidden md:flex mt-auto w-full absolute bottom-0 left-0 right-0 px-6 pb-4">
       <button (click)="cerrarSesion()"
       class="rounded-full bg-transparent text-white text-left w-full px-0 underline pt-1 pb-1 text-2xl origin-left transition-all duration-200 hover:scale-95">Cerrar sesión</button>  
     </div>
-   
 </div>

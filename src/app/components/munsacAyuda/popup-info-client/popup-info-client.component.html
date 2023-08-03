@@ -2,8 +2,8 @@
 
     <div class="bg-black rounded-3xl p-3 md:flex gap-5">
         <div class="md:flex mr-auto gap-5 items-center">
-            <div class="flex md:hidden gap-5 items-center">
-                <img (click)="this.dialogRef.close();" class="flex cursor-pointer hover:scale-90 transition-all duration-200 h-6 mr-3 ml-2 w-auto" src="./assets/img/cerrar.svg" alt="">
+            <div class="flex md:hidden gap-5 items-center justify-end">
+                <img (click)="this.dialogRef.close();" class="flex cursor-pointer hover:scale-90 transition-all duration-200 h-6 ml-2 w-auto" src="./assets/img/cerrar.svg" alt="">
             </div>
             <div>
                 <h1 class="mt-3 md:mt-0 flex text-4xl font-bebas text-white">{{data.datos.datosCliente.nombre}}</h1>
@@ -14,108 +14,350 @@
         </div>
     </div>
 
-    <div class="flex">
-        <div class="w-1/2 px-4">
-            <h1 class="text-2xl">Información personal</h1>
-            <p>Email: {{data.datos.datosCliente.mail}}</p>
-            <p>Rut: {{data.datos.datosCliente.rut}}</p>
-            <p>Nombre: {{data.datos.datosCliente.nombre}}</p>
-            <p>Telefono: {{data.datos.datosCliente.telefono}}</p>
-            <p>Estado equipo: {{data.datos.datosProducto.estadoEquipo}}</p>
-            <p>Fecha compra: {{data.datos.datosProducto.fechaCompra}}</p>
-            <p>Kilometraje: {{data.datos.datosProducto.kilometraje}}</p>
-            <p>Modelo: {{data.datos.datosProducto.modeloScooter}}</p>
-            <p>Motivo ingreso: {{data.datos.datosProducto.motivoIngreso}}</p>
-            <p>Hora agendada: {{data.datos.horaString.hora}}</p>
+
+    <h1 class="text-3xl mt-6">Información personal</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Nombre</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosCliente.nombre}}</p>
+            </div>
         </div>
 
-        <div class="w-1/2 px-4">
-            <div *ngIf="isIngreso">
-                <form (ngSubmit)="saveData()" [formGroup]="form">
-                    <h2>Estado estructura:</h2>
-                    <label>Quiebre</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('quiebre', $event)"/>
-                    <input type="text" class="border" formControlName="quiebre"/><br>
-
-                    <label>Rayones</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('rayones', $event)"/>
-                    <input type="text" class="border" formControlName="rayones"/><br>
-
-                    <h2>Presión neumático:</h2>
-                    <label>Pinchado</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('neumaticoPinchado', $event)"/>
-                    <input type="text" class="border" formControlName="neumaticoPinchado"/><br>
-
-                    <label>Estable</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('neumaticoEstable', $event)"/>
-                    <input type="text" class="border" formControlName="neumaticoEstable"/>
-
-                    <h2>Focos y luces:</h2>
-                    <label>Quemado</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('luzQuemada', $event)"/>
-                    <input type="text" class="border" formControlName="luzQuemada"/>
-
-                    <h2>Bocina:</h2>
-                    <label>Funcional</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('bocinaFuncional', $event)"/>
-                    <input type="text" class="border" formControlName="bocinaFuncional"/>
-            
-                    <h2>Amortiguación:</h2>
-                    <label>Quebrado</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('amortiguacionQuebrada', $event)"/>
-                    <input type="text" class="border" formControlName="amortiguacionQuebrada"/>
-
-                    <h2>Display:</h2>
-                    <label>Quemado/Quebrado</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('displayQuemado', $event)"/>
-                    <input type="text" class="border" formControlName="displayQuemado"/>
-            
-                    <h2>Motor:</h2>
-                    <label>Funcional</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('motorFuncional', $event)"/>
-                    <input type="text" class="border" formControlName="motorFuncional"/>
-
-                    <h2>Cableado:</h2>
-                    <label>Cortado:</label>
-                    <input type="checkbox" class="checkbox" (change)="llenarInput('cableadoCortado', $event)"/>
-                    <input type="text" class="border" formControlName="cableadoCortado"/>
-
-                    <br>
-                    <label>Manillares/Sistema Frenos:</label>
-                    <input type="text" class="border" formControlName="manillaresFrenos"/>
-
-                    <br>
-                    <label>Comentario</label>
-                    <textarea class="border" rows="1" formControlName="comentario"></textarea>
-
-                    <br>
-                    <label>Facturable:</label>
-                    <input type="checkbox" class="border" formControlName="isFactura"/>
-                    <br>
-                    <div class="bg-black rounded-full py-2 px-2">
-                        <button type="submit" class="text-white font-bebas w-full text-center text-xl">Guardar</button>
-                    </div>
-                </form>
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Rut</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosCliente.rut}}</p>
             </div>
-            <div *ngIf="isRevision">
-                <p>Amortiguación quebrada: {{data.datos.revisiones.amortiguacionQuebrada}}</p>
-                <p>Bocina funcional: {{data.datos.revisiones.bocinaFuncional}}</p>
-                <p>Cableado cortado: {{data.datos.revisiones.cableadoCortado}}</p>
-                <p>Display quemado: {{data.datos.revisiones.displayQuemado}}</p>
-                <p>Luz quemada: {{data.datos.revisiones.luzQuemada}}</p>
-                <p>Manillares frenos: {{data.datos.revisiones.manillaresFrenos}}</p>
-                <p>Motor funcional: {{data.datos.revisiones.motorFuncional}}</p>
-                <p>Neumatico estable: {{data.datos.revisiones.neumaticoEstable}}</p>
-                <p>Neumatico pinchado: {{data.datos.revisiones.neumaticoPinchado}}</p>
-                <p>Quiebre: {{data.datos.revisiones.quiebre}}</p>
-                <p>Rayones: {{data.datos.revisiones.rayones}}</p>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Correo</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosCliente.mail}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Teléfono</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosCliente.telefono}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Estado equipo</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosProducto.estadoEquipo}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Fecha compra</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosProducto.fechaCompra}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Kilometraje</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosProducto.kilometraje}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Modelo</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosProducto.modeloScooter}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Motivo ingreso</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.datosProducto.motivoIngreso}}</p>
+            </div>
+        </div>
+
+    <!--
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Hora agendada</h1>
+            <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                <p class="text-sm">{{data.datos.horaString.hora}}</p>
+            </div>
+        </div>
+    -->
+
+    </div>
+
+
+    <div class="w-full">
+        <div *ngIf="isIngreso">
+            <form (ngSubmit)="saveData()" [formGroup]="form">
+                <h1 class="text-3xl mt-10">Checkin Scooter</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Estado estructura</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="quiebre"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Rayones</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="rayones"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Presión neumático</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="neumaticoPinchado"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Estable</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="neumaticoEstable"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Focos y luces</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="luzQuemada"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Bocina</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="bocinaFuncional"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Amortiguación</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="amortiguacionQuebrada"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Display</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="displayQuemado"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Motor</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="motorFuncional"/><br>
+                        </div>
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Manillares/Sistema Frenos</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="manillaresFrenos"/><br>
+                        </div>
+                       
+                    </div>
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Número de chasis</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <input type="text" class="w-full py-3 bg-transparent" formControlName="nChasis"/><br>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Comentario</h1>
+                        </div>
+                        <div class="shadow-min flex rounded-xl bg-white pl-4 w-full">
+                            <textarea rows="5" type="text" class="w-full py-3 bg-transparent" formControlName="comentario"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="gap-4">
+                        <div class="flex items-center py-1">
+                            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">¿Es facturable?</h1>
+                            <div class="flex gap-3 items-center">
+                                <input type="checkbox" formControlName="isFactura" class="relative h-3.5 w-8 appearance-none rounded-full bg-neutral-300 dark:bg-neutral-600 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 dark:after:bg-neutral-400 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary dark:checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary dark:checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]" />
+                            </div>
+                        </div>
+                       
+                    </div>
+
+
+                    <div class="w-full bg-black rounded-full py-2 px-2">
+                        <button type="submit" class="text-white font-bebas w-full text-center text-xl">Finalizar ingreso</button>
+                    </div>
+
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <h1 *ngIf="isRevision" class="text-3xl mt-10">Chekin Scooter</h1>
+    <div *ngIf="isRevision" class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Amortiguación quebrada</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.amortiguacionQuebrada}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Bocina funcional</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{ data.datos.revisiones.bocinaFuncional == 'true' ? 'Si' : data.datos.revisiones.bocinaFuncional }}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Cableado cortado</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.cableadoCortado}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Display quemado</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm"> {{ data.datos.revisiones.displayQuemado == 'true' ? 'Si' : data.datos.revisiones.displayQuemado }}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Luz quemada</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.luzQuemada}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Manillares frenos</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.manillaresFrenos}}</p>
+            </div>
+        </div>
         
-                <label>Diagnostico: </label>
-                <textarea cols="30" rows="1" class="border" [(ngModel)]="diagnostico"></textarea>  
-                <div class="bg-black rounded-full py-2 px-2">
-                    <button (click)="addDiagnosis()" class="text-white font-bebas w-full text-center text-xl">Subir diagnostico</button>
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Motor funcional</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.motorFuncional}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Neumatico estable</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.neumaticoEstable}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Neumatico pinchado</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.neumaticoPinchado}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Quiebre</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.quiebre}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Rayones</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.revisiones.rayones}}</p>
+            </div>
+        </div>
+
+        <div class="gap-4">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Comentario</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.comentario}}</p>
+            </div>
+        </div>
+
+        <div *ngIf="tieneDiagnostico" class="gap-4 mt-3">
+            <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Diagnostico técnico</h1>
+            <div class="flex py-3 rounded-xl bg-fondoinput pl-4 w-full">
+                <p class="text-sm">{{data.datos.diagnostico}}</p>
+            </div>
+        </div>
+
+        <div *ngIf="isDiagnosticando" class="mt-3">
+            <div class="gap-4">
+                <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Diagnostico</h1>
+                <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
+                    <textarea class="w-full" cols="30" rows="5" placeholder="Escribe aquí el diagnostico..." [(ngModel)]="diagnostico"></textarea>  
                 </div>
             </div>
+        
+            <div class="bg-black w-full rounded-full py-2 px-2">
+                <button (click)="addDiagnosis()" class="text-white font-bebas w-full text-center text-xl">Subir diagnostico</button>
+            </div>
         </div>
+
+        <div *ngIf="this.data.datos.estado === 'procesoReparacion'" class="mt-3">
+            <div class="bg-black w-full rounded-full py-2 px-2">
+                <button (click)="statusListo()" class="text-white font-bebas w-full text-center text-xl">Marcar como listo</button>
+            </div>
+        </div>
+
+        <div *ngIf="isPendienteRetiro" class="mt-3 w-full">
+            <h1 class="text-xl mx-auto text-center font-bebas whitespace-nowrap">Scooter pendiente de retiro</h1>
+        </div>
+
+        <div *ngIf="this.data.datos.estado === 'ingresado' || !tieneDiagnostico" class="mt-3">
+            <div class="bg-black w-full rounded-full py-2 px-2">
+                <button (click)="statusEnDiagnostico()" class="text-white font-bebas w-full text-center text-xl">Comenzar diagnostico</button>
+            </div>
+        </div>
+        
+       
     </div>
 </div>
