@@ -211,7 +211,7 @@ export class PopupCreateReportComponent implements OnInit {
           to: email,
           message: {
             subject: this.userData.name! + this.userData.apellido! + ' a hecho un reporte',
-            html: '<p>Visita Munsac Control para ver los detalles</p>'
+            html: '<p>Hola Munsac!</p><p>Detalle del reporte:</p><br><p>Tipo de solicitud:'+this.registrarReporte.value.categoria+'</p><p>Comentario:'+this.registrarReporte.value.descripcion+'</p>'
           },
         }).then(() => console.log('Send email for delivery!'));
       });

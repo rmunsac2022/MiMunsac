@@ -7,14 +7,14 @@
             <div class="flex md:hidden gap-5 items-center">
                 <div class="md:hidden w-full mr-auto relative items-center flex justify-start">
                     <span class="text-2xl mr-2 pt-1 z-50">⌛️</span>
-                    <h1 class="mt-3 md:mt-0 flex text-2xl font-bebas text-white">Hora extra escaneada</h1>
+                    <h1 class="mt-3 md:mt-0 flex text-2xl font-spaceb text-white">Hora extra escaneada</h1>
                 </div>
                 <img (click)="this.dialogRef.close();" class="flex cursor-pointer hover:scale-90 transition-all duration-200 h-6 mr-3 ml-2 w-auto" src="./assets/img/cerrar.svg" alt="">
             </div>
 
             <div class="hidden relative items-center md:flex justify-center">
                 <span class="text-4xl pt-1 z-50 mr-3">⌛️</span>
-                <h1 class="mt-3 md:mt-0 flex text-4xl font-bebas text-white">Hora extra escaneada</h1>
+                <h1 class="mt-3 md:mt-0 flex text-4xl font-spaceb text-white">Hora extra escaneada</h1>
             </div>
         </div>
 
@@ -26,12 +26,12 @@
     </div>
 
     <div class="bg-white rounded-3xl p-6">
-        <div class="bg-verdemunclaro rounded-2xl p-4 md:flex">
+        <div class="bg-rojodualtronclaro rounded-2xl p-4 md:flex">
             <div class="md:flex gap-5 items-center mr-auto">
-                <div class="bg-verdemun mx-auto md:mr-auto relative rounded-2xl items-center w-12 md:w-16 flex justify-center shadow-in aspect-square">
+                <div class="bg-rojodualtron mx-auto md:mr-auto relative rounded-2xl items-center w-12 md:w-16 flex justify-center shadow-in aspect-square">
                     <span class="text-3xl pt-1 z-50">{{horaExtra.emoji}}</span>
                 </div>
-                <h1 class="text-2xl text-center md:text-left mt-1 md:mt-2 md:text-3xl font-bebas">{{horaExtra.nombreProyecto}}</h1>
+                <h1 class="text-2xl text-center md:text-left mt-1 md:mt-2 md:text-3xl font-spaceb">{{horaExtra.nombreProyecto}}</h1>
             </div>
             <div class="ml-auto justify-center md:justify-end flex mt-3 md:mt-0 gap-3 items-center">
                 <p class="text-xs md:text-md">Monto pago</p>
@@ -44,7 +44,7 @@
 
 
             <div class="w-full h-full">
-                <h1 class="text-2xl mb-2">DESCRIPCIÓN</h1>
+                <h1 class="text-2xl mb-2">Descripción</h1>
                 <div class="rounded-2xl break-all text-sm h-28 max-h-28 w-full bg-white px-5 py-2 mr-2 flex shadow-xxs overflow-y-scroll">
                     {{horaExtra.descripcion}}
                 </div>
@@ -52,19 +52,19 @@
     
 
     
-            <div class="bg-verdemunclaro rounded-4xl h-full p-5 items-center">
+            <div class="bg-rojodualtronclaro rounded-4xl h-full p-5 items-center">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
                     <div class="w-full">
                         <p>Desde</p>
-                        <h1 class="rounded-2xl bg-white px-2 py-2 flex h-fit shadow-xxs text-md text-center font-bebas w-full justify-center">{{desde}}</h1>
+                        <h1 class="rounded-2xl bg-white px-2 py-2 flex h-fit shadow-xxs text-md text-center font-spaceb w-full justify-center">{{desde}}</h1>
                     </div>
                     <div class="w-full">
                         <p>Hasta</p>
-                        <h1 class="rounded-2xl bg-white px-2 py-2 flex h-fit shadow-xxs text-md text-center font-bebas w-full justify-center">{{hasta}}</h1>
+                        <h1 class="rounded-2xl bg-white px-2 py-2 flex h-fit shadow-xxs text-md text-center font-spaceb w-full justify-center">{{hasta}}</h1>
                     </div>
                 </div>
                 
-                <button (click)="getDocument(horaExtra.idDocumento)" class="ml-auto font-bebas justify-center mt-5 md:mt-3 flex text-black text-xl shadow-xxs w-full md:w-fit px-6 py-2 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">VER ARCHIVO ADJUNTO</button>    
+                <button (click)="getDocument(horaExtra.idDocumento)" class="ml-auto font-spaceb justify-center mt-5 md:mt-3 flex text-white text-xl shadow-xxs w-full md:w-fit px-6 py-2 md:py-1 bg-rojodualtron whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">Ver adjunto</button>    
 
             </div>
     
@@ -82,8 +82,8 @@
     </div>
 
     <div class="grid grid-cols-1 mt-8 pb-6 md:my-0 md:py-0 md:flex gap-3 md:gap-5 justify-center -mb-2">
-        <button *ngIf="!detail" (click)="this.dialogRef.close();" class="font-bebas justify-center flex md:my-5 text-white text-xl shadow-xxs px-7 py-2 md:py-1 bg-red-600 whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">CANCELAR</button>    
-        <button *ngIf="!detail" (click)="actualizarHoraExtra()" class="font-bebas justify-center flex md:my-5 text-black text-xl shadow-xxs px-7 py-2 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">ENLAZARME</button>    
+        <button *ngIf="!detail" (click)="this.dialogRef.close();" class="font-spaceb justify-center flex md:my-5 text-white text-xl shadow-xxs px-7 py-2 md:py-1 bg-red-600 whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">CANCELAR</button>    
+        <button *ngIf="!detail" (click)="actualizarHoraExtra()" class="font-spaceb justify-center flex md:my-5 text-black text-xl shadow-xxs px-7 py-2 md:py-1 bg-rojodualtron whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">ENLAZARME</button>    
     </div>
 
     </div>

@@ -14,7 +14,7 @@
             </div>
             <div>
 
-                <h1 class="mt-3 md:mt-0 flex text-4xl font-bebas text-white">{{userData.name}} {{userData.apellido}}</h1>
+                <h1 class="mt-3 md:mt-0 flex text-4xl font-spaceb text-white">{{userData.name}} {{userData.apellido}}</h1>
                 <p class="text-md -mt-1 text-white">{{fecha}}</p>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 gap-6 md:gap-6 px-0 md:px-10 py-6">
 
             <div class="w-full">
-                <h1 class="text-2xl mb-2">¿CUÉNTANOS QUE PASO?</h1>
+                <h1 class="text-2xl mb-2">Cuéntanos, ¿Qué paso?</h1>
                 <textarea class="appearance-none rounded-2xl w-full bg-white px-5 py-2 mr-2 flex h-fit text-sm shadow-xxs" placeholder="Ingresa la descripción" type="text" rows="7" cols="50" formControlName="descripcion"> </textarea>
             </div>
     
@@ -42,16 +42,16 @@
                 <!--<option value="otro">Otro</option>-->
             </select>
     
-            <div class="bg-verdemunclaro md:flex rounded-4xl p-5 items-center relative">
+            <div class="bg-rojodualtronclaro md:flex rounded-4xl p-5 items-center relative">
                 <h1 class="text-2xl mr-auto">¿Deseas adjuntar alguna foto o archivo?</h1>
                 <input formControlName="urlImagen" multiple (change)="subirArchivo($event)"
-                class="appearance-none w-full md:w-fit file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:bg-verdemun file:text-black file:cursor-pointer file:transition-all file:duration-200 file:font-bebas hover:file:scale-95 hover:file:bg-black  hover:file:text-white rounded-2xl bg-white p-3 flex h-fit shadow-xxs text-sm text-center font-bebas placeholder:font-bebas place-content-center" placeholder="SELECCIONAR" type="file">
+                class="appearance-none w-full md:w-fit file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:bg-rojodualtron file:text-white file:cursor-pointer file:transition-all file:duration-200 file:font-spaceb hover:file:scale-95 hover:file:bg-black  hover:file:text-white rounded-2xl bg-white p-3 flex h-fit shadow-xxs text-sm text-center font-spaceb placeholder:font-spaceb place-content-center" placeholder="SELECCIONAR" type="file">
             </div>
     
         </div>
     
         <div class="grid grid-cols-1 md:flex gap-3 md:gap-5 justify-center">
-            <button type="submit" class="font-bebas justify-center flex my-5 text-black text-2xl md:text-xl shadow-xxs px-6 py-3 md:py-1 bg-verdemun whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">ENVIAR REPORTE</button>    
+            <button type="submit" class="font-spaceb justify-center flex my-5 text-white text-2xl md:text-xl shadow-xxs px-6 py-3 md:py-1 bg-rojodualtron whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">Enviar reporte</button>    
         </div>
     </form>
 

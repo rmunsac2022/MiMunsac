@@ -15,26 +15,28 @@ textarea:focus-visible {
 }
 
 @font-face {
-    font-family: mnalta;
-    src: url('./assets/font/bebas.ttf');
+    font-family: spaceb;
+    src: url('./assets/font/spacebold.otf');
 }
 
 @font-face {
-    font-family: geomanist;
-    src: url('./assets/font/geomanist.otf');
+    font-family: dmsans;
+    src: url('./assets/font/dmsans.ttf');
 }
 
 h1,
 button,
+input,
 span,
 textarea,
 label {
-    font-family: mnalta !important;
+    font-family: spaceb !important;
 }
 
+input,
 textarea,
-h3, p, input {
-    font-family: geomanist !important;
+h3, p {
+    font-family: dmsans !important;
 }
 
 app-home, app-reports, app-hours-extra, app-requests, app-profile, app-history {
