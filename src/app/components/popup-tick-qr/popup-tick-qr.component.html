@@ -7,70 +7,70 @@
     <div class="pb-6 px-6">
 
         <div *ngIf="valorQr=='entrada'">
-            <h1 class="text-2xl font-bebas mb-2">Marcando entrada a oficina - {{hora}}</h1>
+            <h1 class="text-2xl font-spaceb mb-2">Marcando entrada a oficina - {{hora}}</h1>
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
                 <ngx-scanner-qrcode #ac="scanner" id (event)="entrada($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
     
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
-                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                    <button class="text-white font-spaceb w-full text-center text-2xl">Escanea el código qr aquí</button>
                 </div>
 
             </div>
         </div>
 
         <div *ngIf="valorQr=='salida'">
-            <h1 class="text-2xl font-bebas mb-2">Marcando salida de oficina - {{hora}}</h1>
+            <h1 class="text-2xl font-spaceb mb-2">Marcando salida de oficina - {{hora}}</h1>
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
                 <ngx-scanner-qrcode #ac="scanner" (event)="salida($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
                         
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
-                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                    <button class="text-white font-spaceb w-full text-center text-2xl">Escanea el código qr aquí</button>
                 </div>
 
             </div>
         </div>
 
         <div *ngIf="valorQr=='horaextra'">
-            <h1 class="text-2xl font-bebas mb-2">Enlazandote a una hora extra</h1>
+            <h1 class="text-2xl font-spaceb mb-2">Enlazandote a una hora extra</h1>
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
                 <ngx-scanner-qrcode #ac="scanner" (event)="horaExtra($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
                         
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
-                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                    <button class="text-white font-spaceb w-full text-center text-2xl">Escanea el código qr aquí</button>
                 </div>
 
             </div>
         </div>
 
         <div *ngIf="valorQr=='client'">
-            <h1 class="text-2xl font-bebas mb-2">Escanear qr del cliente</h1>
+            <h1 class="text-2xl font-spaceb mb-2">Escanear qr del cliente</h1>
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
                 <ngx-scanner-qrcode #ac="scanner" (event)="getClient($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
                         
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
-                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                    <button class="text-white font-spaceb w-full text-center text-2xl">Escanea el código qr aquí</button>
                 </div>
 
             </div>
         </div>
 
         <div *ngIf="valorQr=='scooter'">
-            <h1 class="text-2xl font-bebas mb-2">Escanear qr del scooter</h1>
+            <h1 class="text-2xl font-spaceb mb-2">Escanear qr del scooter</h1>
 
             <div class="aspect-square w-full relative rounded-2xl overflow-hidden">
 
                 <ngx-scanner-qrcode #ac="scanner" (event)="getDataScooter($event)" [config]="this.config" [scannerConfig]="config"></ngx-scanner-qrcode>
                         
                 <div class="bg-black rounded-full py-2 w-auto absolute bottom-3 left-3 right-3">
-                    <button class="text-white font-bebas w-full text-center text-2xl">Escanea el código qr aquí</button>
+                    <button class="text-white font-spaceb w-full text-center text-2xl">Escanea el código qr aquí</button>
                 </div>
 
             </div>

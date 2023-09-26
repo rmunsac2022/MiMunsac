@@ -5,13 +5,13 @@
         <h1 class="leading-1 text-5xl">Solicitudes</h1>
         <p class="text-md">Solicitudes de permiso del trabajador, sobre algún inconveniente especifico tales como: salud, urgentes, etc.</p>
 
-        <div class="mt-3 block md:flex bg-verdemun rounded-2xl p-5 items-center gap-5">
+        <div class="mt-3 block md:flex bg-rojodualtron rounded-2xl p-5 items-center gap-5">
             
             <span class="text-7xl pt-2 z-50">☝🏻</span>
             <div class="w-full md:flex items-center">
-                <h1 class="flex mr-auto text-3xl">¿Necesitas realizar una solicitud de permiso?</h1>
+                <h1 class="flex mr-auto text-3xl text-white">¿Necesitas realizar una solicitud de permiso?</h1>
                 <div class="grid grid-cols-1 gap-3 md:mt-0 mt-2">
-                    <button (click)="crearRequest()" class="w-full font-bebas text-white text-xl md:text-md shadow-xxs px-6 py-2 md:py-1 bg-black whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">CREAR NUEVA +</button>    
+                    <button (click)="crearRequest()" class="w-full font-spaceb text-white text-xl md:text-md shadow-xxs px-6 py-2 md:py-1 bg-black whitespace-nowrap rounded-full hover:shadow-none transition-all duration-200 hover:scale-95">Crear nueva +</button>    
                 </div>
             </div>
             
@@ -19,15 +19,15 @@
 
 
 
-            <section class="bg-verdemunfond rounded-3xl h-full w-full p-6 md:p-10 mt-6">
+            <section class="bg-rojodualtronfond rounded-3xl h-full w-full p-6 md:p-10 mt-6">
 
                 <div class="md:flex mb-7 items-center">
                     <div class="flex gap-3 mb-3 md:mb-0 mr-6 items-center">
-                        <h1 class="text-4xl">HISTORIAL</h1>
+                        <h1 class="text-4xl">Historial</h1>
                     </div>
                     <div class="ml-auto md:flex gap-3">
                         <form class="flex gap-3 items-center" (ngSubmit)="filtrar()">
-                            <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="mesSelected" name="filtrar">
+                            <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-spaceb leading-1" id="mesSelected" name="filtrar">
                                 <option
                                     *ngFor="let mes of meses"
                                     [selected]="mes.nombre === selectMes.nombre"
@@ -35,7 +35,7 @@
                                     {{ mes.nombre }}
                                     </option>
                               </select>
-                            <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-bebas leading-1" id="anioSelected" name="filtrar">
+                            <select class="appearance-none form-control rounded-xl bg-white shadow-xxs px-5 py-2 font-spaceb leading-1" id="anioSelected" name="filtrar">
                                 <option
                                     *ngFor="let anio of anios"
                                     [selected]="anio === selectAnio"
@@ -43,7 +43,7 @@
                                     {{ anio }}
                                     </option>
                               </select>
-                            <button class="font-bebas text-black text-xl shadow-xxs px-6 py-1 bg-verdemun rounded-xl hover:shadow-none transition-all duration-200 hover:scale-95" type="submit">Filtrar</button>
+                            <button class="font-spaceb text-white text-xl shadow-xxs px-6 py-1 bg-rojodualtron rounded-xl hover:shadow-none transition-all duration-200 hover:scale-95" type="submit">Filtrar</button>
                         </form>                    
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <!--ITEM SOLICITUDES-->
                     <div *ngFor="let request of listFiltrada;" class="bg-white rounded-4xl shadow-xxs md:pr-4 overflow-hidden md:flex">
                         <div class="bg-black md:mr-4 px-1 md:w-10 md:h-full py-2 md:py-0 relative justify-center flex items-center">
-                            <p class="md:rotate-90 text-white w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-bebas whitespace-nowrap">{{request.hora}} {{request.horario}}</p>
+                            <p class="md:rotate-90 text-white w-fit h-fit md:my-2 mx-auto justify-center flex items-center font-spaceb whitespace-nowrap">{{request.hora}} {{request.horario}}</p>
                         </div>
                         <div class="px-6 md:px-0 py-5 md:flex w-full relative gap-5">
                             <div class="w-full mr-auto relative">
@@ -61,7 +61,7 @@
                                 <p class="bg-black px-6 py-1 rounded-full text-xs w-fit text-white shadow-min">{{request.categoria}}</p>
                             </div>
                             <div class="h-full items-center flex mt-3 md:mt-0">
-                                <button (click)="detailRequest(request)" class="w-full md:w-fit font-bebas mx-auto text-md shadow-xxs px-5 py-1 bg-verdemun rounded-full text-black whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">VER DETALLE</button>
+                                <button (click)="detailRequest(request)" class="w-full md:w-fit font-spaceb mx-auto text-md shadow-xxs px-5 py-1 bg-rojodualtron rounded-full text-white whitespace-nowrap hover:shadow-none transition-all duration-200 hover:scale-95">VER DETALLE</button>
                             </div>
                         </div>
                     </div>

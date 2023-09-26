@@ -8,54 +8,54 @@
         <h1 class="leading-1 text-5xl">Mi perfil</h1>
         <p class="text-md">Aquí puedes ver tu perfil y tus datos ingresados. También puedes cambiar tu contraseña actual por una nueva.</p>
 
-        <section class="bg-verdemunfond rounded-4xl h-full w-full p-6 md:p-10 mt-8">
+        <section class="bg-rojodualtronfond rounded-4xl h-full w-full p-6 md:p-10 mt-8">
 
             <div class="md:flex mr-auto gap-5 items-center">
-                <div class="bg-verdemun relative rounded-full items-center w-20 flex justify-center shadow-in aspect-square cursor-pointer hover:scale-90 transition-all duration-200">
+                <div class="bg-rojodualtron relative rounded-full items-center w-20 flex justify-center shadow-in aspect-square cursor-pointer hover:scale-90 transition-all duration-200">
                     <span class="text-6xl pt-2 z-50">{{user.emoji}}</span>
                 </div>
-                <h1 class="md:mt-0 mt-3 text-5xl font-bebas ">{{user.name}} {{user.apellido}}</h1>
+                <h1 class="md:mt-0 mt-3 text-5xl font-spaceb ">{{user.name}} {{user.apellido}}</h1>
             </div>
     
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Nombre</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Nombre</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.name}} {{user.apellido}}</p>
                     </div>
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">RUT</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">RUT</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.rut}}</p>
                     </div>                    
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Cargo</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Cargo</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.cargo}}</p>
                     </div>                    
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Teléfono</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Teléfono</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.telefono}}</p>
                     </div>                    
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Correo electrónico</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Correo electrónico</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.correo}}</p>
                     </div>                    
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Emoji</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Emoji</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{user.emoji}}</p>
                     </div>
@@ -66,16 +66,16 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 items-end">
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Dirgido por</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Dirgido por</h1>
                     <div class="shadow-min flex py-3 rounded-xl bg-white pl-4 w-full">
                         <p class="text-sm">{{encargado.name}} {{encargado.apellido}}</p>
                     </div>
                 </div>
     
                 <div class="gap-4">
-                    <h1 class="text-xl mr-auto font-bebas whitespace-nowrap">Contraseña</h1>
+                    <h1 class="text-xl mr-auto font-spaceb whitespace-nowrap">Contraseña</h1>
                     <div class="shadow-min flex py-2 rounded-xl bg-white pl-2 text-sm w-full">
-                        <button (click)="recuperarPassword(user.correo)" class="font-bebas flex text-black text-sm mr-auto shadow-xxs px-10 py-1 bg-verdemun whitespace-nowrap rounded-md hover:shadow-none transition-all duration-200 hover:scale-95">CAMBIAR MI CONTRASEÑA</button>
+                        <button (click)="recuperarPassword(user.correo)" class="font-spaceb flex text-white text-sm mr-auto shadow-xxs px-10 py-1 bg-rojodualtron whitespace-nowrap rounded-md hover:shadow-none transition-all duration-200 hover:scale-95">CAMBIAR MI CONTRASEÑA</button>
                     </div>
                 </div>
     

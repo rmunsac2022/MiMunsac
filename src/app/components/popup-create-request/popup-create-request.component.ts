@@ -151,7 +151,7 @@ export class PopupCreateRequestComponent implements OnInit {
           to: email,
           message: {
             subject: this.userData.name! +" "+ this.userData.apellido! + ' a hecho una solicitud',
-            html: '<p>Visita Munsac Control para ver los detalles</p>'
+            html: '<p>Hola Munsac!</p><p>Detalle de la solicitud:</p><br><p>Tipo de solicitud:'+this.registrarSolicitud.value.categoria+'</p><p>Comentario:'+this.registrarSolicitud.value.descripcion+'</p><p>Rango solicitado:'+this.registrarSolicitud.value.desde+' hasta '+this.registrarSolicitud.value.hasta+'</p>'
           },
         }).then(() => console.log('Send email for delivery!'));
       });

@@ -14,17 +14,19 @@ module.exports = {
         'in': 'inset 0px 0px 8px 0px rgba(0,0,0,1.51)'
       },
       colors: {
-        verdemun: '#00E700',
-        verdemunclaro: '#dcefe2',
-        verdemunfond: '#ddf3e7',
-        negroclaro: '#ffffff40',
+        rojodualtron: '#BE0F2E',
+        rojodualtronclaro: '#E8E8E7',
+        rojodualtronfond: '#E8E8E7',
+        negroclaro: '#ffffff24',
         negropopup: 'rgba(0, 0, 0, 0.563)',
         negroinput: '#282828',
         negrobox: '#161616',
         fondoinput: '#e3e3e3'
       },
       fontFamily: {
-        bebas: ['Bebas', 'sans-serif']
+        space: ['space', 'sans-serif'],
+        spaceb: ['spaceb', 'sans-serif'],
+        dmsans: ['dmsans', 'sans-serif']
       },
     }
   },
