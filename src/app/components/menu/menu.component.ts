@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService } from 'src/app/services/auth.service';
 import { PopupShortcutsComponent } from '../popup-shortcuts/popup-shortcuts.component';
-
 
 @Component({
   selector: 'app-menu',
@@ -19,7 +18,6 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private _route: ActivatedRoute,
     private auth: AuthService,
     private afAuth: AngularFireAuth,
     private deviceService: DeviceDetectorService,
@@ -29,14 +27,17 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.afAuth.onAuthStateChanged((user) => {
-      const sub = this.auth.getUserByEmail(user!.email, 'correo').subscribe((user)=>{
-        sub.unsubscribe();
-        var user = user[0];
-        if(user.area == "servicioTecnico" || user.area == "postVenta"  || user.area == "ti") {
-          this.accesoShortcuts = true;
-        }
-      });
+    //Verificar si el usuario esta en loginComponent, si es le caso esconder menú
+    this.afAuth.onAuthStateChanged((userLogged) => {
+      if(userLogged != null){
+        const sub = this.auth.getUserByEmail(userLogged!.email, 'correo').subscribe((user)=>{
+          sub.unsubscribe();
+          var user = user[0];
+          if(user.area == "servicioTecnico" || user.area == "postVenta"  || user.area == "ti") {
+            this.accesoShortcuts = true;
+          }
+        });
+      }
     });
   }
 

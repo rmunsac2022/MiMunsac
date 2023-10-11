@@ -30,34 +30,35 @@ export class ProfileComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email)
       }
-      this.getUser(user!.email)
     });
   }
 
   getUser(email: any){
     const sub = this.authService.getUserByEmail(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0];
-      var partesNombre = this.user.nombre!.split(" ");
-      var primerNombre = partesNombre[0];
-      var primerApellido = partesNombre[2];
-      this.user.name = primerNombre;
-      this.user.apellido = primerApellido;
-
-      const sub2 = this.authService.getUserById(this.user.idDireccion).subscribe((encargado)=>{
-        sub2.unsubscribe();
-        this.encargado = encargado;
-        var partesNombre = this.encargado.nombre!.split(" ");
+      if(user){
+        this.user = user[0];
+        var partesNombre = this.user.nombre!.split(" ");
         var primerNombre = partesNombre[0];
         var primerApellido = partesNombre[2];
-        this.encargado.name = primerNombre;
-        this.encargado.apellido = primerApellido;
-        this.loading = false;
-      });
+        this.user.name = primerNombre;
+        this.user.apellido = primerApellido;
+  
+        const sub2 = this.authService.getUserById(this.user.idDireccion).subscribe((encargado)=>{
+          sub2.unsubscribe();
+          this.encargado = encargado;
+          var partesNombre = this.encargado.nombre!.split(" ");
+          var primerNombre = partesNombre[0];
+          var primerApellido = partesNombre[2];
+          this.encargado.name = primerNombre;
+          this.encargado.apellido = primerApellido;
+          this.loading = false;
+        });
+      }
     });
   }
 

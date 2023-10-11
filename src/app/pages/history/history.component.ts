@@ -98,11 +98,10 @@ export class HistoryComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email)
       }
-      this.getUser(user!.email)
     });
     this.mes = new Date().getMonth();
     this.selectAnio = new Date().getFullYear();
@@ -134,8 +133,10 @@ export class HistoryComponent implements OnInit {
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0].payload.doc;
-      this.getHorarioByUser(this.user.id);
+      if(user){
+        this.user = user[0].payload.doc;
+        this.getHorarioByUser(this.user.id);
+      }
     });
   }
   
@@ -143,63 +144,66 @@ export class HistoryComponent implements OnInit {
     const sub = this.horaExtraService.getHorarioByIdUser(id, 'idUsuario').subscribe((doc)=>{
       sub.unsubscribe();
       this.listHorario = [];
-      doc.forEach((element: any) => { 
-        var partesFecha = element.fechaString.split(".");
-        var dia = partesFecha[0];
-        var horario = {
-          fecha: element.fecha,
-          fechaString: element.fechaString,
-          llegada: element.horario.llegada,
-          salida: element.horario.salida,
-          idUsuario: element.idUsuario,
-          idReporteEntrada: element.idReporteEntrada,
-          idReporteSalida: element.idReporteSalida,
-          dia: dia,
-          am: '',
-          pm: '',
-          largeReportsEntrada: 0,
-          largeReportsSalida: 0,
+      if(doc){
+        doc.forEach((element: any) => { 
+          var partesFecha = element.fechaString.split(".");
+          var dia = partesFecha[0];
+          var horario = {
+            fecha: element.fecha,
+            fechaString: element.fechaString,
+            llegada: element.horario.llegada,
+            salida: element.horario.salida,
+            idUsuario: element.idUsuario,
+            idReporteEntrada: element.idReporteEntrada,
+            idReporteSalida: element.idReporteSalida,
+            dia: dia,
+            am: '',
+            pm: '',
+            largeReportsEntrada: 0,
+            largeReportsSalida: 0,
+          }
+          horario.largeReportsEntrada = horario.idReporteEntrada.length;
+          horario.largeReportsSalida = horario.idReporteSalida.length;
+  
+          var horaLlegada = horario.llegada.split(":");
+          var horaSalida = horario.salida.split(":");
+          var hora1 = horaLlegada[0];
+          hora1 = parseInt(hora1)
+          var hora2 = horaSalida[0];
+          hora2 = parseInt(hora2)
+  
+          if(hora1 <= 11){
+            horario.am = 'AM'
+          }else{
+            horario.am = 'PM'
+          }
+          if(hora2 <= 11){
+            horario.pm = 'AM'
+          }else{
+            horario.pm = 'PM'
+          }
+  
+          if(horario.llegada === ""){
+            horario.llegada = "Unmarked";
+            horario.am = "";
+          }
+          if(horario.salida === ""){
+            horario.salida = "Unmarked";
+            horario.pm = "";
+          }
+  
+          this.listHorario.push(horario);  
+        });
+        if(this.listHorario.length<=0){
+          this.listVacia = true;
         }
-        horario.largeReportsEntrada = horario.idReporteEntrada.length;
-        horario.largeReportsSalida = horario.idReporteSalida.length;
-
-        var horaLlegada = horario.llegada.split(":");
-        var horaSalida = horario.salida.split(":");
-        var hora1 = horaLlegada[0];
-        hora1 = parseInt(hora1)
-        var hora2 = horaSalida[0];
-        hora2 = parseInt(hora2)
-
-        if(hora1 <= 11){
-          horario.am = 'AM'
-        }else{
-          horario.am = 'PM'
-        }
-        if(hora2 <= 11){
-          horario.pm = 'AM'
-        }else{
-          horario.pm = 'PM'
-        }
-
-        if(horario.llegada === ""){
-          horario.llegada = "Unmarked";
-          horario.am = "";
-        }
-        if(horario.salida === ""){
-          horario.salida = "Unmarked";
-          horario.pm = "";
-        }
-
-        this.listHorario.push(horario);  
-      });
-      if(this.listHorario.length<=0){
-        this.listVacia = true;
+        this.filtrar();
       }
-      this.filtrar();
     });
   }
 
   filtrar(){ 
+    this.loading = true;
     this.listVacia = false;
     this.listFiltrada = [];
     this.anioSelected = (<HTMLInputElement>document.getElementById('anioSelected')).value;

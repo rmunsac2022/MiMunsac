@@ -92,11 +92,10 @@ export class HoursExtraComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email)
       }
-      this.getUser(user!.email)
     });
     this.mes = new Date().getMonth();
     this.selectAnio = new Date().getFullYear();
@@ -106,46 +105,51 @@ export class HoursExtraComponent implements OnInit {
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0].payload.doc;
-      this.getReportsByUser(this.user.id);
+      if(user){
+        this.user = user[0].payload.doc;
+        this.getReportsByUser(this.user.id);
+      }
     });
   }
   
   getReportsByUser(id: string){
     this.horaExtraService.getHoraExtraByIdUser(id).subscribe((doc)=>{
       this.listHoraExtra = [];
-      doc.forEach((element: any) => { 
-        var horaExtra = {
-          nombreProyecto: element.nombreProyecto,
-          fecha: element.fecha,
-          descripcion: element.descripcion,
-          hora: '',
-          horario: '',
-          empleados: element.empleados,
-          cantParticipantes: element.empleados.length,
-          emoji: element.emoji,
-          fechaString: element.fechaString,
-          modalidad: element.modalidad,
-          valor: element.valor
-        }
-        var hora = horaExtra.fecha.seconds;          
-        const fechaHora = new Date();
-        fechaHora.setTime(hora * 1000);
-        this.hora = this.datePipe.transform(fechaHora, 'HH');   
-        horaExtra.hora = this.hora; 
-        
-        if(this.hora <= 11){
-          horaExtra.horario = 'AM'
-        }else{
-          horaExtra.horario = 'PM'
-        }
-        this.listHoraExtra.push(element);  
-      });
-      this.filtrar();
+      if(doc){
+        doc.forEach((element: any) => { 
+          var horaExtra = {
+            nombreProyecto: element.nombreProyecto,
+            fecha: element.fecha,
+            descripcion: element.descripcion,
+            hora: '',
+            horario: '',
+            empleados: element.empleados,
+            cantParticipantes: element.empleados.length,
+            emoji: element.emoji,
+            fechaString: element.fechaString,
+            modalidad: element.modalidad,
+            valor: element.valor
+          }
+          var hora = horaExtra.fecha.seconds;          
+          const fechaHora = new Date();
+          fechaHora.setTime(hora * 1000);
+          this.hora = this.datePipe.transform(fechaHora, 'HH');   
+          horaExtra.hora = this.hora; 
+          
+          if(this.hora <= 11){
+            horaExtra.horario = 'AM'
+          }else{
+            horaExtra.horario = 'PM'
+          }
+          this.listHoraExtra.push(element);  
+        });
+        this.filtrar();
+      }
     });
   }
 
   filtrar(){ 
+    this.loading = true;
     this.listVacia = false;
     this.listFiltrada = [];
     this.anioSelected = (<HTMLInputElement>document.getElementById('anioSelected')).value;

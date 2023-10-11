@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<div class="md:flex" *ngIf="!isLoggedIn">
+    <app-menu class="md:w-[20%] block"></app-menu>
+    <router-outlet></router-outlet>
+</div>
+<router-outlet *ngIf="isLoggedIn"></router-outlet>

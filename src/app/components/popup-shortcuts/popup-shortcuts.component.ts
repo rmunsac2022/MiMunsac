@@ -17,6 +17,7 @@ export class PopupShortcutsComponent implements OnInit {
   isVendedor: boolean = false;
   isMarketing: boolean = false;
   isTI: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -53,6 +54,7 @@ export class PopupShortcutsComponent implements OnInit {
         if(user.area == "ventas") {
           this.isVendedor = true;
         }
+        this.loading = false;
       });
     });
   }

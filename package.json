@@ -30,7 +30,7 @@
     "ngx-device-detector": "^5.0.1",
     "ngx-emoji-picker": "^0.1.6",
     "ngx-lottie": "^10.0.0",
-    "ngx-scanner-qrcode": "^1.2.7",
+    "ngx-scanner-qrcode": "^1.6.4",
     "ngx-spinner": "^15.0.1",
     "ngx-tailwind": "^4.0.0",
     "ngx-toastr": "^16.1.0",

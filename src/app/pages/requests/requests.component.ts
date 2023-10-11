@@ -92,11 +92,10 @@ export class RequestsComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email);
       }
-      this.getUser(user!.email)
     });
     this.mes = new Date().getMonth();
     this.selectAnio = new Date().getFullYear();
@@ -118,58 +117,63 @@ export class RequestsComponent implements OnInit {
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0].payload.doc;
-      this.data = user[0].payload.doc.data();
-      this.id = this.user.id;
-      this.getRequestByUser(this.user.id);
+      if(user){
+        this.user = user[0].payload.doc;
+        this.data = user[0].payload.doc.data();
+        this.id = this.user.id;
+        this.getRequestByUser(this.user.id);
+      }
     });
   }
 
   getRequestByUser(id: string){
     this.requestService.getRequestByIdUser(id, 'idUsuario').subscribe((doc)=>{
       this.listRequest = [];
-      doc.forEach((element: any) => { 
-        var request = {
-          nombre: '',
-          hora: '',
-          emoji: '',
-          fecha: element.fecha,
-          descripcion: element.descripcion,
-          leido: element.leido,
-          categoria: element.categoria,
-          rangoSolicitados: element.rangoSolicitados,
-          urlDocumento: element.urlDocumento,
-          horario: '',
-          fechaString: element.fechaString,
-          estado: element.estado,
-          name: '',
-          apellido: '',
-          correo:'',
-          rut:'',
-          telefono: '',
-          motivoRechazo: element.motivoRechazo
-        } 
-        var hora = request.fecha.seconds;          
-        const fechaHora = new Date();
-        fechaHora.setTime(hora * 1000);
-        this.hora = this.datePipe.transform(fechaHora, 'HH');   
-        request.hora = this.hora; 
-        
-        if(this.hora <= 11){
-          request.horario = 'AM'
-        }else{
-          request.horario = 'PM'
+      if(doc){
+        doc.forEach((element: any) => { 
+          var request = {
+            nombre: '',
+            hora: '',
+            emoji: '',
+            fecha: element.fecha,
+            descripcion: element.descripcion,
+            leido: element.leido,
+            categoria: element.categoria,
+            rangoSolicitados: element.rangoSolicitados,
+            urlDocumento: element.urlDocumento,
+            horario: '',
+            fechaString: element.fechaString,
+            estado: element.estado,
+            name: '',
+            apellido: '',
+            correo:'',
+            rut:'',
+            telefono: '',
+            motivoRechazo: element.motivoRechazo
+          } 
+          var hora = request.fecha.seconds;          
+          const fechaHora = new Date();
+          fechaHora.setTime(hora * 1000);
+          this.hora = this.datePipe.transform(fechaHora, 'HH');   
+          request.hora = this.hora; 
+          
+          if(this.hora <= 11){
+            request.horario = 'AM'
+          }else{
+            request.horario = 'PM'
+          }
+          this.listRequest.push(request);  
+        });
+        if(this.listRequest.length<=0){
+          this.listVacia = true;
         }
-        this.listRequest.push(request);  
-      });
-      if(this.listRequest.length<=0){
-        this.listVacia = true;
+        this.filtrar();
       }
-      this.filtrar();
     });
   }
 
   filtrar(){ 
+    this.loading = true;
     this.listVacia = false;
     this.listFiltrada = [];
     this.anioSelected = (<HTMLInputElement>document.getElementById('anioSelected')).value;

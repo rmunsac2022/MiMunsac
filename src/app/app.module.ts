@@ -7,10 +7,8 @@ import { FormsModule } from "@angular/forms";
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { QRCodeModule } from 'angularx-qrcode';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { NgxEmojiPickerModule } from  'ngx-emoji-picker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -38,7 +36,6 @@ import { PopupCreateRequestComponent } from './components/popup-create-request/p
 import { PopupAddHourexComponent } from './components/popup-add-hourex/popup-add-hourex.component';
 import { RequestPermitsComponent } from './components/request-permits/request-permits.component';
 import player from 'lottie-web';
-import * as lottie from 'lottie-web';
 import { PopupActionSuccessComponent } from './components/popup-action-success/popup-action-success.component';
 import { PopupDetailRequestComponent } from './components/popup-detail-request/popup-detail-request.component';
 import { PopupInfoClientComponent } from './components/munsacAyuda/popup-info-client/popup-info-client.component';
@@ -82,9 +79,7 @@ export function playerFactory() {
     AngularFirestoreModule,
     NgxScannerQrcodeModule,
     BrowserAnimationsModule,
-    QRCodeModule,
     LottieModule.forRoot({ player: playerFactory }),
-    NgxEmojiPickerModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     ToastrModule.forRoot({
@@ -95,8 +90,8 @@ export function playerFactory() {
     }),
     MatDialogModule,
     provideStorage(() => getStorage()),
-    PickerModule,
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    PickerModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

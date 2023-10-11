@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NgxScannerQrcodeService,ScannerQRCodeConfig,ScannerQRCodeResult, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
+import { NgxScannerQrcodeService,ScannerQRCodeResult, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { BehaviorSubject } from 'rxjs';
 import { HoraExtra } from 'src/app/models/HoraExtra';
 import { HorariosService } from 'src/app/services/horarios.service';
@@ -16,11 +16,18 @@ import { ClientService } from 'src/app/services/client.service';
 import { PopupInfoClientComponent } from '../munsacAyuda/popup-info-client/popup-info-client.component';
 import { StService } from 'src/app/services/st.service';
 
+interface ScannerQRCodeConfig {
+  isBeep: boolean;
+  fps: number;
+  constraints: MediaStreamConstraints; // Esta propiedad debe ser de tipo MediaStreamConstraints
+};
+
 @Component({
   selector: 'app-popup-tick-qr',
   templateUrl: './popup-tick-qr.component.html',
   styleUrls: ['./popup-tick-qr.component.css']
 })
+
 export class PopupTickQrComponent implements OnInit, OnDestroy {
   camaras: string[] = [];
   camarasName: string[] = [];
@@ -45,27 +52,22 @@ export class PopupTickQrComponent implements OnInit, OnDestroy {
   
   @ViewChild('ac', { static: false }) ac?: NgxScannerQrcodeComponent;
   
-  public config: ScannerQRCodeConfig = {
+  
+
+  
+  config: ScannerQRCodeConfig = {
     isBeep: false,
     fps: 60,
     constraints: { 
       audio: false,
-      scanBrightness: 10,
-      videoHeight: 400, 
-      advanced: {
-        focalLength: 5,
-        focusMode: 'manual',
-        whiteBalanceMode: 'continuous',
-        brightness: 100,
-      },
       video: {
         width: { min: 640, max: 2560 },
         height: { min: 640, max: 2560 },
         aspectRatio: { ideal: 1 }
       },
-      vibrate: false,
     }
   };
+
   constructor(
     public dialogRef: MatDialogRef<PopupTickQrComponent>,
     private dialog: MatDialog,

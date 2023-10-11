@@ -47,13 +47,12 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user) => {
-      if (!user){
+      if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email)
       }
-      this.getUser(user!.email)
     });
 
     this.mes = new Date().getMonth();
@@ -65,20 +64,22 @@ export class HomeComponent implements OnInit{
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithDataAndId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0].payload.doc.data();
-      var id = user[0].payload.doc.id;
-
-      var partesNombre = this.user.nombre.split(" ");
-      var primerNombre = partesNombre[0];
-      var primerApellido = partesNombre[2];
-      this.user.name = primerNombre;
-      this.user.apellido = primerApellido;
-
-      var anio = new Date().getFullYear();
-      var mes = new Date().getMonth() + 1;
-      var fecha = mes+"."+anio;
-
-      this.getHoraExtra(fecha, id);
+      if(user){
+        this.user = user[0].payload.doc.data();
+        var id = user[0].payload.doc.id;
+  
+        var partesNombre = this.user.nombre.split(" ");
+        var primerNombre = partesNombre[0];
+        var primerApellido = partesNombre[2];
+        this.user.name = primerNombre;
+        this.user.apellido = primerApellido;
+  
+        var anio = new Date().getFullYear();
+        var mes = new Date().getMonth() + 1;
+        var fecha = mes+"."+anio;
+  
+        this.getHoraExtra(fecha, id);
+      }
     });
   }
 
@@ -86,23 +87,25 @@ export class HomeComponent implements OnInit{
     this.listVacia = false;
     const sub = this.horaExtraService.getHoraExtraByIdUserAndFecha(id, fecha).subscribe((horasExtras)=>{
       sub.unsubscribe();
-      horasExtras.forEach((element: HoraExtra)=>{
-        const fechaHoraDesde = element.cantidad!.desde;
-        const fechaHoraHasta = element.cantidad!.hasta;
-
-        const fechaDesde = new Date(fechaHoraDesde);
-        const fechaHasta = new Date(fechaHoraHasta);
-        const diferenciaMilisegundos = fechaHasta.getTime() - fechaDesde.getTime();
-        const diferenciaHoras = Math.round(diferenciaMilisegundos / (1000 * 60 * 60));
-        element.duracion = diferenciaHoras;
-        this.listHorasExtras.push(element);
-      });
-      this.listHorasExtras = horasExtras;
-      if(this.listHorasExtras.length<=0){
-        this.listVacia = true;
-        //this.toastr.info('No se encontraron horas extra')
-      }else{
-        //this.toastr.success('Horas extras encontrados')
+      if(horasExtras){
+        horasExtras.forEach((element: HoraExtra)=>{
+          const fechaHoraDesde = element.cantidad!.desde;
+          const fechaHoraHasta = element.cantidad!.hasta;
+  
+          const fechaDesde = new Date(fechaHoraDesde);
+          const fechaHasta = new Date(fechaHoraHasta);
+          const diferenciaMilisegundos = fechaHasta.getTime() - fechaDesde.getTime();
+          const diferenciaHoras = Math.round(diferenciaMilisegundos / (1000 * 60 * 60));
+          element.duracion = diferenciaHoras;
+          this.listHorasExtras.push(element);
+        });
+        this.listHorasExtras = horasExtras;
+        if(this.listHorasExtras.length<=0){
+          this.listVacia = true;
+          //this.toastr.info('No se encontraron horas extra')
+        }else{
+          //this.toastr.success('Horas extras encontrados')
+        }
       }
     });
     this.loading = false;

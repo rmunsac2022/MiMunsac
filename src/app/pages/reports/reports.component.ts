@@ -93,11 +93,11 @@ export class ReportsComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       if (!user) {
         this.router.navigate(['/login']);
-      }
-      if (user){
+      } else {
         this.permissionService.confirmPermitions();
+        this.getUser(user!.email);
       }
-      this.getUser(user!.email)
+
     });
     this.mes = new Date().getMonth();
     this.selectAnio = new Date().getFullYear();
@@ -119,49 +119,54 @@ export class ReportsComponent implements OnInit {
   getUser(email: any){
     const sub = this.authService.getUserByEmailWithId(email, 'correo').subscribe((user)=> {
       sub.unsubscribe();
-      this.user = user[0].payload.doc;
-      this.id = this.user.id;
-      this.getReportsByUser(this.user.id);
+      if(user){
+        this.user = user[0].payload.doc;
+        this.id = this.user.id;
+        this.getReportsByUser(this.user.id);
+      }
     });
   }
   
   getReportsByUser(id: string){
     this.reportService.getReportByIdUser(id, 'idUsuario').subscribe((doc)=>{
       this.listReports = [];
-      doc.forEach((element: any) => { 
-        var reporte = {
-          nombre: '',
-          fecha: element.fecha,
-          descripcion: element.descripcion,
-          hora: '',
-          horario: '',
-          fechaString: element.fechaString,
-          ubicacion: element.ubicacion,
-          urlImagen: element.urlImagen,
-          lat: element.ubicacion['_lat'],
-          long: element.ubicacion['_long'],
+      if(doc){
+        doc.forEach((element: any) => { 
+          var reporte = {
+            nombre: '',
+            fecha: element.fecha,
+            descripcion: element.descripcion,
+            hora: '',
+            horario: '',
+            fechaString: element.fechaString,
+            ubicacion: element.ubicacion,
+            urlImagen: element.urlImagen,
+            lat: element.ubicacion['_lat'],
+            long: element.ubicacion['_long'],
+          }
+          var hora = reporte.fecha.seconds;          
+          const fechaHora = new Date();
+          fechaHora.setTime(hora * 1000);
+          this.hora = this.datePipe.transform(fechaHora, 'HH');   
+          reporte.hora = this.hora; 
+          
+          if(this.hora <= 11){
+            reporte.horario = 'AM'
+          }else{
+            reporte.horario = 'PM'
+          }
+          this.listReports.push(reporte);  
+        });
+        if(this.listReports.length<=0){
+          this.listVacia = true;
         }
-        var hora = reporte.fecha.seconds;          
-        const fechaHora = new Date();
-        fechaHora.setTime(hora * 1000);
-        this.hora = this.datePipe.transform(fechaHora, 'HH');   
-        reporte.hora = this.hora; 
-        
-        if(this.hora <= 11){
-          reporte.horario = 'AM'
-        }else{
-          reporte.horario = 'PM'
-        }
-        this.listReports.push(reporte);  
-      });
-      if(this.listReports.length<=0){
-        this.listVacia = true;
+        this.filtrar();
       }
-      this.filtrar();
     });
   }
 
   filtrar(){ 
+    this.loading = true;
     this.listVacia = false;
     this.listFiltrada = [];
     this.anioSelected = (<HTMLInputElement>document.getElementById('anioSelected')).value;

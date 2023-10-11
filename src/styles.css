@@ -41,7 +41,9 @@ h3, p {
 
 app-home, app-reports, app-hours-extra, app-requests, app-profile, app-history {
     display: flex;
+    width: 100%;
 }
+
 ngx-scanner-qrcode * {
     background-color: transparent!important;
 }

@@ -125,7 +125,6 @@ export class PopupCreateReportComponent implements OnInit {
             .catch((error) => console.log(error));
         };
         this.sendEmail();
-        this.registrarReporte.reset();
         this.dialogRef.close();
       },
       (error: any) => {
@@ -211,7 +210,7 @@ export class PopupCreateReportComponent implements OnInit {
           to: email,
           message: {
             subject: this.userData.name! + this.userData.apellido! + ' a hecho un reporte',
-            html: '<p>Hola Munsac!</p><p>Detalle del reporte:</p><br><p>Tipo de solicitud:'+this.registrarReporte.value.categoria+'</p><p>Comentario:'+this.registrarReporte.value.descripcion+'</p>'
+            html: '<p>Hola Dualtron!</p><p>Detalle del reporte:</p><br><p>Tipo de solicitud:'+this.registrarReporte.value.categoria+'</p><p>Comentario:'+this.registrarReporte.value.descripcion+'</p>'
           },
         }).then(() => console.log('Send email for delivery!'));
       });
