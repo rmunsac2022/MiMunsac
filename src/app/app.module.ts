@@ -40,6 +40,8 @@ import { PopupActionSuccessComponent } from './components/popup-action-success/p
 import { PopupDetailRequestComponent } from './components/popup-detail-request/popup-detail-request.component';
 import { PopupInfoClientComponent } from './components/munsacAyuda/popup-info-client/popup-info-client.component';
 import { PopupShortcutsComponent } from './components/popup-shortcuts/popup-shortcuts.component';
+import { PopupClientsByFolioComponent } from './components/popup-clients-by-folio/popup-clients-by-folio.component';
+import { PopupClientDetailComponent } from './components/popup-client-detail/popup-client-detail.component';
 
 export function playerFactory() {
   return player;
@@ -66,7 +68,9 @@ export function playerFactory() {
     PopupActionSuccessComponent,
     PopupDetailRequestComponent,
     PopupInfoClientComponent,
-    PopupShortcutsComponent
+    PopupShortcutsComponent,
+    PopupClientsByFolioComponent,
+    PopupClientDetailComponent
   ],
   imports: [
     CommonModule,

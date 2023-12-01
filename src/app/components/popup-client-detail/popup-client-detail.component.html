@@ -1,0 +1,63 @@
+<div *ngIf="!loading" class="bg-white text-left rounded-2xl p-4 md:p-6 md:my-6">
+    <img src="./assets/img/cerrarblack.svg" alt="..." (click)="dialogRef.close();" class="absolute top-5 right-5 h-6 cursor-pointer transition-all duration-200 hover:scale-95">
+    <h2 class="text-3xl font-space mb-4">Información del cliente</h2>
+    <form [formGroup]="formDocument">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Nombre:</p>
+                <p class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start">{{ data.name.toUpperCase() }}</p>
+            </div>
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Teléfono:</p>
+                <input class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="telefono">
+            </div>
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Correo:</p>
+                <input class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start overflow-hidden" formControlName="correo">
+            </div> 
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Rut:</p>
+                <p class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start">{{ data.rut }}</p>
+            </div>
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Producto(s) comprado(s):</p>
+                <div class="bg-gray-100 rounded-2xl h-10 w-full flex overflow-x-scroll overflow-y-hidden items-center">
+                <p *ngFor="let product of listProducts" class="px-2 whitespace-nowrap">{{product.name}}</p>
+            </div>
+            </div>
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Total pagado:</p>
+                <p class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start">{{ formatNumber(amount) }}</p>
+            </div>    
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Numero de serie de productos:</p>
+                <input type="text" class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="nroSerie">
+            </div>
+            <div class="flex flex-col items-start">
+                <p class="text-sm mr-2 font-semibold text-center">Tipo de documento:</p>
+                <select class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="tipoDocumento" (change)="changeValidators()">
+                    <option value="" disabled [selected]="true">Selecione una opción...</option>
+                    <option value="Boleta">Boleta</option>
+                    <option value="Factura">Factura</option>
+                </select>
+            </div>
+            <div class="flex flex-col items-start" *ngIf="formDocument.value.tipoDocumento === 'Factura'">
+                <p class="text-sm mr-2 font-semibold text-center">Rut empresa:</p>
+                <input type="text" class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="rutEmpresa" (blur)="setNameByRutCompany()">
+            </div>
+            <div class="flex flex-col items-start" *ngIf="formDocument.value.tipoDocumento === 'Factura'">
+                <p class="text-sm mr-2 font-semibold text-center">Razón social:</p>
+                <input type="text" class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="razonSocial">
+            </div>
+            <div class="flex flex-col items-start" *ngIf="formDocument.value.tipoDocumento === 'Factura'">
+                <p class="text-sm mr-2 font-semibold text-center">Dirección:</p>
+                <input type="text" class="bg-gray-100 rounded-2xl h-10 px-3 w-full flex items-center justify-start" formControlName="direccionEmpresa">
+            </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button [disabled]="formDocument.invalid || isClicked" [ngClass]="{'bg-rojodualtron': formDocument.valid, 'bg-slate-500': formDocument.invalid}" class="font-space text-xl shadow-xxs px-6 py-2 rounded-full text-white hover:shadow-none transition-all duration-200 hover:scale-95" (click)="generateDocument(); isClicked = true;">Generar</button>
+        </div>
+    </form>
+
+</div>
+<app-spinner *ngIf="loading" class="flex justify-center my-10"></app-spinner>

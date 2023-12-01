@@ -33,4 +33,16 @@ export class ClientService {
   addClient(cliente: any):Promise<any>{
     return this.firestore.collection('Clientes').add(cliente);
   }
+
+  getFolios(): Observable<any> {
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador').valueChanges();
+  }
+
+  updateFolios(changes: any): Promise<any> {
+    return this.firestore.collection('MunsacControl').doc('mimunsac-colaborador-test').update(changes);
+  }
+
+  addNewDocument(doc: any): Promise<any> {
+    return this.firestore.collection('EntregadosContenedor').add(doc);
+  }
 }

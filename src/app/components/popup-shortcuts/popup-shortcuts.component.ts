@@ -4,6 +4,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { PopupTickQrComponent } from '../popup-tick-qr/popup-tick-qr.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { PopupClientsByFolioComponent } from '../popup-clients-by-folio/popup-clients-by-folio.component';
 
 @Component({
   selector: 'app-popup-shortcuts',
@@ -35,10 +36,8 @@ export class PopupShortcutsComponent implements OnInit {
     this.afAuth.onAuthStateChanged((user) => {
       const sub = this.auth.getUserByEmail(user!.email, 'correo').subscribe((user)=>{
         sub.unsubscribe();
-        console.log(user)
 
         var user = user[0];
-        console.log(user)
         if(user.area == "postVenta") {
           this.isPostVenta = true;
         }
@@ -76,6 +75,17 @@ export class PopupShortcutsComponent implements OnInit {
       data: 'scooter',
       maxWidth:  this.isMobile ? '90dvw' : '40vw',
       minWidth: this.isMobile ? '90dvw' : 'auto',
+      maxHeight: this.isMobile ? '70dvh' : 'auto'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef.close();
+    });
+  }
+
+  viewClients(){
+    const dialogRef = this.dialog.open(PopupClientsByFolioComponent, {
+      maxWidth:  this.isMobile ? '90dvw' : '50vw',
+      minWidth: this.isMobile ? '90dvw' : '50vw',
       maxHeight: this.isMobile ? '70dvh' : 'auto'
     });
     dialogRef.afterClosed().subscribe(result => {

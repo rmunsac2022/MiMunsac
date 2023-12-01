@@ -1,9 +1,12 @@
 <div class="grid grid-cols-1 gap-3 p-5" *ngIf="!loading">
-    <div class="bg-black rounded-full p-3" *ngIf="isPostVenta || isServicioTecnico || isTI">
-        <button class="text-white font-spaceb w-full text-center text-xl" (click)="scannerSt()">Escanear QR de ingreso</button>
+    <div class="bg-black rounded-full p-3 transition-all duration-200 hover:scale-95 cursor-pointer" (click)="scannerSt()" *ngIf="isPostVenta || isServicioTecnico || isTI">
+        <p class="text-white font-spaceb w-full text-center text-xl">Escanear QR de ingreso</p>
     </div>
-    <div class="bg-black rounded-full p-3" *ngIf="isPostVenta || isServicioTecnico || isTI">
-        <button class="text-white font-spaceb w-full text-center text-xl" (click)="searchScooter()">Escanear QR de scooter</button>
+    <div class="bg-black rounded-full p-3 transition-all duration-200 hover:scale-95 cursor-pointer" (click)="searchScooter()" *ngIf="isPostVenta || isServicioTecnico || isTI">
+        <p class="text-white font-spaceb w-full text-center text-xl">Escanear QR de scooter</p>
+    </div>
+    <div class="bg-black rounded-full p-3 transition-all duration-200 hover:scale-95 cursor-pointer" (click)="viewClients()">
+        <p class="text-white font-spaceb w-full text-center text-xl">Ver clientes</p>
     </div>
 </div> 
-<app-spinner *ngIf="loading" class="flex justify-center p-5"></app-spinner>
+<app-spinner *ngIf="loading" class="flex justify-center p-5 my-6"></app-spinner>

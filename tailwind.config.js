@@ -21,7 +21,8 @@ module.exports = {
         negropopup: 'rgba(0, 0, 0, 0.563)',
         negroinput: '#282828',
         negrobox: '#161616',
-        fondoinput: '#e3e3e3'
+        fondoinput: '#e3e3e3',
+        plomoclaro: '#eaeaea',
       },
       fontFamily: {
         space: ['space', 'sans-serif'],

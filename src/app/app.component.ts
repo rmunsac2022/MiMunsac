@@ -15,7 +15,7 @@ export class AppComponent {
   ){
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
-      if(currentRoute === '/login' || currentRoute === '/'){
+      if(currentRoute === '/login' || currentRoute === '/' || currentRoute === '/permits'){
         this.isLoggedIn = true;
       }else{
         this.isLoggedIn = false;

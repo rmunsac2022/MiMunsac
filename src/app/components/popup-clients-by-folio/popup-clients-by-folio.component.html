@@ -1,0 +1,27 @@
+<div class="p-5 bg-white">
+    <div *ngIf="!loading" class="mt-4">
+
+        <div class="md:flex mb-8 items-center">
+            <h1 class="text-3xl mr-auto">Entrega Clientes</h1>
+            <div class="flex justify-center gap-4">
+                <div class="flex bg-plomoclaro rounded-full pl-3 w-56 text-sm placeholder:text-sm">
+                    <input class="py-3 bg-transparent w-10/12" type="text" placeholder="Busca por nombre/rut" [(ngModel)]="valueToSearch" (keyup.enter)="searchSale()" (input)="checkSearch()">
+                    <img *ngIf="valueToSearch !== ''" class="h-4 md:h-6 flex cursor-pointer transition-all duration-200 hover:scale-95 m-auto md:p-1 p-0" src="./assets/img/cerrarblack.svg" alt="..." (click)="valueToSearch = ''; changeList = false;">
+                </div>
+                <button class="font-space text-xl shadow-xxs px-6 py-2 bg-rojodualtron rounded-full text-white hover:shadow-none transition-all duration-200 hover:scale-95" (click)="searchSale()">Buscar</button>
+            </div>
+        </div>
+
+        <div class="overflow-y-scroll h-60">
+            <div *ngFor="let client of (changeList ? listClientsFilter : listClients)">
+                <div (click)="viewClientByIdRelBase(client)" class="bg-black rounded-full p-3 cursor-pointer text-center transition-all duration-200 hover:scale-95 mb-4 hover:bg-rojodualtron">
+                    <h1 class="text-white">{{client.name.toUpperCase()}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <h1 *ngIf="changeList && listClientsFilter.length === 0" class="text-center text-xl mt-3">No hay resultados para: {{valueToSearch}}</h1>
+    </div>
+
+    <app-spinner *ngIf="loading" class="flex justify-center py-5"></app-spinner>
+</div>
